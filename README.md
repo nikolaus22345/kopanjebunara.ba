@@ -39,38 +39,36 @@ node build.mjs
 
 That single edit updates the header, hero, every region page, the sticky mobile call bar, the footer, the contact page and the schema.org data. **Nothing else needs touching.**
 
-### 2. Your domain
-
-Same file:
+### 2. Your domain — ✅ done
 
 ```js
-origin: 'https://www.dovode.ba',
+origin: 'https://kopanjebunara.ba',
 ```
 
-This feeds canonical URLs, `sitemap.xml`, and the Open Graph tags. Set it
-**before** you go live, or Google will index the wrong URLs.
+`kopanjebunara.ba` is registered through **Globalhost d.o.o.** (global.ba),
+26/08/2026 – 25/08/2027. Canonical URLs, `sitemap.xml`, `llms.txt`, Open Graph
+tags and schema.org all point there.
 
-> **Still a placeholder.** The repo is named `kopanjebunara.ba`, which suggests
-> that's the intended domain — and as of the last check it is **not registered**
-> (`kopanjebunara.ba` does not resolve), so it looks available through NIC.ba.
-> Worth grabbing before anything else. For contrast, `busenjebunara.ba` **is**
-> taken and live — it belongs to Papago Bistrik, one of the two strongest
-> competitors in the research.
->
-> Once the domain is registered, change `origin` here and rebuild. Leaving it
-> pointing at `dovode.ba` means every canonical tag names a domain you don't own.
+**Apex (no `www`) is canonical.** This must match the primary domain in Vercel
+— if Vercel serves `www` as primary while this file says apex, every canonical
+tag points at a URL that redirects, and indexing stalls. See the DNS section
+below.
 
 ### 3. The brand name
 
 Same file. `nameLead` renders in normal ink, `nameAccent` in teal:
 
 ```js
-name: 'Do Vode',
-nameLead: 'Do',
-nameAccent: 'Vode',
+name: 'Kopanje Bunara',
+nameLead: 'Kopanje',
+nameAccent: 'Bunara',
 ```
 
-"Do Vode" is a placeholder I picked so you could see the design working. Change it to whatever you register.
+Set to match the domain, replacing the earlier "Do Vode" placeholder — a
+visitor landing on `kopanjebunara.ba` and seeing an unrelated name in the
+header reads as a site that isn't finished. It's descriptive rather than
+distinctive, so if you register a real trading name later this is a
+three-line change.
 
 ---
 
@@ -152,10 +150,76 @@ node build.mjs && git add -A && git commit -m "..." && git push
 configuration needed — `vercel.json` already sets `buildCommand`
 (`node build.mjs`), `outputDirectory` (`public`), `trailingSlash`, asset
 caching and security headers. Vercel gives you a `*.vercel.app` URL
-immediately; attach the real domain under *Settings → Domains*.
+immediately.
 
 `public/` is committed as well, so the site deploys even if the build step is
 skipped or Node is unavailable.
+
+---
+
+## Connecting kopanjebunara.ba
+
+Two steps: add the domain in Vercel, then point DNS at it from Globalhost.
+
+### 1. Vercel — *Settings → Domains*
+
+Add **both**:
+
+- `kopanjebunara.ba`
+- `www.kopanjebunara.ba`
+
+Then set `kopanjebunara.ba` as **Primary** (the ⋯ menu next to it) so `www`
+302s to the apex. This has to match `origin` in `src/data/site.mjs`, which is
+the apex.
+
+Vercel will show the exact records it wants. They are normally:
+
+| Type | Name / Host | Value |
+|---|---|---|
+| `A` | `@` (apex) | `76.76.21.21` |
+| `CNAME` | `www` | `cname.vercel-dns.com` |
+
+**Use whatever Vercel displays**, not this table — the apex IP has changed
+before. The table is here so you know what to expect.
+
+### 2. Globalhost — DNS zone
+
+Log into `global.ba/ap/clientarea.php` → the domain → **DNS management** (or
+*Upravljanje DNS zonom*). Add the two records above.
+
+If Globalhost's panel only offers a "DNS zone editor" once the domain uses
+their nameservers, leave the nameservers as they are and just edit the zone.
+Don't move nameservers to Vercel — Vercel isn't a DNS host for `.ba`.
+
+**Apex CNAME won't work.** DNS forbids a CNAME at the zone apex, which is why
+the apex needs an `A` record. If Globalhost offers "ALIAS" or "ANAME" for the
+apex, that works too and is slightly better.
+
+### 3. Wait, then verify
+
+`.ba` propagation is typically 15 minutes to a few hours. Vercel issues the
+Let's Encrypt certificate automatically once DNS resolves — no action needed.
+
+Check with:
+
+```bash
+nslookup kopanjebunara.ba
+```
+
+When it returns the Vercel IP, open `https://kopanjebunara.ba`. Then confirm
+the redirect works — `www.kopanjebunara.ba` should land on the apex, and
+`http://` should upgrade to `https://`.
+
+### 4. After it's live
+
+- **Google Search Console** — add the property, submit
+  `https://kopanjebunara.ba/sitemap.xml`.
+- **Create the mailbox.** `info@kopanjebunara.ba` is on the contact page and in
+  the schema, but only the *domain* was purchased — there's no mailbox behind
+  it yet. Set one up at Globalhost (or forward it to Gmail), otherwise remove
+  the address from `src/data/site.mjs`. A published address that bounces is
+  worse than none.
+- **Re-run the SEOStack checks** against the live domain rather than localhost.
 
 ---
 

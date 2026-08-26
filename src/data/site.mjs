@@ -10,9 +10,9 @@
 export const site = {
   // --- brand ------------------------------------------------------------
   // Placeholder brand. Change `name` + `nameAccent` and the logo follows.
-  name: 'Do Vode',
-  nameLead: 'Do',            // rendered in ink
-  nameAccent: 'Vode',        // rendered in accent colour
+  name: 'Kopanje Bunara',
+  nameLead: 'Kopanje',       // rendered in ink
+  nameAccent: 'Bunara',      // rendered in accent colour
   tagline: 'Bušenje bunara u BiH',
 
   // --- contact — REPLACE THESE ------------------------------------------
@@ -20,16 +20,21 @@ export const site = {
   phoneHref: '+38763050308',           // tel: form, no spaces
   viberHref: '+38763050308',           // usually same number
   whatsappHref: '38763050308',         // wa.me form, no plus
-  email: 'info@dovode.ba',
+  email: 'info@kopanjebunara.ba',
   hours: 'Pon–Sub, 07:00–20:00',
 
   // --- deployment -------------------------------------------------------
-  // Set this to your real domain before you go live (used in canonical
-  // URLs, sitemap.xml, Open Graph tags and schema.org).
-  origin: 'https://www.dovode.ba',
+  // Canonical origin. Feeds canonical URLs, sitemap.xml, llms.txt, Open
+  // Graph tags and schema.org.
+  //
+  // Apex (no www) is the canonical form. This MUST match the primary domain
+  // set in Vercel — if Vercel serves www as primary while this says apex,
+  // every canonical tag points at a URL that redirects, which is exactly
+  // the kind of mismatch that stalls indexing. www redirects here.
+  origin: 'https://kopanjebunara.ba',
 
   // --- legal entity (fill in when the firm is registered) ---------------
-  legalName: 'Do Vode d.o.o.',
+  legalName: '',                       // popuni kad firma bude registrovana
   address: 'Adresa firme bb',
   city: 'Grad',
   postalCode: '00000',
