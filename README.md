@@ -264,6 +264,44 @@ For a `.ba` domain you register through **NIC.ba (UTIC)**. Note from the researc
 
 ---
 
+## Analytics & Search Console
+
+Both are in [`src/data/site.mjs`](src/data/site.mjs) and emitted into every
+page's `<head>`:
+
+```js
+googleSiteVerification: 'B8xVjz_2WG_MG23zOVojJJlMdD57t8ncLOWk7ZL8gL4',
+ga4: 'G-979V3F3CS7',
+analyticsHost: 'kopanjebunara.ba',
+```
+
+- **Search Console** — the verification `<meta>` is on all 73 pages. Once DNS
+  resolves, hit *Verify* in Search Console, then submit
+  `https://kopanjebunara.ba/sitemap.xml`.
+- **GA4** — `ga4: ''` disables analytics completely.
+
+### Why the GA snippet isn't Google's verbatim copy
+
+Google's snippet loads `gtag.js` unconditionally. That would count **every
+localhost preview and every Vercel preview deployment** as real traffic — and
+during development that's a lot of fake pageviews in a brand-new property.
+
+So it's wrapped in a hostname check. It fires only on `kopanjebunara.ba` and
+`www.kopanjebunara.ba`; localhost, `*.vercel.app` and lookalike domains like
+`notkopanjebunara.ba` are all skipped. Set `analyticsHost: ''` to get Google's
+unconditional behaviour.
+
+Two other small departures, both forced by living inside an `if` block:
+`var`-style `window.gtag = function(){}` rather than `function gtag(){}` (a
+function declaration in a block is block-scoped under strict mode), and
+explicit `window.gtag(...)` / `window.dataLayer.push` rather than the implicit
+globals. Verified firing correctly under both sloppy and strict mode.
+
+**Not done:** no cookie/consent banner. Bosnia isn't in the EEA so GDPR consent
+mode isn't strictly required, but if you ever advertise into the EU, revisit it.
+
+---
+
 ## Adding a municipality
 
 Open [`src/data/regions.mjs`](src/data/regions.mjs), copy an existing entry, change the fields. A new page, sitemap entry, estimator option and contact-form option all appear on the next build.

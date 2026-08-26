@@ -41,6 +41,18 @@ export const site = {
   country: 'BA',
   vat: '',                             // ID/PDV broj
 
+  // --- analytics & verification -----------------------------------------
+  // Google Search Console verification. Emitted as a <meta> on every page.
+  googleSiteVerification: 'B8xVjz_2WG_MG23zOVojJJlMdD57t8ncLOWk7ZL8gL4',
+
+  // GA4 measurement ID. Empty string disables analytics entirely.
+  ga4: 'G-979V3F3CS7',
+
+  // GA4 only fires on hostnames ending in this, so localhost previews and
+  // Vercel preview deployments don't pollute the property with fake traffic.
+  // Set to '' to fire everywhere (Google's snippet verbatim).
+  analyticsHost: 'kopanjebunara.ba',
+
   // --- positioning ------------------------------------------------------
   // Honest description of what we are. See KNOWLEDGE-BASE.md §7.3 —
   // we must NOT present ourselves as the drilling contractor.

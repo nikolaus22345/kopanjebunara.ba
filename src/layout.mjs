@@ -145,6 +145,38 @@ const breadcrumbSchema = (path) => {
 
 const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap'
 
+/* GA4. Google's snippet loads gtag.js unconditionally; this wraps it in a
+   hostname check so localhost builds and Vercel preview deployments don't
+   file pageviews against the real property. Set site.analyticsHost = '' to
+   get the verbatim behaviour. */
+const analytics = () => {
+  if (!site.ga4) return ''
+  const id = site.ga4
+  const host = site.analyticsHost
+  const guardOpen = host ? `if (location.hostname === '${host}' || location.hostname.endsWith('.${host}')) {` : ''
+  const guardClose = host ? '}' : ''
+  /* Two deliberate departures from Google's verbatim snippet, both because
+     it is now inside an `if` block:
+       - `var gtag = function(){}` instead of `function gtag(){}`, since a
+         function declaration in a block is block-scoped in strict mode
+         (only Annex B hoisting saves it in sloppy mode).
+       - `window.dataLayer.push` instead of bare `dataLayer.push`, so it
+         never depends on the implicit global. */
+  return `<!-- Google tag (gtag.js) -->
+<script>
+${guardOpen}
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', '${id}');
+  var gs = document.createElement('script');
+  gs.async = true;
+  gs.src = 'https://www.googletagmanager.com/gtag/js?id=${id}';
+  document.head.appendChild(gs);
+${guardClose}
+</script>`
+}
+
 export function page({
   title,
   description,
@@ -172,7 +204,8 @@ export function page({
 <title>${esc(fullTitle)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
-<meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}">
+<meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}">${site.googleSiteVerification ? `
+<meta name="google-site-verification" content="${esc(site.googleSiteVerification)}">` : ''}
 <meta name="theme-color" content="#0B1615">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="bs_BA">
@@ -197,6 +230,7 @@ export function page({
 <link rel="stylesheet" href="${FONT_CSS}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="${FONT_CSS}"></noscript>
 ${jsonld.map(j => `<script type="application/ld+json">${j}</script>`).join('\n')}
+${analytics()}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 <a class="skip" href="#main">Preskoči na sadržaj</a>
