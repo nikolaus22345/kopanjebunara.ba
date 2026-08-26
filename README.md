@@ -35,7 +35,18 @@ Same file:
 origin: 'https://www.dovode.ba',
 ```
 
-This feeds canonical URLs, `sitemap.xml`, and the Open Graph tags. Set it **before** you go live, or Google will index the wrong URLs.
+This feeds canonical URLs, `sitemap.xml`, and the Open Graph tags. Set it
+**before** you go live, or Google will index the wrong URLs.
+
+> **Still a placeholder.** The repo is named `kopanjebunara.ba`, which suggests
+> that's the intended domain — and as of the last check it is **not registered**
+> (`kopanjebunara.ba` does not resolve), so it looks available through NIC.ba.
+> Worth grabbing before anything else. For contrast, `busenjebunara.ba` **is**
+> taken and live — it belongs to Papago Bistrik, one of the two strongest
+> competitors in the research.
+>
+> Once the domain is registered, change `origin` here and rebuild. Leaving it
+> pointing at `dovode.ba` means every canonical tag names a domain you don't own.
 
 ### 3. The brand name
 
@@ -109,23 +120,17 @@ to
 
 ## Deploying to Vercel (via GitHub)
 
-The repo is committed and the remote is set to
-`https://github.com/nikolaus22345/busenjebunara.ba.git`. One push is left:
+**Pushed.** The code lives at
+[nikolaus22345/kopanjebunara.ba](https://github.com/nikolaus22345/kopanjebunara.ba)
+on `main`. Note the repo was renamed from `busenjebunara.ba` to
+`kopanjebunara.ba` — GitHub still redirects the old URL, but the remote here
+points at the new name.
+
+Day-to-day from now on:
 
 ```bash
-git push -u origin main
+node build.mjs && git add -A && git commit -m "..." && git push
 ```
-
-**If that returns 403:** the GitHub credential stored on this machine belongs to
-`David2314das`, which has no write access to `nikolaus22345/busenjebunara.ba`.
-Fix it one of these ways:
-
-1. Repo owner adds `David2314das` as a collaborator — *Settings → Collaborators → Add people*. Then the push above works as-is.
-2. Or the owner pushes it themselves from their own machine.
-3. Or use a Personal Access Token with `repo` scope:
-   ```bash
-   git remote set-url origin https://<TOKEN>@github.com/nikolaus22345/busenjebunara.ba.git
-   ```
 
 **Then in Vercel:** *Add New → Project → Import* the repo. No dashboard
 configuration needed — `vercel.json` already sets `buildCommand`
