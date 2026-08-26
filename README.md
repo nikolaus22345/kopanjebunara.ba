@@ -107,7 +107,38 @@ to
 
 ---
 
-## Deploying
+## Deploying to Vercel (via GitHub)
+
+The repo is committed and the remote is set to
+`https://github.com/nikolaus22345/busenjebunara.ba.git`. One push is left:
+
+```bash
+git push -u origin main
+```
+
+**If that returns 403:** the GitHub credential stored on this machine belongs to
+`David2314das`, which has no write access to `nikolaus22345/busenjebunara.ba`.
+Fix it one of these ways:
+
+1. Repo owner adds `David2314das` as a collaborator — *Settings → Collaborators → Add people*. Then the push above works as-is.
+2. Or the owner pushes it themselves from their own machine.
+3. Or use a Personal Access Token with `repo` scope:
+   ```bash
+   git remote set-url origin https://<TOKEN>@github.com/nikolaus22345/busenjebunara.ba.git
+   ```
+
+**Then in Vercel:** *Add New → Project → Import* the repo. No dashboard
+configuration needed — `vercel.json` already sets `buildCommand`
+(`node build.mjs`), `outputDirectory` (`public`), `trailingSlash`, asset
+caching and security headers. Vercel gives you a `*.vercel.app` URL
+immediately; attach the real domain under *Settings → Domains*.
+
+`public/` is committed as well, so the site deploys even if the build step is
+skipped or Node is unavailable.
+
+---
+
+## Other hosts
 
 **Making a zip:** use the included script, not `Compress-Archive`.
 
@@ -151,6 +182,56 @@ The `loc` field is the **locative case** — it's what makes sentences read as n
 ```
 
 **Where the numbers come from:** depth and price bands are derived from the aquifer type plus published BiH market pricing (see KNOWLEDGE-BASE.md §4). They are framed on every page as *orijentacione* — indicative, not quotes. As your partners report real job data back, replace the estimates with what actually happened. That's how this becomes something no competitor can copy.
+
+---
+
+## SEO — what's in place
+
+Audited against the checks SEOStack runs. What's implemented:
+
+**On-page.** Self-referencing canonical on every page. Titles kept under 62
+characters and descriptions under 160 — `build.mjs` prints a warning and names
+the page if either drifts over, so this can't silently regress. Heading
+hierarchy has no skipped levels (footer column labels are `<p class="footer-h">`,
+not `<h4>`, precisely because that created an `h2 → h4` jump). No `<img>` tags
+at all — every graphic is inline SVG with `aria-label` or `aria-hidden`.
+
+**H1 pattern.** Homepage is `Bušenje i kopanje bunara Bosna i Hercegovina`;
+every landing page is `Bušenje i kopanje bunara <Mjesto>` — Livno,
+Tomislavgrad, all 59. The keyword phrase carries the H1; the hook line
+("Voda je ispod vas…") moved to `.kicker` directly beneath it, so the page
+keeps its voice without spending the H1 on it.
+
+**Structured data.** `ProfessionalService` on every page, plus
+`BreadcrumbList` derived from the URL path (so it can never drift out of sync
+with the visible breadcrumbs) and `FAQPage` wherever there's an FAQ block.
+The organisation's `address` is only emitted once real details replace the
+placeholder — a fake locality is worse than no address.
+
+**Social.** `og:image` / `twitter:image` point at a 1200×630 PNG generated at
+build time by `src/og.mjs`. See the note below about improving it.
+
+**Crawlability.** `sitemap.xml` with weighted priorities, `robots.txt` that
+explicitly allows GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and
+Google-Extended, and an `llms.txt` summarising prices, depths and the permit
+rules for answer engines. `trailingSlash: true` in `vercel.json` matches the
+canonicals, so internal links never take a 308 redirect hop.
+
+**Performance.** `site.css` is render-blocking (it's the design); Google Fonts
+load asynchronously via the `media="print"` swap so they don't block first
+paint. Assets get a one-year immutable cache header.
+
+### The OG image needs one manual step
+
+`public/assets/img/og.png` is generated geometrically — the strata motif,
+borehole line and water drop. It's valid and on-brand but has **no text**,
+because nothing in this project can render type into a raster.
+
+WhatsApp and Viber previews are how links actually get shared in BiH, so text
+is worth the five minutes: open `src/og-card.html` in Chrome, set the viewport
+to exactly 1200×630, capture a screenshot, and save it over
+`public/assets/img/og.png`. Instructions are in the file. Nothing in the build
+changes — the meta tags already point there.
 
 ---
 
