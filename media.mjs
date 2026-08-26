@@ -96,10 +96,16 @@ async function doPhotos() {
     const widths = [...new Set(WIDTHS.map(x => Math.min(x, w)))].sort((a, b) => a - b)
     const out = []
 
+    /* JPEG only — no WebP, on measured grounds.
+       ffmpeg's libwebp output was generated and verified as decodable in
+       Chrome, so compatibility is not the issue. The issue is that it saves
+       almost nothing here: 519 KB of JPEG became 480 KB of WebP (~7.5%),
+       because -q:v 4 already compresses hard. Not worth a second format.
+       If you install sharp or cwebp and target a lower quality, re-measure
+       before adding it back. */
     for (const width of widths) {
       for (const [ext, args] of [
-        ['webp', ['-c:v', 'libwebp', '-quality', '80']],
-        ['jpg',  ['-c:v', 'mjpeg', '-q:v', '4', '-pix_fmt', 'yuvj420p']],
+        ['jpg', ['-c:v', 'mjpeg', '-q:v', '4', '-pix_fmt', 'yuvj420p']],
       ]) {
         const dest = join(PHOTO_OUT, `${p.slug}-${width}.${ext}`)
         await run('ffmpeg', [

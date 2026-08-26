@@ -22,9 +22,17 @@ export function photo(slug, opts = {}) {
   const set = ext => p.widths.map(w => `/assets/photo/${p.slug}-${w}.${ext} ${w}w`).join(', ')
   const largest = p.widths[p.widths.length - 1]
 
+  /* JPEG only, deliberately — measured, not assumed.
+     WebP was generated and tested: it decodes fine in Chrome, so there is
+     no compatibility problem. It just isn't worth it here. Against these
+     mjpeg -q:v 4 files it saved 519 KB -> 480 KB, about 7.5%, nowhere near
+     the ~30% WebP usually buys, because the JPEGs are already compressed
+     hard. 7.5% does not justify a second format, double the files on disk
+     and an extra <source> on every image.
+     Worth revisiting only with a real encoder (sharp/cwebp) at a lower
+     quality target, where the gap actually opens up. */
   const style = ratio ? ` style="aspect-ratio:${ratio}"` : ''
   const pic = `<picture class="ph${ratio ? ' ph-crop' : ''}${cls ? ' ' + cls : ''}"${style}>
-  <source type="image/webp" srcset="${set('webp')}" sizes="${esc(sizes)}">
   <img src="/assets/photo/${p.slug}-${largest}.jpg" srcset="${set('jpg')}" sizes="${esc(sizes)}"
        width="${p.w}" height="${p.h}" alt="${esc(alt || p.alt)}"
        loading="${priority ? 'eager' : 'lazy'}" decoding="${priority ? 'sync' : 'async'}"${priority ? ' fetchpriority="high"' : ''}>
