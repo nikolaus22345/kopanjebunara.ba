@@ -1,5 +1,6 @@
 import { site } from '../data/site.mjs'
 import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { photo, presjekBunara } from '../components/media.mjs'
 
 const faq = [
   {
@@ -118,6 +119,11 @@ ${pageHead({
         </tbody>
       </table>
     </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:start;margin-top:2rem" class="split">
+      ${presjekBunara()}
+      ${photo('kolone-cijevi', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '3/4', caption: 'Kolona, spojnice i alat — materijal koji nestaje iz jeftinih ponuda.' })}
+    </div>
+
     <div class="call" style="margin-top:1.5rem">
       <span class="k">Jedno pitanje koje otkriva sve</span>
       <p>Pitajte izvođača: <strong>„Kolika je izmjerena izdašnost i kako ćete je izmjeriti?“</strong> Ozbiljan izvođač zna odgovor i objasni step-test. Onaj koji kaže „vidjet ćemo koliko ide“ nije spreman za posao koji naplaćuje.</p>

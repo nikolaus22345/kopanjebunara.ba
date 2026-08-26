@@ -728,3 +728,139 @@ tbody tr.no td:first-child { border-left: 3px solid var(--ochre); }
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+
+/* ==========================================================================
+   MEDIA — photos, video cards, cross-section diagram
+   ========================================================================== */
+
+.ph { display: block; }
+.ph img { display: block; width: 100%; height: auto; background: var(--surface-sunk); }
+/* forced-ratio variant: the wrapper owns the box, the image fills it */
+.ph-crop { display: block; overflow: hidden; }
+.ph-crop img { width: 100%; height: 100%; object-fit: cover; }
+
+.mfig { margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+.mfig figcaption {
+  font-family: var(--mono); font-size: .72rem; line-height: 1.55;
+  letter-spacing: .03em; color: var(--ink-faint);
+}
+.band-deep .mfig figcaption { color: var(--deep-soft); }
+.mfig .ph { border: 1px solid var(--rule); }
+.band-deep .mfig .ph { border-color: var(--deep-rule); }
+
+/* photo grid ------------------------------------------------------------- */
+
+.pgrid { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+.pgrid-3 { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+.pgrid figure { margin: 0; background: var(--surface); display: flex; flex-direction: column; }
+.pgrid .ph { border: 0; }
+.pgrid figcaption {
+  padding: .8rem 1rem 1rem; font-family: var(--mono); font-size: .7rem;
+  line-height: 1.5; letter-spacing: .03em; color: var(--ink-faint);
+}
+
+/* media strip: edge-to-edge row of stills ------------------------------- */
+
+.strip-row {
+  display: grid; grid-auto-flow: column;
+  grid-auto-columns: minmax(13rem, 1fr);
+  gap: 1px; background: var(--deep-rule);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+}
+.strip-row .ph { scroll-snap-align: start; border: 0; }
+
+/* video cards ----------------------------------------------------------- */
+
+.vgrid {
+  display: grid; gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  background: var(--rule); border: 1px solid var(--rule);
+}
+.band-deep .vgrid { background: var(--deep-rule); border-color: var(--deep-rule); }
+
+.vcard { background: var(--surface); display: flex; flex-direction: column; }
+.band-deep .vcard { background: var(--deep-2); }
+
+.vcard-play {
+  position: relative; display: block; padding: 0; border: 0; cursor: pointer;
+  background: #0B1615; line-height: 0; width: 100%;
+}
+.vcard-play img {
+  width: 100%; height: auto; display: block;
+  aspect-ratio: 9 / 16; object-fit: cover;
+  transition: opacity .2s, transform .3s;
+}
+.vcard-play:hover img { opacity: .82; transform: scale(1.015); }
+
+.vcard-icon {
+  position: absolute; inset: 0; margin: auto;
+  width: 3.6rem; height: 3.6rem; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 92%, transparent);
+  color: #06211D;
+  display: grid; place-items: center;
+  box-shadow: 0 6px 20px -6px rgba(0,0,0,.6);
+  transition: transform .18s;
+}
+.vcard-icon svg { width: 1.5rem; height: 1.5rem; margin-left: .12rem; }
+.vcard-play:hover .vcard-icon { transform: scale(1.08); }
+
+.vcard-dur {
+  position: absolute; right: .55rem; bottom: .55rem;
+  font-family: var(--mono); font-size: .68rem; font-weight: 500;
+  color: #E7EEEC; background: rgba(11,22,21,.78);
+  padding: .18rem .42rem; border-radius: 2px; line-height: 1.3;
+}
+
+.vcard video { width: 100%; height: auto; aspect-ratio: 9 / 16; display: block; background: #0B1615; }
+
+.vcard-meta { padding: 1rem 1.15rem 1.25rem; display: flex; flex-direction: column; gap: .35rem; }
+.vcard-meta h3 { font-size: 1.15rem; }
+.vcard-meta p { font-size: .9rem; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+.band-deep .vcard-meta p { color: var(--deep-soft); }
+
+/* cross-section diagram ------------------------------------------------- */
+
+.xsec { max-width: 46rem; }
+.xsec-svg { width: 100%; height: auto; background: var(--surface); border: 1px solid var(--rule); }
+
+.xsec-svg .sky { fill: var(--accent-sunk); }
+.xsec-svg .ho { fill: none; stroke: var(--ink-soft); stroke-width: 2.4; stroke-linejoin: round; }
+.xsec-svg .pipe { fill: none; stroke: var(--accent); stroke-width: 2.4; }
+.xsec-svg .void { fill: #0B1615; }
+.xsec-svg .water { fill: var(--accent); opacity: .55; }
+.xsec-svg .casing { fill: #C9D2CF; }
+.xsec-svg .slot { stroke: #0B1615; stroke-width: 2.2; }
+.xsec-svg .pack { fill: #A8B6B2; }
+.xsec-svg .tampon { fill: #5E5347; }
+.xsec-svg .pump { fill: #4A5A57; stroke: #C9D2CF; stroke-width: 1.6; }
+.xsec-svg .riser { stroke: var(--accent-deep); stroke-width: 2.6; fill: none; }
+.xsec-svg .wl { stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+
+.xsec-svg .ls {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.xsec-svg .lead line { stroke: var(--rule); stroke-width: 1.2; }
+.xsec-svg .lead .dot { fill: var(--accent); }
+.xsec-svg .lb {
+  font-family: var(--display); font-size: 15px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .02em; fill: var(--ink);
+}
+.xsec-svg .lb-sub {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; fill: var(--ink-faint);
+}
+
+@media (max-width: 560px) {
+  .xsec-svg .lb { font-size: 17px; }
+  .xsec-svg .lb-sub { font-size: 12px; }
+  .xsec-svg .ls { font-size: 12px; }
+}
+
+/* hero photo composition ------------------------------------------------ */
+
+.hero-media { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--deep-rule); }
+.hero-media .ph { border: 0; }
+@media (min-width: 901px) {
+  .hero-media { grid-template-columns: 1.35fr 1fr; align-items: stretch; }
+  .hero-media > * { min-width: 0; }
+}

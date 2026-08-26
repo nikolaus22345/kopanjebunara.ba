@@ -1,5 +1,13 @@
 import { site } from '../data/site.mjs'
 import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { photo } from '../components/media.mjs'
+
+const SERVICE_PHOTO = {
+  'geotermalne-sonde': ['garnitura-velika', 'Dublje bušenje u stijenu — geosonde traže 80 do 150 metara.'],
+  'pumpe-i-hidrofori': ['kolone-cijevi', 'Oprema se bira nakon mjerenja izdašnosti, ne prije.'],
+  'analiza-vode': ['isplaka-blizu', 'Voda odmah nakon bušenja je mutna — bistri se razradom, a ispravnost pokazuje analiza.'],
+  'ciscenje-bunara': ['svrdlo-dvoriste', 'Regeneracija postojećeg bunara u dvorištu.'],
+}
 
 const services = [
   {
@@ -189,7 +197,10 @@ ${pageHead({ eyebrow: s.eyebrow, title: esc(s.title), lede: esc(s.lede) })}
 
 <section class="band">
   <div class="wrap">
-    ${s.body}
+    <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:start" class="split">
+      ${s.body}
+      ${SERVICE_PHOTO[s.slug] ? photo(SERVICE_PHOTO[s.slug][0], { sizes: '(max-width: 860px) 100vw, 28vw', ratio: '3/4', caption: SERVICE_PHOTO[s.slug][1] }) : ''}
+    </div>
   </div>
 </section>
 

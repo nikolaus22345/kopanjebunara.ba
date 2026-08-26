@@ -2,6 +2,7 @@ import { site } from '../data/site.mjs'
 import { regions, aquiferTypes } from '../data/regions.mjs'
 import { page, pageHead, strata, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
+import { photo, videoShowcase, presjekBunara } from '../components/media.mjs'
 
 const homeFaq = [
   {
@@ -93,8 +94,13 @@ export function homePage() {
         <div><span class="n">0</span><span class="l">Dozvola za kućni bunar na svom zemljištu</span></div>
       </div>
     </div>
-    <div class="hero-figure">
-      ${strata(al.strata, [0, 40], { caption: 'Prikazan je aluvijalni profil — tipičan za Posavinu i riječne doline.' })}
+    <div class="hero-figure hero-media">
+      ${photo('garnitura-brdo', {
+        priority: true,
+        sizes: '(max-width: 900px) 100vw, 32vw',
+        alt: 'Bušaća garnitura na brdskom terenu u BiH — isplaka izlazi iz bušotine',
+      })}
+      ${strata(al.strata, [0, 40], { caption: 'Aluvijalni profil — tipičan za Posavinu i riječne doline.' })}
     </div>
   </div>
 </section>
@@ -110,6 +116,17 @@ export function homePage() {
       ${estimator()}
       <p class="note">Rasponi su <strong>orijentacioni</strong> i temelje se na tipu izdani i objavljenim cijenama na tržištu BiH. Konačna cijena zavisi od stvarne dubine, promjera, materijala kolone i pristupa parceli. Nisu ponuda u pravnom smislu.</p>
     </div>
+  </div>
+</section>
+
+<section class="band band-deep">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Kako to izgleda na terenu</h2>
+      <span class="tag">Snimci s bušotina</span>
+    </div>
+    <p class="lede" style="max-width:58ch;margin-bottom:1.75rem">Bušenje nije čist posao i ne pravimo se da jeste. Ovako izgleda isplaka, ovako stijena, i ovako trenutak kad voda krene.</p>
+    ${videoShowcase()}
   </div>
 </section>
 
@@ -153,6 +170,30 @@ export function homePage() {
   </div>
 </section>
 
+<section class="band band-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Presjek bunara</h2>
+      <span class="tag">Ono što se ne vidi kad je gotovo</span>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:start" class="split">
+      ${presjekBunara()}
+      <div class="stack gap-md">
+        ${photo('kolone-cijevi', {
+          sizes: '(max-width: 860px) 100vw, 34vw',
+          ratio: '4/3',
+          caption: 'Zaštitne kolone i spojnice. Promjer bušotine mora biti najmanje 5 cm veći od kolone.',
+        })}
+        ${photo('isplaka-blizu', {
+          sizes: '(max-width: 860px) 100vw, 34vw',
+          ratio: '3/2',
+          caption: 'Rotaciono bušenje s isplakom — standard u pijesku i šljunku.',
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band band-deep">
   <div class="wrap">
     <div class="sec-head">
@@ -190,6 +231,16 @@ export function homePage() {
       </li>`).join('\n      ')}
     </ol>
     <p style="margin-top:1.5rem"><a class="btn btn-ghost" href="/postupak/">Detaljno o svakom koraku ${icon.arrow}</a></p>
+  </div>
+</section>
+
+<section class="band-tight" style="background:var(--deep)">
+  <div class="strip-row">
+    ${photo('garnitura-njiva', { sizes: '20vw', ratio: '3/4' })}
+    ${photo('garnitura-gusjenicar', { sizes: '20vw', ratio: '3/4' })}
+    ${photo('garnitura-velika', { sizes: '20vw', ratio: '3/4' })}
+    ${photo('svrdlo-dvoriste', { sizes: '20vw', ratio: '3/4' })}
+    ${photo('garnitura-sumrak', { sizes: '20vw', ratio: '3/4' })}
   </div>
 </section>
 

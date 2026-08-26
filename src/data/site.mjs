@@ -16,10 +16,10 @@ export const site = {
   tagline: 'Bušenje bunara u BiH',
 
   // --- contact — REPLACE THESE ------------------------------------------
-  phone: '+387 61 000 000',            // display form
-  phoneHref: '+38761000000',           // tel: form, no spaces
-  viberHref: '+38761000000',           // usually same number
-  whatsappHref: '38761000000',         // wa.me form, no plus
+  phone: '+387 63 050 308',            // display form
+  phoneHref: '+38763050308',           // tel: form, no spaces
+  viberHref: '+38763050308',           // usually same number
+  whatsappHref: '38763050308',         // wa.me form, no plus
   email: 'info@dovode.ba',
   hours: 'Pon–Sub, 07:00–20:00',
 

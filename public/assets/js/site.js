@@ -35,6 +35,33 @@
     reveals.forEach(function (el) { el.classList.add('in') })
   }
 
+  /* ---------- video cards: click to play ----------
+     Posters are plain <img>, so nothing video-related is fetched until the
+     visitor actually asks for it. On click we swap in a real <video> with
+     the poster still showing underneath until the first frame decodes. */
+  document.querySelectorAll('.vcard').forEach(function (card) {
+    var btn = card.querySelector('.vcard-play')
+    if (!btn) return
+    btn.addEventListener('click', function () {
+      var src = card.getAttribute('data-video')
+      var poster = card.querySelector('.vcard-play img')
+      var v = document.createElement('video')
+      v.src = src
+      v.controls = true
+      v.autoplay = true
+      v.loop = true
+      v.muted = true                 // required for autoplay on mobile
+      v.playsInline = true
+      v.setAttribute('playsinline', '')
+      if (poster) v.poster = poster.getAttribute('src')
+      /* Stays muted — the clips have no audio track at all (stripped in
+         media.mjs), and a video that unmutes itself is hostile anyway. */
+      btn.replaceWith(v)
+      var p = v.play()
+      if (p && p.catch) p.catch(function () { v.controls = true })
+    }, { once: true })
+  })
+
   /* ---------- estimator ---------- */
   var tool = document.getElementById('estimator')
   if (!tool) return

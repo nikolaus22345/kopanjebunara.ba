@@ -1,6 +1,7 @@
 import { site } from '../data/site.mjs'
 import { aquiferTypes } from '../data/regions.mjs'
 import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { photo, presjekBunara, videoShowcase } from '../components/media.mjs'
 
 /* ==========================================================================
    /busenje-bunara/  — main service page
@@ -110,6 +111,26 @@ ${pageHead({
 
 <section class="band">
   <div class="wrap">
+    <div class="pgrid pgrid-3">
+      ${photo('isplaka-blizu', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Rotaciono bušenje s isplakom — meke naslage, pijesak i šljunak.' })}
+      ${photo('garnitura-velika', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Velika garnitura na kamenitom terenu — pneumatski čekić za stijenu i krš.' })}
+      ${photo('garnitura-gusjenicar', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Gusjeničar za teško dostupne parcele — dolazi gdje kamion ne može.' })}
+    </div>
+  </div>
+</section>
+
+<section class="band band-deep">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Snimci s terena</h2>
+      <span class="tag">Isplaka, stijena, voda</span>
+    </div>
+    ${videoShowcase()}
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
     <div class="sec-head">
       <h2>Šta odlučuje o uspjehu</h2>
       <span class="tag">Četiri tipa terena u BiH</span>
@@ -130,6 +151,16 @@ ${pageHead({
     </div>
 
     <p style="margin-top:2rem"><a class="btn btn-primary" href="/podrucja/">Šta je ispod vaše općine ${icon.arrow}</a></p>
+  </div>
+</section>
+
+<section class="band band-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Kako izgleda gotov bunar</h2>
+      <span class="tag">Sedam stavki koje plaćate</span>
+    </div>
+    ${presjekBunara()}
   </div>
 </section>
 
@@ -214,6 +245,13 @@ const steps = [
   },
 ]
 
+const STEP_PHOTO = {
+  '2': ['garnitura-gusjenicar', 'Provjera pristupa i prostora za garnituru — prije bilo kakvog dogovora.'],
+  '3': ['garnitura-brdo', 'Bušenje u toku — isplaka iznosi izbušeni materijal na površinu.'],
+  '4': ['kolone-cijevi', 'Kolona i filterska cijev prije spuštanja u bušotinu.'],
+  '6': ['svrdlo-dvoriste', 'Rad u dvorištu — bunar se pozicionira što dalje od septičke jame.'],
+}
+
 export function postupakPage() {
   const body = `
 ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Postupak' }])}
@@ -236,6 +274,7 @@ ${pageHead({
           <h3>${esc(s.t)}</h3>
           <p>${esc(s.b)}</p>
           <p style="font-family:var(--mono);font-size:.78rem;line-height:1.5;color:var(--accent)">${esc(s.out)}</p>
+          ${STEP_PHOTO[s.n] ? photo(STEP_PHOTO[s.n][0], { sizes: '(max-width: 860px) 100vw, 30rem', ratio: '16/9', caption: STEP_PHOTO[s.n][1] }) : ''}
         </div>
       </li>`).join('\n      ')}
     </ol>

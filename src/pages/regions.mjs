@@ -2,6 +2,16 @@ import { site } from '../data/site.mjs'
 import { regions, regionBySlug, aquiferTypes, oddsMeta } from '../data/regions.mjs'
 import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
+import { photo } from '../components/media.mjs'
+
+/* One representative photo per terrain type, so a Posavina page and a
+   Herzegovina page don't show the same rig on the same ground. */
+const TYPE_PHOTO = {
+  aluvij: 'garnitura-njiva',
+  mjesovito: 'garnitura-brdo',
+  flis: 'garnitura-gusjenicar',
+  krs: 'garnitura-velika',
+}
 
 const ENTITY = {
   FBiH: {
@@ -192,6 +202,11 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja', href: '/podruc
           <h3>Voda u ${esc(r.loc)}</h3>
           <p style="color:var(--ink-soft)">${esc(r.water)}</p>
         </div>
+        ${photo(TYPE_PHOTO[r.type] || 'garnitura-njiva', {
+          sizes: '(max-width: 860px) 100vw, 20rem',
+          ratio: '4/3',
+          caption: `Tipičan teren i mehanizacija za ${esc(t.short.toLowerCase())}.`,
+        })}
       </div>
     </div>
   </div>
