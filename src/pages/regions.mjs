@@ -33,7 +33,7 @@ export function podrucjaIndexPage() {
 ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja' }])}
 ${pageHead({
     eyebrow: `${regions.length} općina i područja`,
-    title: 'Bušenje i kopanje bunara<br><em>po područjima BiH</em>',
+    title: 'Bušenje i kopanje bunara <br><em>po područjima BiH</em>',
     lede: 'Bušenje u Semberiji i bušenje u Širokom Brijegu nisu isti posao. Za svako područje smo napisali tip izdani, realnu dubinu, cijenu i koliko je uspješnost vjerovatna.',
   })}
 
@@ -155,7 +155,7 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja', href: '/podruc
     <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,15rem);gap:clamp(1.5rem,4vw,3rem);align-items:start" class="split">
       <div class="stack gap-md">
         <p class="eyebrow">${esc(r.area)} &middot; ${esc(ent.name)}</p>
-        <h1>Bušenje i kopanje bunara<br><em>${esc(r.name)}</em></h1>
+        <h1>Bušenje i kopanje bunara <br><em>${esc(r.name)}</em></h1>
         <p class="lede">${esc(r.intro)}</p>
         <div class="readout" style="margin-top:.5rem">
           <div><span class="n">${r.depth[0]}–${r.depth[1]} <small>m</small></span><span class="l">Očekivana dubina</span></div>
