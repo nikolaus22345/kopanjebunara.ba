@@ -146,15 +146,22 @@ ${pageHead({
           <p class="note">Odgovaramo isti ili sljedeći radni dan. Ako vam se žuri — nazovite.</p>
 
           <!-- ==================================================================
-               FORM ENDPOINT — nije još povezan.
-               Netlify: radi odmah, bez izmjena (data-netlify).
-               Formspree: zamijeni action sa https://formspree.io/f/TVOJ_ID
-               Web3Forms: dodaj <input type="hidden" name="access_key" value="...">
-               Vidi README.md, sekcija "Forma".
+               Forma sastavlja WhatsApp poruku — bez backenda i bez posrednika.
+               Radi na Vercelu (i svugdje drugdje) bez ijedne postavke, a
+               WhatsApp je kanal na kojem ovo tržište zapravo komunicira.
+
+               Ako ikad zatreba klasična e-mail forma, vidi README.md
+               sekciju "Forma" — Formspree ili Web3Forms je jedna linija.
                ================================================================== -->
-          <form class="form" method="POST" action="#" data-netlify="true" name="upit" style="margin-top:1rem">
-            <input type="hidden" name="form-name" value="upit">
-            <p style="display:none"><label>Ne popunjavajte: <input name="bot-field"></label></p>
+          <noscript>
+            <div class="call warn" style="margin:1rem 0">
+              <span class="k">JavaScript je isključen</span>
+              <p>Obrazac sastavlja WhatsApp poruku, pa bez JavaScripta ne radi.
+                 Pozovite nas na <a href="tel:${site.phoneHref}">${esc(site.phone)}</a> — brže je ionako.</p>
+            </div>
+          </noscript>
+
+          <form class="form" id="upit-form" data-wa="${esc(site.whatsappHref)}" style="margin-top:1rem">
 
             <div class="form-row">
               <div class="field">
@@ -209,7 +216,8 @@ ${pageHead({
               <textarea id="f-poruka" name="poruka" rows="4" placeholder="Sve što mislite da nam pomaže."></textarea>
             </div>
 
-            <button class="btn btn-primary btn-lg" type="submit">Pošalji upit ${icon.arrow}</button>
+            <button class="btn btn-primary btn-lg" type="submit">${icon.chat} Pošalji na WhatsApp</button>
+            <p class="note">Klikom se otvara WhatsApp s već popunjenom porukom — samo je pošaljete. Ako vam je lakše, <a href="tel:${site.phoneHref}">pozovite ${esc(site.phone)}</a>.</p>
             <p class="note">Vaše podatke koristimo isključivo da vam odgovorimo na upit i dogovorimo posao. Ne prosljeđujemo ih trećim stranama osim izvođaču kojeg zajedno odaberemo.</p>
           </form>
         </div>

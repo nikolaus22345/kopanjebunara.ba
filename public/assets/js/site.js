@@ -35,6 +35,42 @@
     reveals.forEach(function (el) { el.classList.add('in') })
   }
 
+  /* ---------- contact form -> prefilled WhatsApp message ----------
+     No backend, no third-party form processor, nothing to configure. The
+     fields are assembled into a readable message and handed to WhatsApp,
+     which is where this market actually replies. */
+  var upit = document.getElementById('upit-form')
+  if (upit) {
+    upit.addEventListener('submit', function (e) {
+      e.preventDefault()
+
+      var label = function (id) {
+        var el = upit.querySelector(id)
+        if (!el) return ''
+        if (el.tagName === 'SELECT') {
+          return el.selectedOptions.length ? el.selectedOptions[0].text : ''
+        }
+        return el.value.trim()
+      }
+
+      var rows = [
+        ['Ime', label('#f-ime')],
+        ['Telefon', label('#f-tel')],
+        ['Općina', label('#f-opcina')],
+        ['Namjena', label('#f-namjena')],
+        ['Pristup za kamion', label('#f-pristup')],
+        ['Dubina susjednog bunara', label('#f-susjed')],
+        ['Poruka', label('#f-poruka')],
+      ].filter(function (r) { return r[1] && r[1].indexOf('—') !== 0 })
+
+      var text = 'Upit sa sajta kopanjebunara.ba\n\n' +
+        rows.map(function (r) { return r[0] + ': ' + r[1] }).join('\n')
+
+      var num = upit.getAttribute('data-wa')
+      window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(text), '_blank', 'noopener')
+    })
+  }
+
   /* ---------- video cards: click to play ----------
      Posters are plain <img>, so nothing video-related is fetched until the
      visitor actually asks for it. On click we swap in a real <video> with
