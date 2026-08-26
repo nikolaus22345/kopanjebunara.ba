@@ -1,5 +1,6 @@
 import { site } from '../data/site.mjs'
 import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { photoBand } from '../components/media.mjs'
 
 const faq = [
   {
@@ -168,6 +169,8 @@ ${pageHead({
     </div>
   </div>
 </section>
+
+${photoBand('garnitura-gusjenicar', 'Za kućni bunar na vlastitom zemljištu papiri ne trebaju. Za navodnjavanje i posao — trebaju.')}
 
 <section class="band band-deep">
   <div class="wrap">

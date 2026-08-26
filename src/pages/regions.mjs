@@ -2,7 +2,7 @@ import { site } from '../data/site.mjs'
 import { regions, regionBySlug, aquiferTypes, oddsMeta } from '../data/regions.mjs'
 import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
-import { photo } from '../components/media.mjs'
+import { photo, photoBand } from '../components/media.mjs'
 
 /* One representative photo per terrain type, so a Posavina page and a
    Herzegovina page don't show the same rig on the same ground. */
@@ -96,6 +96,8 @@ ${order.map(k => {
   </div>
 </section>`
 }).join('\n')}
+
+${photoBand('garnitura-velika', 'Isti stroj, isti ljudi — potpuno različit rezultat u Semberiji i na Brotnju.')}
 
 <section class="band">
   <div class="wrap-narrow">
@@ -254,6 +256,9 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja', href: '/podruc
     <p class="note" style="margin-top:.9rem">Rasponi su orijentacioni, izvedeni iz tipa izdani i objavljenih cijena na tržištu BiH. Nisu ponuda. <a href="/cijena/">Zašto cijena po metru sama za sebe ne znači ništa &rarr;</a></p>
   </div>
 </section>
+
+${photoBand(r.type === 'krs' ? 'garnitura-velika' : r.type === 'flis' ? 'garnitura-gusjenicar' : r.type === 'mjesovito' ? 'garnitura-brdo' : 'garnitura-njiva',
+  `Bušenje u ${r.loc} — ${t.short.toLowerCase()}, očekivano ${r.depth[0]}–${r.depth[1]} m.`)}
 
 ${near.length ? `
 <section class="band band-alt">

@@ -181,3 +181,57 @@ export function presjekBunara() {
 <figcaption>Presjek pravilno izvedenog bunara. Tampon i šljunčani zasip su nevidljivi kad je posao gotov — i upravo se na njima najčešće šteti.</figcaption>
 </figure>`
 }
+
+/* --------------------------------------------------------------------------
+   Gallery — mosaic of everything we have.
+
+   Cell spans are assigned per slug so the mosaic is deliberate rather than
+   whatever order the manifest happens to be in: portrait sources get tall
+   cells, landscape ones get wide cells. Nothing is upscaled past its source
+   width, so the low-resolution files are only ever given small cells.
+   -------------------------------------------------------------------------- */
+const GALLERY = [
+  ['garnitura-brdo', 'g-big', 'Brdski teren — isplaka izlazi iz bušotine'],
+  ['isplaka-blizu', 'g-wide', 'Rotaciono bušenje s isplakom, izbliza'],
+  ['kolone-cijevi', 'g-wide', 'Zaštitne kolone i spojnice'],
+  ['garnitura-njiva', 'g-tall', 'Kamionska garnitura na ravnom terenu'],
+  ['garnitura-gusjenicar', '', 'Gusjeničar za teško dostupne parcele'],
+  ['garnitura-velika', '', 'Velika garnitura na kamenitom terenu'],
+  ['svrdlo-dvoriste', '', 'Rad u dvorištu kuće'],
+  ['garnitura-sumrak', '', 'Garnitura na terenu u sumrak'],
+]
+
+export function gallery() {
+  return `<div class="gallery">
+  ${GALLERY.map(([slug, cls, cap]) => {
+    const p = photoBySlug[slug]
+    if (!p) return ''
+    const big = cls === 'g-big'
+    const set = p.widths.map(w => `/assets/photo/${p.slug}-${w}.jpg ${w}w`).join(', ')
+    const largest = p.widths[p.widths.length - 1]
+    return `<figure${cls ? ` class="${cls}"` : ''}>
+    <picture class="ph">
+      <img src="/assets/photo/${p.slug}-${largest}.jpg" srcset="${set}"
+           sizes="${big ? '(max-width: 900px) 100vw, 50vw' : '(max-width: 480px) 100vw, (max-width: 900px) 50vw, 25vw'}"
+           width="${p.w}" height="${p.h}" alt="${esc(p.alt)}" loading="lazy" decoding="async">
+    </picture>
+    <figcaption>${esc(cap)}</figcaption>
+  </figure>`
+  }).join('\n  ')}
+</div>`
+}
+
+/* Full-width photo strip used to break up long stretches of text. */
+export function photoBand(slug, caption) {
+  const p = photoBySlug[slug]
+  if (!p) return ''
+  const set = p.widths.map(w => `/assets/photo/${p.slug}-${w}.jpg ${w}w`).join(', ')
+  const largest = p.widths[p.widths.length - 1]
+  return `<section class="photo-band">
+  <picture class="ph">
+    <img src="/assets/photo/${p.slug}-${largest}.jpg" srcset="${set}" sizes="100vw"
+         width="${p.w}" height="${p.h}" alt="${esc(p.alt)}" loading="lazy" decoding="async">
+  </picture>
+  ${caption ? `<div class="photo-band-cap">${esc(caption)}</div>` : ''}
+</section>`
+}

@@ -385,8 +385,11 @@ a:hover { text-decoration-thickness: 2px; }
   border: 1px solid var(--deep-rule);
   background: var(--deep-2);
   padding: 1rem;
+  /* COLUMN, not row: the children are [graphic row, figcaption]. As a row
+     the caption was squeezed beside the graphic into a vertical strip. */
   display: flex;
-  gap: .85rem;
+  flex-direction: column;
+  gap: .5rem;
 }
 .strata-scale {
   display: flex; flex-direction: column; justify-content: space-between;
@@ -395,9 +398,12 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .strata-col { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .strata-layer {
-  position: relative; display: flex; align-items: center; padding: 0 .7rem;
-  font-family: var(--mono); font-size: .68rem; letter-spacing: .04em;
-  color: #0B1615; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  position: relative; display: flex; align-items: center; padding: .2rem .6rem;
+  font-family: var(--mono); font-size: .62rem; line-height: 1.3; letter-spacing: .02em;
+  color: #0B1615; overflow: hidden;
+  /* labels wrap instead of being clipped — these boxes get narrow in a
+     sidebar and long names like 'Površinski raspadnuti vapnenac' must fit */
+  white-space: normal; overflow-wrap: anywhere; hyphens: auto;
 }
 .strata-layer span { position: relative; z-index: 2; }
 .strata-layer.dark { color: #E7EEEC; }
@@ -412,9 +418,10 @@ a:hover { text-decoration-thickness: 2px; }
   pointer-events: none;
 }
 .strata-note {
-  font-family: var(--mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--deep-soft); margin-top: .7rem; display: flex; align-items: center; gap: .4rem;
+  font-family: var(--mono); font-size: .62rem; line-height: 1.5; letter-spacing: .05em;
+  text-transform: none; color: var(--deep-soft); margin: 0; display: block;
 }
+.strata-note b { display: inline; }
 .strata-note b { color: var(--accent); font-weight: 500; }
 
 /* light-surface variant used on region pages */
@@ -863,4 +870,114 @@ tbody tr.no td:first-child { border-left: 3px solid var(--ochre); }
 @media (min-width: 901px) {
   .hero-media { grid-template-columns: 1.35fr 1fr; align-items: stretch; }
   .hero-media > * { min-width: 0; }
+}
+
+/* ==========================================================================
+   HERO — full-bleed photo behind the headline
+   ========================================================================== */
+
+.hero-photo {
+  position: relative;
+  isolation: isolate;
+  background: var(--deep);
+  color: var(--deep-ink);
+  border-bottom: 1px solid var(--deep-rule);
+  overflow: hidden;
+}
+
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg .ph, .hero-bg img { width: 100%; height: 100%; }
+.hero-bg img { object-fit: cover; object-position: 50% 42%; }
+
+/* Two scrims: a horizontal one so the text column stays legible, and a
+   vertical one so the band edges melt into the page. Without both, the
+   headline sits on whatever the photo happens to be doing. */
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg, var(--deep) 6%, rgba(11,22,21,.92) 34%, rgba(11,22,21,.62) 58%, rgba(11,22,21,.34) 100%),
+    linear-gradient(to bottom, rgba(11,22,21,.55) 0%, rgba(11,22,21,0) 30%, rgba(11,22,21,.75) 100%);
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  padding-block: clamp(3.5rem, 11vw, 8.5rem);
+  min-height: clamp(28rem, 62vh, 44rem);
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 1.35rem;
+  max-width: 60rem;
+}
+.hero-photo h1 { color: var(--deep-ink); text-shadow: 0 2px 24px rgba(0,0,0,.4); }
+.hero-photo h1 em { font-style: normal; color: var(--accent); }
+.hero-photo .lede { color: #C6D4D0; max-width: 44ch; }
+.hero-photo .kicker { color: var(--accent); }
+
+@media (max-width: 700px) {
+  /* on a narrow screen a side-weighted scrim reads badly — go vertical */
+  .hero-bg::after {
+    background: linear-gradient(to bottom, rgba(11,22,21,.72) 0%, rgba(11,22,21,.55) 45%, rgba(11,22,21,.93) 100%);
+  }
+  .hero-bg img { object-position: 50% 35%; }
+}
+
+/* ==========================================================================
+   GALLERY — mosaic of site photography
+   ========================================================================== */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 11rem;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.gallery figure { margin: 0; position: relative; overflow: hidden; background: var(--deep); }
+.gallery .ph, .gallery img { width: 100%; height: 100%; }
+.gallery img { object-fit: cover; transition: transform .5s ease; }
+.gallery figure:hover img { transform: scale(1.04); }
+
+.gallery figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 1.6rem .85rem .7rem;
+  font-family: var(--mono); font-size: .66rem; line-height: 1.45; letter-spacing: .03em;
+  color: #E7EEEC;
+  background: linear-gradient(to top, rgba(11,22,21,.9), rgba(11,22,21,0));
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .25s, transform .25s;
+}
+.gallery figure:hover figcaption,
+.gallery figure:focus-within figcaption { opacity: 1; transform: none; }
+
+/* feature cells */
+.gallery .g-wide { grid-column: span 2; }
+.gallery .g-tall { grid-row: span 2; }
+.gallery .g-big  { grid-column: span 2; grid-row: span 2; }
+
+@media (max-width: 900px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 10rem; }
+  .gallery .g-big { grid-column: span 2; grid-row: span 2; }
+  .gallery .g-wide { grid-column: span 2; }
+}
+@media (max-width: 480px) {
+  .gallery { grid-template-columns: 1fr; grid-auto-rows: 13rem; }
+  .gallery .g-wide, .gallery .g-big { grid-column: span 1; }
+  .gallery .g-big, .gallery .g-tall { grid-row: span 1; }
+  .gallery figcaption { opacity: 1; transform: none; }
+}
+
+/* inline photo band — a full-width strip between sections */
+.photo-band { position: relative; overflow: hidden; background: var(--deep); }
+.photo-band .ph { width: 100%; }
+.photo-band img { width: 100%; height: 100%; object-fit: cover; max-height: 26rem; }
+.photo-band-cap {
+  position: absolute; inset: auto 0 0 0; padding: 2.5rem var(--gutter) 1.25rem;
+  background: linear-gradient(to top, rgba(11,22,21,.92), rgba(11,22,21,0));
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; color: #C6D4D0;
+}
+
+@media (max-width: 700px) {
+  /* a decorative full-width strip shouldn't eat most of a phone screen */
+  .photo-band img { max-height: 15rem; }
+  .photo-band-cap { padding-top: 2rem; font-size: .68rem; }
 }

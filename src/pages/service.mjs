@@ -1,7 +1,7 @@
 import { site } from '../data/site.mjs'
 import { aquiferTypes } from '../data/regions.mjs'
 import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
-import { photo, presjekBunara, videoShowcase } from '../components/media.mjs'
+import { photo, presjekBunara, videoShowcase, photoBand } from '../components/media.mjs'
 
 /* ==========================================================================
    /busenje-bunara/  — main service page
@@ -295,6 +295,8 @@ ${pageHead({
     </div>
   </div>
 </section>
+
+${photoBand('garnitura-sumrak', 'Posao ne staje kad padne mrak — ali ni tada ne obećavamo ono što teren ne daje.')}
 
 <section class="band">
   <div class="wrap">

@@ -1,6 +1,6 @@
 import { site } from '../data/site.mjs'
 import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
-import { photo, presjekBunara } from '../components/media.mjs'
+import { photo, presjekBunara, photoBand } from '../components/media.mjs'
 
 const faq = [
   {
@@ -187,6 +187,8 @@ ${pageHead({
     </div>
   </div>
 </section>
+
+${photoBand('isplaka-blizu', 'Ovo je ono što plaćate po metru — i ono što se ne vidi kad je posao gotov.')}
 
 <section class="band band-deep">
   <div class="wrap-narrow">

@@ -1,6 +1,7 @@
 import { site } from '../data/site.mjs'
 import { regions } from '../data/regions.mjs'
 import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { photoBand, photo } from '../components/media.mjs'
 
 /* ==========================================================================
    /pitanja/
@@ -71,7 +72,7 @@ ${pageHead({
     lede: 'Sve što nas ljudi najčešće pitaju, odgovoreno bez uljepšavanja — uključujući ono što drugi ne vole spominjati.',
   })}
 
-${groups.map((g, i) => `
+${groups.map((g, i) => `${i === 2 ? photoBand('svrdlo-dvoriste', 'Većina naših poslova su obični kućni bunari u dvorištu.') : ''}
 <section class="band ${i % 2 ? 'band-alt' : ''}">
   <div class="wrap-narrow">
     <div class="sec-head">
@@ -138,6 +139,12 @@ ${pageHead({
           <p><a href="mailto:${esc(site.email)}" style="font-family:var(--mono)">${esc(site.email)}</a></p>
           <p class="note">${esc(site.role)}</p>
         </div>
+
+        ${photo('garnitura-njiva', {
+          sizes: '(max-width: 860px) 100vw, 34vw',
+          ratio: '4/3',
+          caption: 'Ekipa na terenu. Prvo procjena telefonom, pa izlazak na parcelu.',
+        })}
       </div>
 
       <div>

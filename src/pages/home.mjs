@@ -2,7 +2,7 @@ import { site } from '../data/site.mjs'
 import { regions, aquiferTypes } from '../data/regions.mjs'
 import { page, pageHead, strata, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
-import { photo, videoShowcase, presjekBunara } from '../components/media.mjs'
+import { photo, videoShowcase, presjekBunara, gallery, photoBand } from '../components/media.mjs'
 
 const homeFaq = [
   {
@@ -77,8 +77,15 @@ export function homePage() {
   const al = aquiferTypes.aluvij
 
   const body = `
-<section class="hero">
-  <div class="wrap hero-grid">
+<section class="hero-photo">
+  <div class="hero-bg">
+    ${photo('garnitura-brdo', {
+      priority: true,
+      sizes: '100vw',
+      alt: 'Bušaća garnitura na brdskom terenu u Bosni i Hercegovini — isplaka izlazi iz bušotine',
+    })}
+  </div>
+  <div class="wrap hero-inner">
     <div class="stack gap-md">
       <p class="eyebrow">Provjerene bušačke ekipe &middot; sve općine</p>
       <h1>Bušenje i kopanje bunara <br><em>Bosna i Hercegovina</em></h1>
@@ -93,14 +100,6 @@ export function homePage() {
         <div><span class="n">15–150</span><span class="l">Metara dubine, ovisno o regiji</span></div>
         <div><span class="n">0</span><span class="l">Dozvola za kućni bunar na svom zemljištu</span></div>
       </div>
-    </div>
-    <div class="hero-figure hero-media">
-      ${photo('garnitura-brdo', {
-        priority: true,
-        sizes: '(max-width: 900px) 100vw, 32vw',
-        alt: 'Bušaća garnitura na brdskom terenu u BiH — isplaka izlazi iz bušotine',
-      })}
-      ${strata(al.strata, [0, 40], { caption: 'Aluvijalni profil — tipičan za Posavinu i riječne doline.' })}
     </div>
   </div>
 </section>
@@ -127,6 +126,16 @@ export function homePage() {
     </div>
     <p class="lede" style="max-width:58ch;margin-bottom:1.75rem">Bušenje nije čist posao i ne pravimo se da jeste. Ovako izgleda isplaka, ovako stijena, i ovako trenutak kad voda krene.</p>
     ${videoShowcase()}
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Galerija</h2>
+      <span class="tag">Strojevi, teren, materijal</span>
+    </div>
+    ${gallery()}
   </div>
 </section>
 
@@ -162,6 +171,7 @@ export function homePage() {
           <p>Ako u ponudi nema stavke „tampon“ i „probno crpljenje“, to nije kompletan bunar — bez obzira koliko dobro izgleda cijena po metru.</p>
         </div>
         <p><a class="btn btn-primary" href="/cijena/">Razrada cijene i lista za provjeru ${icon.arrow}</a></p>
+        ${strata(al.strata, [0, 40], { light: true, caption: 'Aluvijalni profil — tipičan za Posavinu i riječne doline. Filter ide u šljunak.' })}
       </div>
       <ol class="anat reveal">
         ${components.map(([d, t, b]) => `<li><span class="d">${d}</span><span class="t">${esc(t)}</span><span class="b">${esc(b)}</span></li>`).join('\n        ')}
@@ -193,6 +203,8 @@ export function homePage() {
     </div>
   </div>
 </section>
+
+${photoBand('garnitura-njiva', 'Bušenje za navodnjavanje na ravnom terenu — namjena vode odlučuje o tome trebaju li vam papiri.')}
 
 <section class="band band-deep">
   <div class="wrap">
