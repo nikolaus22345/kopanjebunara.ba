@@ -1,0 +1,104 @@
+<!doctype html>
+<!--
+  Open Graph card WITH TEXT — 1200×630.
+
+  The generated public/assets/img/og.png is geometric only (no image library
+  in this project can render type). This file is the better version.
+
+  To use it:
+    1. Open this file in Chrome.
+    2. DevTools → device toolbar → set viewport to exactly 1200 × 630.
+    3. Screenshot (DevTools → ⋮ → Capture screenshot, or Cmd/Ctrl+Shift+P →
+       "Capture screenshot").
+    4. Save it over public/assets/img/og.png.
+
+  Nothing in the build needs changing — the meta tags already point there.
+  Edit the phone number below to match src/data/site.mjs before exporting.
+-->
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<title>OG card 1200×630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #333; display: grid; place-items: center; min-height: 100vh; }
+
+  .card {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    background: #0B1615; border: 4px solid #0E6E63;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    color: #E7EEEC;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .top { padding: 62px 70px 0; position: relative; z-index: 2; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 19px; font-weight: 500;
+    letter-spacing: .22em; text-transform: uppercase; color: #2FA091;
+    margin-bottom: 26px;
+  }
+
+  h1 {
+    font-size: 96px; font-weight: 700; line-height: .93;
+    text-transform: uppercase; letter-spacing: .005em; max-width: 15ch;
+  }
+  h1 em { font-style: normal; color: #55C7B4; }
+
+  .sub {
+    margin-top: 24px; font-size: 34px; font-weight: 500;
+    letter-spacing: .01em; color: #93A8A3; max-width: 24ch;
+  }
+
+  .phone {
+    position: absolute; right: 70px; top: 62px; z-index: 3;
+    font-family: "IBM Plex Mono", monospace; font-size: 27px; font-weight: 500;
+    color: #E7EEEC; border: 2px solid #21332F; padding: 12px 18px;
+  }
+
+  /* strata bands — same palette as the site graphic */
+  .strata { display: flex; flex-direction: column; height: 210px; }
+  .strata div { flex: var(--h) 1 0; position: relative; }
+  .water::after {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent 0 7px, rgba(255,255,255,.26) 7px 9px);
+  }
+
+  /* borehole + drop */
+  .bore { position: absolute; left: 50%; top: 0; width: 3px; height: 420px; background: #21332F; }
+  .drop {
+    position: absolute; left: 50%; top: 196px; width: 168px; height: 168px;
+    transform: translateX(-50%) rotate(-45deg);
+    background: linear-gradient(135deg, #55C7B4, #0E6E63);
+    border-radius: 50% 50% 50% 0;
+    opacity: .95;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <span class="bore"></span>
+    <span class="drop"></span>
+
+    <div class="phone">+387 61 000 000</div>
+
+    <div class="top">
+      <p class="eyebrow">Cijela Bosna i Hercegovina</p>
+      <h1>Bušenje i kopanje <em>bunara</em></h1>
+      <p class="sub">Cijena i dubina za vašu općinu — prije izlaska na teren.</p>
+    </div>
+
+    <div class="strata">
+      <div style="--h:6;  background:#4A3B2A"></div>
+      <div style="--h:22; background:#8A7359"></div>
+      <div style="--h:17; background:#B49A6E"></div>
+      <div style="--h:15; background:#C8A96B"></div>
+      <div class="water" style="--h:26; background:#8FA9A5"></div>
+      <div style="--h:14; background:#6E6152"></div>
+    </div>
+  </div>
+</body>
+</html>

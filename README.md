@@ -1,0 +1,176 @@
+# Do Vode — website
+
+Static website for the well-drilling lead-generation business. Built from the research in [KNOWLEDGE-BASE.md](KNOWLEDGE-BASE.md).
+
+**73 pages**, no framework, no database, no server code. The `public/` folder is the whole site — it works on any host.
+
+---
+
+## The three things you'll want to change first
+
+### 1. Your phone number
+
+Open [`src/data/site.mjs`](src/data/site.mjs) and change these four lines:
+
+```js
+phone: '+387 61 000 000',      // shown on screen
+phoneHref: '+38761000000',     // tel: link — no spaces
+viberHref: '+38761000000',     // Viber
+whatsappHref: '38761000000',   // WhatsApp — no plus sign
+```
+
+Then rebuild:
+
+```bash
+node build.mjs
+```
+
+That single edit updates the header, hero, every region page, the sticky mobile call bar, the footer, the contact page and the schema.org data. **Nothing else needs touching.**
+
+### 2. Your domain
+
+Same file:
+
+```js
+origin: 'https://www.dovode.ba',
+```
+
+This feeds canonical URLs, `sitemap.xml`, and the Open Graph tags. Set it **before** you go live, or Google will index the wrong URLs.
+
+### 3. The brand name
+
+Same file. `nameLead` renders in normal ink, `nameAccent` in teal:
+
+```js
+name: 'Do Vode',
+nameLead: 'Do',
+nameAccent: 'Vode',
+```
+
+"Do Vode" is a placeholder I picked so you could see the design working. Change it to whatever you register.
+
+---
+
+## Build and preview
+
+```bash
+node build.mjs
+```
+
+```bash
+npx serve public
+```
+
+Then open `http://localhost:3000`.
+
+---
+
+## Where everything lives
+
+```
+build.mjs                 Build script — run this after any edit
+src/data/site.mjs         Phone, brand, domain, nav          ← edit this most
+src/data/regions.mjs      59 municipalities: geology, depth, price
+src/layout.mjs            Page shell, header, footer, shared blocks
+src/components/           The price estimator
+src/pages/                One file per page group
+public/                   ← BUILD OUTPUT. Deploy this folder.
+public/assets/css/site.css    Design system (not generated — edit directly)
+public/assets/js/site.js      Mobile nav + estimator (not generated)
+```
+
+**Careful:** `build.mjs` wipes the generated HTML in `public/` on every run but leaves `public/assets/` alone. So editing the CSS or JS directly is safe; editing a generated `.html` file is not — your changes vanish on the next build. Edit the source in `src/` instead.
+
+---
+
+## The form
+
+The contact form is **not connected yet**. Until it is, the phone number is the working channel — which matches how this market actually behaves anyway.
+
+Three ways to hook it up, easiest first:
+
+**Netlify** — already wired. The form has `data-netlify="true"`, so if you deploy to Netlify it starts working with zero changes. Submissions appear in the Netlify dashboard.
+
+**Formspree** — sign up, get a form ID, then in [`src/pages/misc.mjs`](src/pages/misc.mjs) change:
+```html
+<form class="form" method="POST" action="#" ...>
+```
+to
+```html
+<form class="form" method="POST" action="https://formspree.io/f/YOUR_ID" ...>
+```
+
+**Web3Forms** — add a hidden field inside the form:
+```html
+<input type="hidden" name="access_key" value="YOUR_KEY">
+```
+
+---
+
+## Deploying
+
+**Making a zip:** use the included script, not `Compress-Archive`.
+
+```bash
+powershell -ExecutionPolicy Bypass -File make-zip.ps1
+```
+
+Windows PowerShell 5.1's `Compress-Archive` writes ZIP entry paths with backslashes (`assets\css\site.css`). The ZIP spec requires forward slashes, so Netlify unpacks such an archive as a pile of flat files with no folders — the homepage loads unstyled and every subpage 404s. `make-zip.ps1` builds it correctly and verifies before finishing.
+
+Simpler still: **drag the `public` folder itself** onto Netlify Drop instead of a zip. Folders always work.
+
+The site is plain files. Anything works:
+
+- **Netlify / Vercel / Cloudflare Pages** — drag `public/` in, or connect the Git repo with build command `node build.mjs` and publish directory `public`.
+- **Any cPanel host in BiH** — upload the contents of `public/` to `public_html/` over FTP.
+
+For a `.ba` domain you register through **NIC.ba (UTIC)**. Note from the research: minimum 3 characters, Latin letters and digits, hyphen allowed but not at the start or end. Registration is not open to just anyone the way `.com` is — you have to meet the conditions in their Pravilnik. A new UTIC price list took effect 1 January 2026, so check current pricing.
+
+---
+
+## Adding a municipality
+
+Open [`src/data/regions.mjs`](src/data/regions.mjs), copy an existing entry, change the fields. A new page, sitemap entry, estimator option and contact-form option all appear on the next build.
+
+The `loc` field is the **locative case** — it's what makes sentences read as native Bosnian ("bušenje bunara u Banjoj Luci", not "u Banja Luka"). Get it right or the page reads like a translation.
+
+```js
+{
+  slug: 'novo-mjesto', name: 'Novo Mjesto', loc: 'Novom Mjestu',
+  entity: 'RS',              // FBiH | RS | BD — drives the permit block
+  type: 'aluvij',            // aluvij | krs | flis | mjesovito
+  area: 'Posavina',
+  depth: [15, 40],           // metres
+  price: [55, 85],           // KM per metre
+  odds: 'visoka',            // visoka | dobra | srednja | promjenjiva
+  tier: 1,
+  intro: '2–3 rečenice, specifično za ovo mjesto.',
+  water: 'Kakva je voda ovdje.',
+  near: ['bijeljina', 'brcko'],
+}
+```
+
+**Where the numbers come from:** depth and price bands are derived from the aquifer type plus published BiH market pricing (see KNOWLEDGE-BASE.md §4). They are framed on every page as *orijentacione* — indicative, not quotes. As your partners report real job data back, replace the estimates with what actually happened. That's how this becomes something no competitor can copy.
+
+---
+
+## Design notes
+
+If you hand this to a designer later, here's the reasoning so they don't flatten it:
+
+- **Palette** is drawn from the subject — karst spring teal `#0E6E63` as the accent, iron-oxide ochre `#A15A24` for warnings (it's the colour of the iron in Posavina well water), limestone-grey neutrals. Dark mode is fully designed, not inverted.
+- **Type** is Barlow Condensed (engineering-drawing display) + Source Serif 4 (editorial authority, because the whole positioning is "the honest expert who explains things") + IBM Plex Mono for depths, prices and codes. Every competitor uses a generic sans; the serif body is deliberate differentiation.
+- **The strata column** — the layered geological profile on the homepage and every region page — is the signature device. It's informative and unmistakably about this trade, and no competitor has anything like it.
+
+---
+
+## What still needs doing
+
+Before this goes live:
+
+1. **Real photos.** Rigs on real Bosnian sites. The research is explicit that stock photography destroys trust in this trade. This is the single biggest remaining gap.
+2. **Verify the legal pages** with the actual agencies before publishing — see KNOWLEDGE-BASE.md §10. The Brčko section deliberately says "we won't guess" rather than inventing detail.
+3. **Confirm partner capabilities in writing** — max depth, diameters, rock capability, territory, licences, and whether they'll stand behind a "no water, no charge" guarantee. Several pages promise things your partners must actually deliver.
+4. **Analytics** — nothing is installed. Add Plausible or GA4 in `src/layout.mjs`.
+5. **Google Business Profile** — read KNOWLEDGE-BASE.md §8.6 first. There's a real constraint here for a broker and getting it wrong can cost you the listing.
+6. **Legal entity details** in `src/data/site.mjs` (`legalName`, `address`, `vat`) once the firm is registered.
