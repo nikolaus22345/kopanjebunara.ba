@@ -286,7 +286,8 @@ a:hover { text-decoration-thickness: 2px; }
 }
 
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--ink); flex: none; }
-.brand-mark { width: 2rem; height: 2rem; flex: none; }
+/* the mark is 96x105, not square — fix the height and let width follow */
+.brand-mark { width: auto; height: 2rem; flex: none; }
 .brand-name {
   font-family: var(--display); font-weight: 700; font-size: 1.5rem;
   letter-spacing: .02em; text-transform: uppercase; line-height: 1;

@@ -17,7 +17,6 @@ import { fileURLToPath } from 'node:url'
 import { site } from './src/data/site.mjs'
 import { regions, aquiferTypes } from './src/data/regions.mjs'
 import { estimatorData } from './src/components/estimator.mjs'
-import { renderOgPng } from './src/og.mjs'
 
 import { homePage } from './src/pages/home.mjs'
 import { cijenaPage } from './src/pages/cijena.mjs'
@@ -196,12 +195,6 @@ const vercelJson = () => JSON.stringify({
   ],
 }, null, 2) + '\n'
 
-const favicon = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#0B1615"/>
-  <path d="M16 4v16" stroke="#0E6E63" stroke-width="2"/>
-  <path d="M16 28c-3.2 0-5.8-2.6-5.8-5.7C10.2 18.7 16 12.5 16 12.5s5.8 6.2 5.8 9.8c0 3.1-2.6 5.7-5.8 5.7Z" fill="#2FA091"/>
-</svg>`
-
 /* ---------- run ---------- */
 
 async function build() {
@@ -232,8 +225,9 @@ async function build() {
   await write(join(OUT, 'sitemap.xml'), sitemap())
   await write(join(OUT, 'robots.txt'), robots())
   await write(join(OUT, 'llms.txt'), llms())
-  await write(join(OUT, 'assets', 'img', 'favicon.svg'), favicon())
-  await write(join(OUT, 'assets', 'img', 'og.png'), renderOgPng())
+  /* favicon.svg / favicon-*.png / og.jpg / logo-*.png are produced by
+     media.mjs (they need ffmpeg and the source art) and live in
+     public/assets/img, which this build never touches. */
 
   // Netlify 404 rule (ignored by Vercel, harmless)
   await write(join(OUT, '_redirects'), '/*  /404.html  404\n')

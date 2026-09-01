@@ -2,7 +2,7 @@ import { site } from '../data/site.mjs'
 import { regions, aquiferTypes } from '../data/regions.mjs'
 import { page, pageHead, strata, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
-import { photo, videoShowcase, presjekBunara, gallery, photoBand } from '../components/media.mjs'
+import { photo, videoShowcase, presjekBunara, gallery, photoBand, heroImage } from '../components/media.mjs'
 
 const homeFaq = [
   {
@@ -79,11 +79,7 @@ export function homePage() {
   const body = `
 <section class="hero-photo">
   <div class="hero-bg">
-    ${photo('garnitura-brdo', {
-      priority: true,
-      sizes: '100vw',
-      alt: 'Bušaća garnitura na brdskom terenu u Bosni i Hercegovini — isplaka izlazi iz bušotine',
-    })}
+    ${heroImage({ alt: "Bušaća garnitura u radu na brdskom imanju u Bosni i Hercegovini, u zoru" })}
   </div>
   <div class="wrap hero-inner">
     <div class="stack gap-md">

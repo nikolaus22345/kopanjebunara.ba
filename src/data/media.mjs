@@ -114,4 +114,35 @@ export const videos = [
   }
 ]
 
+export const heroes = [
+  {
+    "slug": "hero-desktop",
+    "widths": [
+      1280,
+      1920,
+      2560
+    ],
+    "w": 2560,
+    "h": 1448
+  },
+  {
+    "slug": "hero-mobile",
+    "widths": [
+      640,
+      828,
+      1170
+    ],
+    "w": 1170,
+    "h": 2069
+  }
+]
+
+export const brand = {
+  "logoWidths": [
+    96,
+    192
+  ]
+}
+
 export const photoBySlug = Object.fromEntries(photos.map(p => [p.slug, p]))
+export const heroBySlug  = Object.fromEntries(heroes.map(h => [h.slug, h]))

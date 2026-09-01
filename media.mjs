@@ -19,16 +19,24 @@
 
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { mkdir, stat, readdir, writeFile } from 'node:fs/promises'
+import { mkdir, stat, readdir, writeFile, rm, copyFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { renderFaviconPng, faviconSvg } from './src/favicon.mjs'
+import { renderScrimPng, ogFilter, FONT_SOURCES, FONT_FILE } from './src/ogcard.mjs'
+
 const run = promisify(execFile)
 const ROOT = dirname(fileURLToPath(import.meta.url))
 const SRC = process.argv[2] || 'C:\\Users\\windows11\\Downloads\\kopanje bunara'
+// Heroes and the logo sit in the Downloads root, not the photo subfolder.
+const SRC_BRAND = process.argv[3] || String.raw`C:\Users\windows11\Downloads`
+
 const PHOTO_OUT = join(ROOT, 'public', 'assets', 'photo')
 const VIDEO_OUT = join(ROOT, 'public', 'assets', 'video')
+const IMG_OUT   = join(ROOT, 'public', 'assets', 'img')
+const HERO_OUT  = join(ROOT, 'public', 'assets', 'hero')
 
 /* --------------------------------------------------------------------------
    PHOTOS — approved set only.
@@ -70,6 +78,22 @@ const VIDEOS = [
     start: 20, dur: 14, poster: 27,
     title: 'Voda iz bušotine', note: 'Trenutak zbog kojeg se sve radi — dotok nakon probijanja vodonosnog sloja.' },
 ]
+
+/* --------------------------------------------------------------------------
+   HERO — two separate crops, not one image squeezed. The landscape frame
+   loses the sky and the valley when cropped to a phone, so the portrait
+   version is served below 700px via <source media>.
+   -------------------------------------------------------------------------- */
+const HEROES = [
+  { src: 'hero desktop.png', slug: 'hero-desktop', widths: [1280, 1920, 2560] },
+  { src: 'hero mobile.png',  slug: 'hero-mobile',  widths: [640, 828, 1170] },
+]
+
+/* Logo: the supplied PNG is flattened onto white (colourType 2, no alpha),
+   so the white has to be keyed out or it shows as a block on the dark
+   header. colorkey keeps the original teal rather than re-tinting it. */
+const LOGO_SRC = '41d4295e316786283e0edc13403fd58b_1788272523.png'
+const LOGO_WIDTHS = [96, 192]
 
 const WIDTHS = [640, 1100]   // srcset steps; never upscaled past the source
 
@@ -182,10 +206,117 @@ async function doVideos() {
 }
 
 console.log(`\n  izvor: ${SRC}\n`)
+/* --------------------------------------------------------------------------
+   HERO — two separate crops rather than one image squeezed. The landscape
+   frame loses the sky and the valley when cropped to a phone, so the
+   portrait file is served below 700px via <source media>.
+   -------------------------------------------------------------------------- */
+async function doHeroes() {
+  await mkdir(HERO_OUT, { recursive: true })
+  const manifest = []
+
+  for (const hero of HEROES) {
+    const input = join(SRC_BRAND, hero.src)
+    if (!existsSync(input)) { console.log(`  ! nema: ${hero.src}`); continue }
+
+    const { w, h } = await probe(input)
+    const widths = [...new Set(hero.widths.map(x => Math.min(x, w)))].sort((a, b) => a - b)
+    let total = 0
+
+    for (const width of widths) {
+      const dest = join(HERO_OUT, `${hero.slug}-${width}.jpg`)
+      await run('ffmpeg', [
+        '-v', 'error', '-i', input,
+        '-vf', `scale=${width}:-2:flags=lanczos`,
+        '-c:v', 'mjpeg', '-q:v', '5', '-pix_fmt', 'yuvj420p',
+        '-frames:v', '1', '-y', dest,
+      ])
+      total += (await stat(dest)).size
+    }
+
+    const biggest = widths[widths.length - 1]
+    manifest.push({ slug: hero.slug, widths, w: biggest, h: Math.round((h / w) * biggest) })
+    console.log(`  ✓ ${hero.slug.padEnd(22)} ${w}×${h} → ${widths.join('/')}w  ${kb(total)}`)
+  }
+  return manifest
+}
+
+async function doBrand() {
+  await mkdir(IMG_OUT, { recursive: true })
+  const input = join(SRC_BRAND, LOGO_SRC)
+  const logoWidths = []
+
+  if (existsSync(input)) {
+    for (const width of LOGO_WIDTHS) {
+      const dest = join(IMG_OUT, `logo-${width}.png`)
+      await run('ffmpeg', [
+        '-v', 'error', '-i', input,
+        // key the flattened white out, then trim to the mark's bounding box
+        '-vf', `colorkey=0xFAF7FA:0.26:0.12,crop=iw*0.68:ih*0.74:iw*0.16:ih*0.12,scale=${width}:-1:flags=lanczos`,
+        '-frames:v', '1', '-y', dest,
+      ])
+      logoWidths.push(width)
+      console.log(`  ✓ ${('logo-' + width + '.png').padEnd(22)} ${kb((await stat(dest)).size)}`)
+    }
+  } else {
+    console.log(`  ! nema logo: ${LOGO_SRC}`)
+  }
+
+  /* Favicons are a separate, bolder drawing — the fine line art averages
+     away to a smudge at 16px. See src/favicon.mjs. */
+  for (const size of [32, 180, 512]) {
+    const dest = join(IMG_OUT, `favicon-${size}.png`)
+    await writeFile(dest, renderFaviconPng(size, { rounded: size >= 180 ? 0.18 : 0.16 }))
+    console.log(`  ✓ ${('favicon-' + size + '.png').padEnd(22)} ${kb((await stat(dest)).size)}`)
+  }
+  await writeFile(join(IMG_OUT, 'favicon.svg'), faviconSvg(), 'utf8')
+  console.log('  ✓ favicon.svg')
+
+  return { logoWidths }
+}
+
+async function doOgCard() {
+  await mkdir(IMG_OUT, { recursive: true })
+  const input = join(SRC_BRAND, HEROES[0].src)
+  if (!existsSync(input)) { console.log('  ! nema hero za OG karticu'); return }
+
+  const scrim = join(IMG_OUT, '_scrim.png')
+  await writeFile(scrim, renderScrimPng())
+
+  const fontSrc = FONT_SOURCES.find(f => existsSync(f))
+  if (!fontSrc) { console.log('  ! nema fonta za OG karticu'); return }
+  await copyFile(fontSrc, join(IMG_OUT, FONT_FILE))
+
+  const dest = join(IMG_OUT, 'og.jpg')
+  await run('ffmpeg', [
+    '-v', 'error',
+    '-i', input,
+    '-i', scrim,
+    '-filter_complex', ogFilter(FONT_FILE, {
+      domain: 'KOPANJEBUNARA.BA',
+      title1: 'Bušenje i kopanje',
+      title2: 'bunara',
+      sub: 'Cijena i dubina za vašu općinu — prije izlaska na teren.',
+      phone: '+387 63 050 308',
+    }),
+    '-frames:v', '1', '-q:v', '3', '-y', dest,
+  ], { cwd: IMG_OUT })
+
+  await rm(scrim, { force: true })
+  await rm(join(IMG_OUT, FONT_FILE), { force: true })
+  console.log(`  ✓ ${'og.jpg'.padEnd(22)} ${kb((await stat(dest)).size)}`)
+}
+
 console.log('  FOTOGRAFIJE')
 const photos = await doPhotos()
 console.log('\n  VIDEO')
 const videos = await doVideos()
+console.log('\n  HERO')
+const heroes = await doHeroes()
+console.log('\n  BREND')
+const brand = await doBrand()
+console.log('\n  OG KARTICA')
+await doOgCard()
 
 /* The manifest is what the site imports — dimensions come from the real
    files so every <img> and <video> ships correct width/height and never
@@ -198,7 +329,12 @@ export const photos = ${JSON.stringify(photos, null, 2)}
 
 export const videos = ${JSON.stringify(videos, null, 2)}
 
+export const heroes = ${JSON.stringify(heroes, null, 2)}
+
+export const brand = ${JSON.stringify(brand, null, 2)}
+
 export const photoBySlug = Object.fromEntries(photos.map(p => [p.slug, p]))
+export const heroBySlug  = Object.fromEntries(heroes.map(h => [h.slug, h]))
 `,
   'utf8'
 )

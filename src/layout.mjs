@@ -14,12 +14,7 @@ export const icon = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
 }
 
-export const logo = `<svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-  <rect x="1" y="1" width="30" height="30" stroke="currentColor" stroke-opacity=".28"/>
-  <path d="M6 7h20M6 11h20M6 15h20" stroke="currentColor" stroke-opacity=".3" stroke-width="1.2"/>
-  <path d="M16 5v14" stroke="var(--accent)" stroke-width="1.6"/>
-  <path d="M16 27c-2.9 0-5.2-2.3-5.2-5.1C10.8 18.6 16 13 16 13s5.2 5.6 5.2 8.9c0 2.8-2.3 5.1-5.2 5.1Z" fill="var(--accent)"/>
-</svg>`
+export const logo = `<img class="brand-mark" src="/assets/img/logo-96.png" srcset="/assets/img/logo-96.png 96w, /assets/img/logo-192.png 192w" sizes="32px" width="96" height="105" alt="" aria-hidden="true" decoding="async">`
 
 /* ---------- header ---------- */
 
@@ -82,7 +77,7 @@ const orgSchema = () => {
     url: site.origin,
     telephone: site.phone,
     email: site.email,
-    image: `${site.origin}/assets/img/og.png`,
+    image: `${site.origin}/assets/img/og.jpg`,
     priceRange: '50–190 KM/m',
     areaServed: { '@type': 'Country', name: 'Bosna i Hercegovina' },
     knowsAbout: ['Bušenje bunara', 'Kopanje bunara', 'Arteški bunari', 'Hidrogeologija', 'Geotermalne sonde', 'Vodna saglasnost'],
@@ -213,16 +208,17 @@ export function page({
 <meta property="og:title" content="${esc(fullTitle)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${origin}/assets/img/og.png">
+<meta property="og:image" content="${origin}/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${esc(site.name)} — bušenje i kopanje bunara u Bosni i Hercegovini">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(fullTitle)}">
 <meta name="twitter:description" content="${esc(description)}">
-<meta name="twitter:image" content="${origin}/assets/img/og.png">
+<meta name="twitter:image" content="${origin}/assets/img/og.jpg">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">

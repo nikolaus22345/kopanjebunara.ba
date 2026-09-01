@@ -1,4 +1,4 @@
-import { photoBySlug, videos } from '../data/media.mjs'
+import { photoBySlug, videos, heroBySlug } from '../data/media.mjs'
 import { esc, icon } from '../layout.mjs'
 
 /* --------------------------------------------------------------------------
@@ -234,4 +234,27 @@ export function photoBand(slug, caption) {
   </picture>
   ${caption ? `<div class="photo-band-cap">${esc(caption)}</div>` : ''}
 </section>`
+}
+
+/* --------------------------------------------------------------------------
+   Hero art direction — two different photographs, not one crop.
+
+   The landscape frame carries the valley and the sky; squeezed into a phone
+   viewport it loses both and becomes a picture of a truck. The portrait
+   frame is composed for that shape, so it is served below 700px via
+   <source media> and the browser only ever downloads one of them.
+   -------------------------------------------------------------------------- */
+export function heroImage({ alt }) {
+  const d = heroBySlug['hero-desktop']
+  const m = heroBySlug['hero-mobile']
+  if (!d) return ''
+  const set = h => h.widths.map(w => `/assets/hero/${h.slug}-${w}.jpg ${w}w`).join(', ')
+  const largest = d.widths[d.widths.length - 1]
+
+  return `<picture class="ph">
+  ${m ? `<source media="(max-width: 700px)" srcset="${set(m)}" sizes="100vw" width="${m.w}" height="${m.h}">` : ''}
+  <source srcset="${set(d)}" sizes="100vw" width="${d.w}" height="${d.h}">
+  <img src="/assets/hero/${d.slug}-${largest}.jpg" width="${d.w}" height="${d.h}"
+       alt="${esc(alt)}" loading="eager" decoding="sync" fetchpriority="high">
+</picture>`
 }
