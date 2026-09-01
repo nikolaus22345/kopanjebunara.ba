@@ -178,22 +178,22 @@ skipped or Node is unavailable.
 
 ---
 
-## Connecting kopanjebunara.ba
+## Connecting kopanjebunara.ba — ✅ live
 
-Two steps: add the domain in Vercel, then point DNS at it from Globalhost.
+Both domains are attached in Vercel and DNS resolves (apex → `76.76.21.21`).
 
-### 1. Vercel — *Settings → Domains*
+### Which one is canonical
 
-Add **both**:
+`www.kopanjebunara.ba` is **Primary** in Vercel; the apex 308-redirects to it.
+`origin` in [`src/data/site.mjs`](src/data/site.mjs) is set to match.
 
-- `kopanjebunara.ba`
-- `www.kopanjebunara.ba`
+**These must never disagree.** If you ever flip Vercel to serve the apex as
+Primary, change `origin` the same day — otherwise every canonical tag, every
+sitemap URL and the OG URL point at an address that redirects, and Google
+stalls on it. That mismatch existed briefly and was caught by curling the live
+apex.
 
-Then set `kopanjebunara.ba` as **Primary** (the ⋯ menu next to it) so `www`
-302s to the apex. This has to match `origin` in `src/data/site.mjs`, which is
-the apex.
-
-Vercel will show the exact records it wants. They are normally:
+Kept for reference — the records Vercel asked for:
 
 | Type | Name / Host | Value |
 |---|---|---|
@@ -203,7 +203,7 @@ Vercel will show the exact records it wants. They are normally:
 **Use whatever Vercel displays**, not this table — the apex IP has changed
 before. The table is here so you know what to expect.
 
-### 2. Globalhost — DNS zone
+### Globalhost — DNS zone (already done)
 
 Log into `global.ba/ap/clientarea.php` → the domain → **DNS management** (or
 *Upravljanje DNS zonom*). Add the two records above.
@@ -216,7 +216,7 @@ Don't move nameservers to Vercel — Vercel isn't a DNS host for `.ba`.
 the apex needs an `A` record. If Globalhost offers "ALIAS" or "ANAME" for the
 apex, that works too and is slightly better.
 
-### 3. Wait, then verify
+### Verifying
 
 `.ba` propagation is typically 15 minutes to a few hours. Vercel issues the
 Let's Encrypt certificate automatically once DNS resolves — no action needed.
@@ -231,7 +231,7 @@ When it returns the Vercel IP, open `https://kopanjebunara.ba`. Then confirm
 the redirect works — `www.kopanjebunara.ba` should land on the apex, and
 `http://` should upgrade to `https://`.
 
-### 4. After it's live
+### Still to do
 
 - **Google Search Console** — add the property, submit
   `https://kopanjebunara.ba/sitemap.xml`.
