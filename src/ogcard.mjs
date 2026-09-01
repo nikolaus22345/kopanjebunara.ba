@@ -70,12 +70,15 @@ export function ogFilter(font, lines) {
     // photo: cover 1200x630, biased slightly above centre to keep the sky
     `[0:v]scale=${OG_W}:-2:flags=lanczos,crop=${OG_W}:${OG_H}:0:(ih-${OG_H})*0.42[bg]`,
     `[bg][1:v]overlay=0:0[scrimmed]`,
-    `[scrimmed]` + [
+    // the logo mark, top-left, scaled to a 62px cap height
+    `[2:v]scale=-1:62[logo]`,
+    `[scrimmed][logo]overlay=68:56[branded]`,
+    `[branded]` + [
       t(lines.title1, { color: '0xE7EEEC', size: 68, x: 68, y: 150 }),
       t(lines.title2, { color: '0x55C7B4', size: 68, x: 68, y: 226 }),
       t(lines.sub,    { color: '0xB9C9C5', size: 29, x: 70, y: 330 }),
       t(lines.phone,  { color: '0xE7EEEC', size: 40, x: 70, y: 470 }),
-      t(lines.domain, { color: '0x55C7B4', size: 24, x: 70, y: 100 }),
+      t(lines.domain, { color: '0x55C7B4', size: 26, x: 148, y: 74 }),
       // teal keyline
       `drawbox=x=0:y=0:w=${OG_W}:h=${OG_H}:color=0x2FA091@1.0:t=6`,
     ].join(','),

@@ -7,9 +7,11 @@
    drawing: fewer elements, much thicker strokes, and a solid ground so the
    mark has presence in a browser tab.
 
-   So this keeps the identity — borehole stem, strata bars, water drop — but
-   drops the third bar, thickens everything, and fills the drop rather than
-   outlining it.
+   So this keeps the identity — borehole stem, three strata bars, water drop
+   — but thickens every stroke and fills the drop rather than outlining it.
+   Below 24px it drops to two bars (see barsFor) because three cannot be
+   resolved on that pixel grid. The ground is a circle: Google crops search
+   favicons to one, so drawing it makes the edge intentional.
    ========================================================================== */
 
 import { writePng } from './og.mjs'
@@ -18,18 +20,23 @@ const GROUND = [11, 22, 21, 255]      // #0B1615 — dark tile reads on light ta
 const MARK   = [79, 199, 180, 255]    // #4FC7B4 — the logo teal, brightened for contrast
 const CLEAR  = [0, 0, 0, 0]
 
-/* Geometry in a 0..1 unit square, taken from the real logo's measured
-   proportions (stems at 47.7% / 52.0%, bars at 32% / 45% / 59%) and then
-   deliberately fattened. */
-const STEM_W  = 0.085
-const BAR_H   = 0.075
+/* Geometry in a 0..1 unit square, from the real logo's measured proportions
+   (stems at 47.7% / 52.0%, three bars at 32% / 45% / 59% widening downward).
+
+   All THREE bars are kept — two read as a generic marker, three read as the
+   logo. Everything sits inside the inscribed circle, because Google crops
+   favicons to a circle in search results; anything in the corners is lost.
+   The bar half-widths below all clear sqrt(0.25 - (y-0.5)^2) at their y. */
+const STEM_W  = 0.075
+const BAR_H   = 0.062
 const BARS    = [
-  { y: 0.30, x0: 0.20, x1: 0.80 },
-  { y: 0.47, x0: 0.13, x1: 0.87 },
+  { y: 0.275, x0: 0.295, x1: 0.705 },
+  { y: 0.415, x0: 0.245, x1: 0.755 },
+  { y: 0.555, x0: 0.195, x1: 0.805 },
 ]
-const STEM_TOP = 0.12
-const DROP_CY  = 0.735
-const DROP_R   = 0.185
+const STEM_TOP = 0.145
+const DROP_CY  = 0.755
+const DROP_R   = 0.145
 
 /* Supersampled coverage so edges are smooth at any size.
    `px` is the pixel's size in unit space (1 / imageSize) — samples must fall
@@ -46,11 +53,23 @@ function coverage(u, v, px, inside, samples = 4) {
   return hit / (samples * samples)
 }
 
-function markShape(u, v) {
+/* Optical sizing: below ~24px three bars sit closer together than the pixel
+   grid can resolve and smear into one grey block. At those sizes drop the
+   middle bar and spread the outer two, which keeps the mark legible while
+   still reading as strata rather than a single line. */
+function barsFor(size) {
+  if (size >= 24) return BARS
+  return [
+    { y: 0.265, x0: 0.275, x1: 0.725 },
+    { y: 0.475, x0: 0.195, x1: 0.805 },
+  ]
+}
+
+function markShape(u, v, bars) {
   // vertical stem, from the top down into the drop
   if (Math.abs(u - 0.5) <= STEM_W / 2 && v >= STEM_TOP && v <= DROP_CY) return true
   // strata bars
-  for (const b of BARS) {
+  for (const b of bars) {
     if (v >= b.y - BAR_H / 2 && v <= b.y + BAR_H / 2 && u >= b.x0 && u <= b.x1) return true
   }
   // filled drop: circle plus a tapering tip that meets the stem
@@ -69,22 +88,28 @@ function markShape(u, v) {
  * @param rounded   corner radius as a fraction (0 = square, .18 = app icon)
  * @param ground    draw the dark tile, or leave transparent
  */
-export function renderFaviconPng(size, { rounded = 0.16, ground = true } = {}) {
+export function renderFaviconPng(size, { rounded = 0.5, ground = true } = {}) {
+  /* A full circle by default (rounded = 0.5). Google renders favicons inside
+     a circle anyway, so drawing one means the tile edge is intentional
+     instead of clipped — and a circular icon looks deliberate in a browser
+     tab too. Pass a smaller `rounded` for a squircle app icon. */
   const inTile = (u, v) => {
     if (!rounded) return true
-    const r = rounded
+    const r = Math.min(rounded, 0.5)
     const cx = Math.min(Math.max(u, r), 1 - r)
     const cy = Math.min(Math.max(v, r), 1 - r)
     const dx = u - cx, dy = v - cy
     return dx * dx + dy * dy <= r * r
   }
 
+  const bars = barsFor(size)
+
   return writePng(size, size, (x, y) => {
     const u = x / size, v = y / size
     const step = 1 / size
 
     const tile = ground ? coverage(u, v, step, (a, b) => inTile(a, b)) : 0
-    const mark = coverage(u, v, step, (a, b) => markShape(a, b) && inTile(a, b))
+    const mark = coverage(u, v, step, (a, b) => markShape(a, b, bars) && inTile(a, b))
 
     if (!ground) {
       return mark > 0 ? [MARK[0], MARK[1], MARK[2], Math.round(mark * 255)] : CLEAR
@@ -110,7 +135,7 @@ export function faviconSvg() {
   const apex = ((DROP_CY - DROP_R * 2.0) * 32).toFixed(2)
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="${(0.16 * 32).toFixed(1)}" fill="#0B1615"/>
+  <circle cx="16" cy="16" r="16" fill="#0B1615"/>
   <g fill="#4FC7B4">
     <rect x="${(16 - (STEM_W * 32) / 2).toFixed(1)}" y="${(STEM_TOP * 32).toFixed(1)}" width="${(STEM_W * 32).toFixed(1)}" height="${((DROP_CY - STEM_TOP) * 32).toFixed(1)}" rx=".6"/>
     ${bars}

@@ -27,11 +27,11 @@ export const site = {
   // Canonical origin. Feeds canonical URLs, sitemap.xml, llms.txt, Open
   // Graph tags and schema.org.
   //
-  // Apex (no www) is the canonical form. This MUST match the primary domain
-  // set in Vercel — if Vercel serves www as primary while this says apex,
-  // every canonical tag points at a URL that redirects, which is exactly
-  // the kind of mismatch that stalls indexing. www redirects here.
-  origin: 'https://kopanjebunara.ba',
+  // MUST match the Primary domain set in Vercel. Vercel is serving www as
+  // primary (the apex 308-redirects to it), so www is canonical here too.
+  // When these disagree every canonical tag points at a redirect, which is
+  // exactly the mismatch that stalls indexing.
+  origin: 'https://www.kopanjebunara.ba',
 
   // --- legal entity (fill in when the firm is registered) ---------------
   legalName: '',                       // popuni kad firma bude registrovana
@@ -51,7 +51,7 @@ export const site = {
   // GA4 only fires on hostnames ending in this, so localhost previews and
   // Vercel preview deployments don't pollute the property with fake traffic.
   // Set to '' to fire everywhere (Google's snippet verbatim).
-  analyticsHost: 'kopanjebunara.ba',
+  analyticsHost: 'kopanjebunara.ba',   // matches www.* too, via the suffix check
 
   // --- positioning ------------------------------------------------------
   // Honest description of what we are. See KNOWLEDGE-BASE.md §7.3 —

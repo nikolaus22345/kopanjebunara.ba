@@ -14,90 +14,90 @@ Kontakt: +387 63 050 308 · info@kopanjebunara.ba
 
 ## Glavne stranice
 
-- [Bušenje i kopanje bunara](https://kopanjebunara.ba/busenje-bunara/): vrste bunara, metode bušenja, četiri tipa terena u BiH.
-- [Cijena](https://kopanjebunara.ba/cijena/): realni rasponi po tipu terena, šta jeste a šta nije u cijeni, lista pitanja za izvođača.
-- [Dozvole](https://kopanjebunara.ba/dozvole/): opća upotreba voda, vodni akti, razdvojeno po FBiH / RS / Brčko distrikt.
-- [Postupak](https://kopanjebunara.ba/postupak/): sedam koraka od poziva do vode.
-- [Područja](https://kopanjebunara.ba/podrucja/): 59 općina s procjenom dubine, cijene i tipa izdani.
-- [Česta pitanja](https://kopanjebunara.ba/pitanja/)
-- [Kontakt](https://kopanjebunara.ba/kontakt/)
+- [Bušenje i kopanje bunara](https://www.kopanjebunara.ba/busenje-bunara/): vrste bunara, metode bušenja, četiri tipa terena u BiH.
+- [Cijena](https://www.kopanjebunara.ba/cijena/): realni rasponi po tipu terena, šta jeste a šta nije u cijeni, lista pitanja za izvođača.
+- [Dozvole](https://www.kopanjebunara.ba/dozvole/): opća upotreba voda, vodni akti, razdvojeno po FBiH / RS / Brčko distrikt.
+- [Postupak](https://www.kopanjebunara.ba/postupak/): sedam koraka od poziva do vode.
+- [Područja](https://www.kopanjebunara.ba/podrucja/): 59 općina s procjenom dubine, cijene i tipa izdani.
+- [Česta pitanja](https://www.kopanjebunara.ba/pitanja/)
+- [Kontakt](https://www.kopanjebunara.ba/kontakt/)
 
 ## Usluge
 
-- [Geotermalne sonde](https://kopanjebunara.ba/usluge/geotermalne-sonde/)
-- [Pumpe i hidrofori](https://kopanjebunara.ba/usluge/pumpe-i-hidrofori/)
-- [Analiza vode](https://kopanjebunara.ba/usluge/analiza-vode/)
-- [Čišćenje i regeneracija bunara](https://kopanjebunara.ba/usluge/ciscenje-bunara/)
+- [Geotermalne sonde](https://www.kopanjebunara.ba/usluge/geotermalne-sonde/)
+- [Pumpe i hidrofori](https://www.kopanjebunara.ba/usluge/pumpe-i-hidrofori/)
+- [Analiza vode](https://www.kopanjebunara.ba/usluge/analiza-vode/)
+- [Čišćenje i regeneracija bunara](https://www.kopanjebunara.ba/usluge/ciscenje-bunara/)
 
 ## Područja po tipu terena
 
 ### Međuzrnska (aluvijalna) izdan
 
-- [Banja Luka](https://kopanjebunara.ba/podrucja/banja-luka/): 20–50 m, 60–95 KM/m, RS.
-- [Bijeljina](https://kopanjebunara.ba/podrucja/bijeljina/): 15–40 m, 55–85 KM/m, RS.
-- [Brčko](https://kopanjebunara.ba/podrucja/brcko/): 12–35 m, 55–85 KM/m, BD.
-- [Derventa](https://kopanjebunara.ba/podrucja/derventa/): 15–40 m, 60–90 KM/m, RS.
-- [Gradačac](https://kopanjebunara.ba/podrucja/gradacac/): 15–40 m, 60–90 KM/m, FBiH.
-- [Gradiška](https://kopanjebunara.ba/podrucja/gradiska/): 12–35 m, 55–85 KM/m, RS.
-- [Kozarska Dubica](https://kopanjebunara.ba/podrucja/kozarska-dubica/): 12–35 m, 55–85 KM/m, RS.
-- [Laktaši](https://kopanjebunara.ba/podrucja/laktasi/): 12–35 m, 55–85 KM/m, RS.
-- [Modriča](https://kopanjebunara.ba/podrucja/modrica/): 12–35 m, 55–85 KM/m, RS.
-- [Novi Grad](https://kopanjebunara.ba/podrucja/novi-grad/): 15–40 m, 60–90 KM/m, RS.
-- [Odžak](https://kopanjebunara.ba/podrucja/odzak/): 12–32 m, 55–85 KM/m, FBiH.
-- [Orašje](https://kopanjebunara.ba/podrucja/orasje/): 10–30 m, 50–80 KM/m, FBiH.
-- [Prijedor](https://kopanjebunara.ba/podrucja/prijedor/): 20–45 m, 60–90 KM/m, RS.
-- [Sanski Most](https://kopanjebunara.ba/podrucja/sanski-most/): 15–45 m, 65–100 KM/m, FBiH.
-- [Srbac](https://kopanjebunara.ba/podrucja/srbac/): 10–30 m, 50–80 KM/m, RS.
-- [Šamac](https://kopanjebunara.ba/podrucja/samac/): 10–30 m, 50–80 KM/m, RS.
+- [Banja Luka](https://www.kopanjebunara.ba/podrucja/banja-luka/): 20–50 m, 60–95 KM/m, RS.
+- [Bijeljina](https://www.kopanjebunara.ba/podrucja/bijeljina/): 15–40 m, 55–85 KM/m, RS.
+- [Brčko](https://www.kopanjebunara.ba/podrucja/brcko/): 12–35 m, 55–85 KM/m, BD.
+- [Derventa](https://www.kopanjebunara.ba/podrucja/derventa/): 15–40 m, 60–90 KM/m, RS.
+- [Gradačac](https://www.kopanjebunara.ba/podrucja/gradacac/): 15–40 m, 60–90 KM/m, FBiH.
+- [Gradiška](https://www.kopanjebunara.ba/podrucja/gradiska/): 12–35 m, 55–85 KM/m, RS.
+- [Kozarska Dubica](https://www.kopanjebunara.ba/podrucja/kozarska-dubica/): 12–35 m, 55–85 KM/m, RS.
+- [Laktaši](https://www.kopanjebunara.ba/podrucja/laktasi/): 12–35 m, 55–85 KM/m, RS.
+- [Modriča](https://www.kopanjebunara.ba/podrucja/modrica/): 12–35 m, 55–85 KM/m, RS.
+- [Novi Grad](https://www.kopanjebunara.ba/podrucja/novi-grad/): 15–40 m, 60–90 KM/m, RS.
+- [Odžak](https://www.kopanjebunara.ba/podrucja/odzak/): 12–32 m, 55–85 KM/m, FBiH.
+- [Orašje](https://www.kopanjebunara.ba/podrucja/orasje/): 10–30 m, 50–80 KM/m, FBiH.
+- [Prijedor](https://www.kopanjebunara.ba/podrucja/prijedor/): 20–45 m, 60–90 KM/m, RS.
+- [Sanski Most](https://www.kopanjebunara.ba/podrucja/sanski-most/): 15–45 m, 65–100 KM/m, FBiH.
+- [Srbac](https://www.kopanjebunara.ba/podrucja/srbac/): 10–30 m, 50–80 KM/m, RS.
+- [Šamac](https://www.kopanjebunara.ba/podrucja/samac/): 10–30 m, 50–80 KM/m, RS.
 
 ### Riječna terasa u brdskom okruženju
 
-- [Bihać](https://kopanjebunara.ba/podrucja/bihac/): 20–60 m, 75–120 KM/m, FBiH.
-- [Bosanska Krupa](https://kopanjebunara.ba/podrucja/bosanska-krupa/): 20–60 m, 75–120 KM/m, FBiH.
-- [Bugojno](https://kopanjebunara.ba/podrucja/bugojno/): 25–70 m, 80–125 KM/m, FBiH.
-- [Cazin](https://kopanjebunara.ba/podrucja/cazin/): 25–70 m, 80–125 KM/m, FBiH.
-- [Doboj](https://kopanjebunara.ba/podrucja/doboj/): 15–45 m, 60–95 KM/m, RS.
-- [Foča](https://kopanjebunara.ba/podrucja/foca/): 25–75 m, 85–130 KM/m, RS.
-- [Goražde](https://kopanjebunara.ba/podrucja/gorazde/): 25–70 m, 80–125 KM/m, FBiH.
-- [Gračanica](https://kopanjebunara.ba/podrucja/gracanica/): 20–50 m, 65–100 KM/m, FBiH.
-- [Jablanica](https://kopanjebunara.ba/podrucja/jablanica/): 30–85 m, 90–140 KM/m, FBiH.
-- [Jajce](https://kopanjebunara.ba/podrucja/jajce/): 25–75 m, 85–130 KM/m, FBiH.
-- [Ključ](https://kopanjebunara.ba/podrucja/kljuc/): 25–70 m, 80–125 KM/m, FBiH.
-- [Konjic](https://kopanjebunara.ba/podrucja/konjic/): 30–85 m, 90–140 KM/m, FBiH.
-- [Lukavac](https://kopanjebunara.ba/podrucja/lukavac/): 20–50 m, 65–100 KM/m, FBiH.
-- [Prnjavor](https://kopanjebunara.ba/podrucja/prnjavor/): 20–50 m, 65–100 KM/m, RS.
-- [Sarajevo](https://kopanjebunara.ba/podrucja/sarajevo/): 25–80 m, 85–135 KM/m, FBiH.
-- [Teslić](https://kopanjebunara.ba/podrucja/teslic/): 25–70 m, 80–125 KM/m, RS.
-- [Travnik](https://kopanjebunara.ba/podrucja/travnik/): 25–70 m, 80–125 KM/m, FBiH.
-- [Velika Kladuša](https://kopanjebunara.ba/podrucja/velika-kladusa/): 25–70 m, 80–125 KM/m, FBiH.
-- [Visoko](https://kopanjebunara.ba/podrucja/visoko/): 25–65 m, 80–125 KM/m, FBiH.
-- [Višegrad](https://kopanjebunara.ba/podrucja/visegrad/): 25–75 m, 85–130 KM/m, RS.
-- [Vitez](https://kopanjebunara.ba/podrucja/vitez/): 20–60 m, 75–120 KM/m, FBiH.
-- [Zvornik](https://kopanjebunara.ba/podrucja/zvornik/): 15–45 m, 60–95 KM/m, RS.
-- [Živinice](https://kopanjebunara.ba/podrucja/zivinice/): 20–55 m, 70–105 KM/m, FBiH.
+- [Bihać](https://www.kopanjebunara.ba/podrucja/bihac/): 20–60 m, 75–120 KM/m, FBiH.
+- [Bosanska Krupa](https://www.kopanjebunara.ba/podrucja/bosanska-krupa/): 20–60 m, 75–120 KM/m, FBiH.
+- [Bugojno](https://www.kopanjebunara.ba/podrucja/bugojno/): 25–70 m, 80–125 KM/m, FBiH.
+- [Cazin](https://www.kopanjebunara.ba/podrucja/cazin/): 25–70 m, 80–125 KM/m, FBiH.
+- [Doboj](https://www.kopanjebunara.ba/podrucja/doboj/): 15–45 m, 60–95 KM/m, RS.
+- [Foča](https://www.kopanjebunara.ba/podrucja/foca/): 25–75 m, 85–130 KM/m, RS.
+- [Goražde](https://www.kopanjebunara.ba/podrucja/gorazde/): 25–70 m, 80–125 KM/m, FBiH.
+- [Gračanica](https://www.kopanjebunara.ba/podrucja/gracanica/): 20–50 m, 65–100 KM/m, FBiH.
+- [Jablanica](https://www.kopanjebunara.ba/podrucja/jablanica/): 30–85 m, 90–140 KM/m, FBiH.
+- [Jajce](https://www.kopanjebunara.ba/podrucja/jajce/): 25–75 m, 85–130 KM/m, FBiH.
+- [Ključ](https://www.kopanjebunara.ba/podrucja/kljuc/): 25–70 m, 80–125 KM/m, FBiH.
+- [Konjic](https://www.kopanjebunara.ba/podrucja/konjic/): 30–85 m, 90–140 KM/m, FBiH.
+- [Lukavac](https://www.kopanjebunara.ba/podrucja/lukavac/): 20–50 m, 65–100 KM/m, FBiH.
+- [Prnjavor](https://www.kopanjebunara.ba/podrucja/prnjavor/): 20–50 m, 65–100 KM/m, RS.
+- [Sarajevo](https://www.kopanjebunara.ba/podrucja/sarajevo/): 25–80 m, 85–135 KM/m, FBiH.
+- [Teslić](https://www.kopanjebunara.ba/podrucja/teslic/): 25–70 m, 80–125 KM/m, RS.
+- [Travnik](https://www.kopanjebunara.ba/podrucja/travnik/): 25–70 m, 80–125 KM/m, FBiH.
+- [Velika Kladuša](https://www.kopanjebunara.ba/podrucja/velika-kladusa/): 25–70 m, 80–125 KM/m, FBiH.
+- [Visoko](https://www.kopanjebunara.ba/podrucja/visoko/): 25–65 m, 80–125 KM/m, FBiH.
+- [Višegrad](https://www.kopanjebunara.ba/podrucja/visegrad/): 25–75 m, 85–130 KM/m, RS.
+- [Vitez](https://www.kopanjebunara.ba/podrucja/vitez/): 20–60 m, 75–120 KM/m, FBiH.
+- [Zvornik](https://www.kopanjebunara.ba/podrucja/zvornik/): 15–45 m, 60–95 KM/m, RS.
+- [Živinice](https://www.kopanjebunara.ba/podrucja/zivinice/): 20–55 m, 70–105 KM/m, FBiH.
 
 ### Slabo vodopropusne naslage (fliš, lapor, glina)
 
-- [Busovača](https://kopanjebunara.ba/podrucja/busovaca/): 30–75 m, 85–130 KM/m, FBiH.
-- [Kakanj](https://kopanjebunara.ba/podrucja/kakanj/): 30–80 m, 85–130 KM/m, FBiH.
-- [Tuzla](https://kopanjebunara.ba/podrucja/tuzla/): 25–70 m, 80–125 KM/m, FBiH.
-- [Zenica](https://kopanjebunara.ba/podrucja/zenica/): 30–80 m, 85–130 KM/m, FBiH.
+- [Busovača](https://www.kopanjebunara.ba/podrucja/busovaca/): 30–75 m, 85–130 KM/m, FBiH.
+- [Kakanj](https://www.kopanjebunara.ba/podrucja/kakanj/): 30–80 m, 85–130 KM/m, FBiH.
+- [Tuzla](https://www.kopanjebunara.ba/podrucja/tuzla/): 25–70 m, 80–125 KM/m, FBiH.
+- [Zenica](https://www.kopanjebunara.ba/podrucja/zenica/): 30–80 m, 85–130 KM/m, FBiH.
 
 ### Karstno-pukotinska izdan
 
-- [Bileća](https://kopanjebunara.ba/podrucja/bileca/): 60–160 m, 120–195 KM/m, RS.
-- [Čapljina](https://kopanjebunara.ba/podrucja/capljina/): 25–80 m, 95–155 KM/m, FBiH.
-- [Čitluk](https://kopanjebunara.ba/podrucja/citluk/): 50–140 m, 115–185 KM/m, FBiH.
-- [Drvar](https://kopanjebunara.ba/podrucja/drvar/): 35–110 m, 105–170 KM/m, FBiH.
-- [Gacko](https://kopanjebunara.ba/podrucja/gacko/): 40–120 m, 110–180 KM/m, RS.
-- [Glamoč](https://kopanjebunara.ba/podrucja/glamoc/): 40–120 m, 110–180 KM/m, FBiH.
-- [Kupres](https://kopanjebunara.ba/podrucja/kupres/): 40–120 m, 110–180 KM/m, FBiH.
-- [Livno](https://kopanjebunara.ba/podrucja/livno/): 30–100 m, 100–165 KM/m, FBiH.
-- [Ljubuški](https://kopanjebunara.ba/podrucja/ljubuski/): 40–120 m, 110–180 KM/m, FBiH.
-- [Mostar](https://kopanjebunara.ba/podrucja/mostar/): 40–120 m, 110–180 KM/m, FBiH.
-- [Mrkonjić Grad](https://kopanjebunara.ba/podrucja/mrkonjic-grad/): 35–100 m, 95–150 KM/m, RS.
-- [Nevesinje](https://kopanjebunara.ba/podrucja/nevesinje/): 50–140 m, 115–185 KM/m, RS.
-- [Stolac](https://kopanjebunara.ba/podrucja/stolac/): 40–120 m, 110–180 KM/m, FBiH.
-- [Široki Brijeg](https://kopanjebunara.ba/podrucja/siroki-brijeg/): 50–150 m, 115–190 KM/m, FBiH.
-- [Tomislavgrad](https://kopanjebunara.ba/podrucja/tomislavgrad/): 40–120 m, 110–180 KM/m, FBiH.
-- [Trebinje](https://kopanjebunara.ba/podrucja/trebinje/): 50–150 m, 115–190 KM/m, RS.
+- [Bileća](https://www.kopanjebunara.ba/podrucja/bileca/): 60–160 m, 120–195 KM/m, RS.
+- [Čapljina](https://www.kopanjebunara.ba/podrucja/capljina/): 25–80 m, 95–155 KM/m, FBiH.
+- [Čitluk](https://www.kopanjebunara.ba/podrucja/citluk/): 50–140 m, 115–185 KM/m, FBiH.
+- [Drvar](https://www.kopanjebunara.ba/podrucja/drvar/): 35–110 m, 105–170 KM/m, FBiH.
+- [Gacko](https://www.kopanjebunara.ba/podrucja/gacko/): 40–120 m, 110–180 KM/m, RS.
+- [Glamoč](https://www.kopanjebunara.ba/podrucja/glamoc/): 40–120 m, 110–180 KM/m, FBiH.
+- [Kupres](https://www.kopanjebunara.ba/podrucja/kupres/): 40–120 m, 110–180 KM/m, FBiH.
+- [Livno](https://www.kopanjebunara.ba/podrucja/livno/): 30–100 m, 100–165 KM/m, FBiH.
+- [Ljubuški](https://www.kopanjebunara.ba/podrucja/ljubuski/): 40–120 m, 110–180 KM/m, FBiH.
+- [Mostar](https://www.kopanjebunara.ba/podrucja/mostar/): 40–120 m, 110–180 KM/m, FBiH.
+- [Mrkonjić Grad](https://www.kopanjebunara.ba/podrucja/mrkonjic-grad/): 35–100 m, 95–150 KM/m, RS.
+- [Nevesinje](https://www.kopanjebunara.ba/podrucja/nevesinje/): 50–140 m, 115–185 KM/m, RS.
+- [Stolac](https://www.kopanjebunara.ba/podrucja/stolac/): 40–120 m, 110–180 KM/m, FBiH.
+- [Široki Brijeg](https://www.kopanjebunara.ba/podrucja/siroki-brijeg/): 50–150 m, 115–190 KM/m, FBiH.
+- [Tomislavgrad](https://www.kopanjebunara.ba/podrucja/tomislavgrad/): 40–120 m, 110–180 KM/m, FBiH.
+- [Trebinje](https://www.kopanjebunara.ba/podrucja/trebinje/): 50–150 m, 115–190 KM/m, RS.

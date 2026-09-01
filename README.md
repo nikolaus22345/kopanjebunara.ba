@@ -42,17 +42,18 @@ That single edit updates the header, hero, every region page, the sticky mobile 
 ### 2. Your domain — ✅ done
 
 ```js
-origin: 'https://kopanjebunara.ba',
+origin: 'https://www.kopanjebunara.ba',
 ```
 
 `kopanjebunara.ba` is registered through **Globalhost d.o.o.** (global.ba),
 26/08/2026 – 25/08/2027. Canonical URLs, `sitemap.xml`, `llms.txt`, Open Graph
 tags and schema.org all point there.
 
-**Apex (no `www`) is canonical.** This must match the primary domain in Vercel
-— if Vercel serves `www` as primary while this file says apex, every canonical
-tag points at a URL that redirects, and indexing stalls. See the DNS section
-below.
+**`www` is canonical**, because that is what Vercel has set as the Primary
+domain — the apex 308-redirects to it. Confirmed against the live site.
+These two must always agree: when they disagree, every canonical tag points
+at a URL that redirects and indexing stalls. If you ever switch Vercel to
+serve the apex as primary, change this line the same day.
 
 ### 3. The brand name
 

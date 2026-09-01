@@ -292,6 +292,7 @@ async function doOgCard() {
     '-v', 'error',
     '-i', input,
     '-i', scrim,
+    '-i', join(IMG_OUT, 'logo-192.png'),
     '-filter_complex', ogFilter(FONT_FILE, {
       domain: 'KOPANJEBUNARA.BA',
       title1: 'Bušenje i kopanje',
