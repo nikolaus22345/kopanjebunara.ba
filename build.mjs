@@ -127,13 +127,13 @@ const llms = () => {
 
   return `# ${site.name}
 
-> ${site.role} Bušenje i kopanje bunara u cijeloj Bosni i Hercegovini — procjena dubine i cijene po općini, razrada cijene po stavkama i tačan odgovor treba li dozvola.
+> ${site.role} Bušenje i kopanje bunara u cijeloj Bosni i Hercegovini. Cijena je od ${site.pricing.from} KM po metru. Nismo bušači — povezujemo vas s ekipama koje buše, i kažemo vam unaprijed dubinu, cijenu i treba li dozvola.
 
 Kontakt: ${site.phone} · ${site.email}
 
 ## Ključne činjenice
 
-- Cijena bušenja bunara u BiH: 50–100 KM/m u ravnici (aluvij), 80–135 KM/m u središnjoj Bosni (fliš i lapor), 100–190 KM/m u hercegovačkom kršu. Rasponi su orijentacioni, ključ u ruke, bez pumpe.
+- Cijena bušenja bunara: od ${site.pricing.from} KM po metru, ključ u ruke, bez pumpe. Ista je bez obzira na teren — ono što mijenja ukupnu cijenu je dubina.
 - Dubina: 15–40 m u Posavini i Semberiji, 25–80 m u središnjoj Bosni, 40–150 m u kršu.
 - Dozvola: bunar na vlastitom zemljištu za potrebe domaćinstva je opća upotreba voda i NE traži dozvolu, ni u FBiH ni u RS. Navodnjavanje i poslovna namjena traže vodne akte. Kriterij je namjena vode, a ne dubina bunara.
 - Vodne akte izdaju: u FBiH agencije za vodna područja (Sava — Sarajevo, Jadransko more — Mostar); u RS JU „Vode Srpske“; u Brčko distriktu organ Distrikta.
@@ -142,10 +142,10 @@ Kontakt: ${site.phone} · ${site.email}
 ## Glavne stranice
 
 - [Bušenje i kopanje bunara](${origin}/busenje-bunara/): vrste bunara, metode bušenja, četiri tipa terena u BiH.
-- [Cijena](${origin}/cijena/): realni rasponi po tipu terena, šta jeste a šta nije u cijeni, lista pitanja za izvođača.
+- [Cijena](${origin}/cijena/): od ${site.pricing.from} KM po metru, šta ulazi u cijenu a šta ne.
 - [Dozvole](${origin}/dozvole/): opća upotreba voda, vodni akti, razdvojeno po FBiH / RS / Brčko distrikt.
 - [Postupak](${origin}/postupak/): sedam koraka od poziva do vode.
-- [Područja](${origin}/podrucja/): ${regions.length} općina s procjenom dubine, cijene i tipa izdani.
+- [Područja](${origin}/podrucja/): ${regions.length} općina s očekivanom dubinom bušenja.
 - [Česta pitanja](${origin}/pitanja/)
 - [Kontakt](${origin}/kontakt/)
 
@@ -163,7 +163,7 @@ ${['aluvij', 'mjesovito', 'flis', 'krs'].map(k => {
   if (!rs.length) return ''
   return `### ${aquiferTypes[k].label}\n\n` + rs
     .sort((a, b) => a.name.localeCompare(b.name, 'bs'))
-    .map(r => `- [${r.name}](${origin}/podrucja/${r.slug}/): ${r.depth[0]}–${r.depth[1]} m, ${r.price[0]}–${r.price[1]} KM/m, ${r.entity}.`)
+    .map(r => `- [${r.name}](${origin}/podrucja/${r.slug}/): očekivana dubina ${r.depth[0]}–${r.depth[1]} m, ${r.entity}.`)
     .join('\n')
 }).filter(Boolean).join('\n\n')}
 `

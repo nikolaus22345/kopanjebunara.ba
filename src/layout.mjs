@@ -43,7 +43,7 @@ const footer = () => `
     <div class="footer-grid">
       <div class="stack gap-sm">
         <a class="brand" href="/">${logo}<span class="brand-name">${esc(site.nameLead)}<span>${esc(site.nameAccent)}</span></span></a>
-        <p style="max-width:34ch">${esc(site.role)}</p>
+        <p style="max-width:34ch"><strong>Nismo bušači.</strong> ${esc(site.role)}</p>
         <p><a href="tel:${site.phoneHref}" style="font-family:var(--mono);font-size:1.05rem;color:var(--accent);text-decoration:none">${esc(site.phone)}</a></p>
         <p style="font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase">${esc(site.hours)}</p>
       </div>
@@ -78,7 +78,7 @@ const orgSchema = () => {
     telephone: site.phone,
     email: site.email,
     image: `${site.origin}/assets/img/og.jpg`,
-    priceRange: '50–190 KM/m',
+    priceRange: `od ${site.pricing.from} KM/m`,
     areaServed: { '@type': 'Country', name: 'Bosna i Hercegovina' },
     knowsAbout: ['Bušenje bunara', 'Kopanje bunara', 'Arteški bunari', 'Hidrogeologija', 'Geotermalne sonde', 'Vodna saglasnost'],
     makesOffer: [
@@ -325,3 +325,23 @@ export const ctaBand = (heading = 'Recite nam gdje je parcela — mi vam kažemo
     </div>
   </div>
 </section>`
+
+/* ==========================================================================
+   PRICE HELPERS — every price on the site comes from site.pricing.from
+   ========================================================================== */
+
+/** "od 200 KM po metru" / "od 200 KM/m" */
+export const priceFrom = (short = false) =>
+  `od ${site.pricing.from} ${short ? site.pricing.currency + '/m' : site.pricing.currency + ' po metru'}`
+
+/** Bosnian thousands separator. */
+export const km = n => Math.round(n).toLocaleString('bs-BA')
+
+/** Depth band -> an indicative total, floored at the published rate.
+ *  Rounded to the nearest 100 so it never reads as a precise quote. */
+export function totalFrom([dMin, dMax]) {
+  const r = site.pricing.from
+  const lo = Math.round((dMin * r) / 100) * 100
+  const hi = Math.round((dMax * r) / 100) * 100
+  return { lo, hi, text: `od ${km(lo)} do ${km(hi)} ${site.pricing.currency}` }
+}

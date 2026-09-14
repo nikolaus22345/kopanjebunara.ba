@@ -114,6 +114,18 @@ All figures below are what BiH-market sources actually publish. Ranges are wide 
 
 > One BiH source (IPIN Institut) quotes a "20 to 15,000 KM per metre" range. Treat that as unreliable/garbled — it does not match any other market data. Don't cite it.
 
+### 4.2b CORRECTION — Sep 2026, after talking to actual drillers
+
+**The bands in §4.1 are wrong for our purposes.** They came from Daibau and OLX listings plus regional calibration against Serbia and Croatia. Every driller we actually approached and could book quoted **200 KM/m or more**, and mostly flat regardless of terrain — one in Ljubuški quoted 200 KM/m *"bez obzira na išta"*, with no pre-drilling investigation at all.
+
+Two explanations, probably both true: the cheap listings describe drilling-only work (no casing, no gravel pack, no development — exactly the gap §4.3 is about), and they are out of date.
+
+**What changed on the site.** Price is now a single published floor — `site.pricing.from` = 200 KM/m — and the per-region price bands were dropped entirely. Only **depth** genuinely varies by location, so the total is depth × rate, always labelled *"od"*. The estimator no longer models a price band per municipality; that was false precision dressed up as expertise.
+
+**What did NOT change, and now matters more.** §4.3 below. Being the 200+ KM/m option makes the "why a cheap quote is not the same product" argument *more* necessary, not less — it is the entire justification for the price. That section survived the simplification on purpose.
+
+**Lesson for the rest of this document:** the market figures here are desk research from published listings. Where they meet primary evidence — an actual quote from an actual contractor — the primary evidence wins. Treat §4.1, and the price side of §3 and §8, as indicative only.
+
 ### 4.3 The pricing insight that should shape the whole website
 
 The spread between **30 KM/m and 130 KM/m** is not a market inefficiency — it's a **definition gap**. The 30 KM/m quote is a hole in soft ground with no casing, no gravel pack, no seal, no development, no test. The 130 KM/m is a finished, cased, sealed, developed well.

@@ -1,6 +1,6 @@
 import { site } from '../data/site.mjs'
 import { regions } from '../data/regions.mjs'
-import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom } from '../layout.mjs'
 import { photoBand, photo } from '../components/media.mjs'
 
 /* ==========================================================================
@@ -11,8 +11,8 @@ const groups = [
   {
     title: 'Cijena i plaćanje',
     items: [
-      { q: 'Koliko košta bunar u BiH?', a: '<p>U ravničarskim dijelovima <strong>50–100 KM po metru</strong> ključ u ruke, u središnjoj Bosni <strong>80–135 KM/m</strong>, u hercegovačkom kršu <strong>100–190 KM/m</strong>. Za prosječno domaćinstvo u Posavini to najčešće znači <strong>1.500–3.500 KM</strong> za samu bušotinu.</p><p><a href="/cijena/">Razrada po stavkama &rarr;</a></p>' },
-      { q: 'Zašto se cijene toliko razlikuju?', a: '<p>Zato što se pod istom riječju prodaju različite stvari. Ponuda od 30 KM/m je najčešće samo bušotina — bez pravilne kolone, zasipa, tampona i razrade. Ponuda od 100 KM/m je gotov, obložen i ispitan bunar.</p><p>To nije razlika u marži nego u proizvodu.</p>' },
+      { q: 'Koliko košta bunar u BiH?', a: `<p>Bušenje je <strong>${priceFrom()}</strong>, isto za svaki teren. Ukupan račun zavisi od dubine: u Posavini 15–40 m pa oko 3.000–8.000 KM, u kršu 40–120 m pa znatno više.</p><p><a href="/cijena/">Šta je u cijeni &rarr;</a></p>` },
+      { q: 'Zašto se cijene u oglasima toliko razlikuju?', a: '<p>Zato što se pod istom riječju prodaju različite stvari. Oglas od 30 KM/m je najčešće samo rupa — bez pravilne kolone, zasipa, tampona i ispiranja. Kompletan bunar je nešto drugo.</p><p>To nije razlika u marži nego u proizvodu. <a href="/cijena/">Šta ulazi u cijenu &rarr;</a></p>' },
       { q: 'Da li je pumpa uključena u cijenu?', a: '<p>Gotovo nikad. Pumpa, hidrofor, elektroinstalacija i priključak se obračunavaju zasebno, i to je normalno — jer se pumpa bira tek kad se izmjeri stvarna izdašnost bunara.</p><p>Za domaćinstvo realno računajte dodatnih <strong>700–1.200 KM</strong>.</p>' },
       { q: 'Plaća se ako se ne nađe voda?', a: '<p>Zavisi od pismenog dogovora sklopljenog <strong>prije</strong> početka. Neke ekipe u BiH nude uslov „nema vode — nema naplate“, druge naplaćuju izvedene metre. Oba su legitimna ako ste znali unaprijed.</p><p>Mi taj uslov utvrđujemo prije izlaska na teren i kažemo vam koja varijanta vrijedi za vaš teren.</p>' },
     ],

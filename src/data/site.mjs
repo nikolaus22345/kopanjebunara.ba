@@ -41,6 +41,23 @@ export const site = {
   country: 'BA',
   vat: '',                             // ID/PDV broj
 
+  // --- cijena -----------------------------------------------------------
+  /* ONE source of truth for price. Change `from` and it propagates to the
+     home page, the estimator, every region page, /cijena/, the FAQs and
+     llms.txt.
+
+     Set from real quotes collected from drillers in Sep 2026, not from
+     classified ads. The earlier 50–190 KM/m bands came from Daibau and OLX
+     listings, which turned out to describe drilling-only jobs (no casing,
+     no gravel pack, no development) or to be simply out of date. Every
+     driller actually willing to take our work quoted 200 KM/m or more,
+     mostly flat regardless of terrain. Publishing a floor is honest and it
+     is also the only real number anyone in this market publishes. */
+  pricing: {
+    from: 200,                    // KM per running metre, turnkey — a FLOOR
+    currency: 'KM',
+  },
+
   // --- analytics & verification -----------------------------------------
   // Google Search Console verification. Emitted as a <meta> on every page.
   googleSiteVerification: 'B8xVjz_2WG_MG23zOVojJJlMdD57t8ncLOWk7ZL8gL4',

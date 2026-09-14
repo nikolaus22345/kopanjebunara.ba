@@ -1,6 +1,6 @@
 import { site } from '../data/site.mjs'
 import { regions, regionBySlug, aquiferTypes, oddsMeta } from '../data/regions.mjs'
-import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand, priceFrom, totalFrom, km } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
 import { photo, photoBand } from '../components/media.mjs'
 
@@ -44,7 +44,7 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja' }])}
 ${pageHead({
     eyebrow: `${regions.length} općina i područja`,
     title: 'Bušenje i kopanje bunara <br><em>po područjima BiH</em>',
-    lede: 'Bušenje u Semberiji i bušenje u Širokom Brijegu nisu isti posao. Za svako područje smo napisali tip izdani, realnu dubinu, cijenu i koliko je uspješnost vjerovatna.',
+    lede: `Cijena bušenja je svugdje ista — ${priceFrom()}. Ono što se mijenja je dubina, a ona zavisi od terena. Za svaku općinu piše koliko se realno očekuje.`,
   })}
 
 <section class="band band-tight band-alt">
@@ -57,7 +57,7 @@ ${pageHead({
   <div class="wrap">
     <div class="sec-head">
       <h2>Četiri tipa terena</h2>
-      <span class="tag">Geologija odlučuje o cijeni</span>
+      <span class="tag">Teren odlučuje o dubini</span>
     </div>
     <div class="grid grid-4">
       ${order.map(k => {
@@ -89,7 +89,7 @@ ${order.map(k => {
     <div class="regions-list">
       ${rs.map(r => `<a class="region-item" href="/podrucja/${r.slug}/">
         <span class="r-n">${esc(r.name)}</span>
-        <span class="r-d">${r.depth[0]}–${r.depth[1]} m &middot; ${r.price[0]}–${r.price[1]} KM/m</span>
+        <span class="r-d">${r.depth[0]}–${r.depth[1]} m dubine</span>
         <span class="r-t">${esc(r.area)}</span>
       </a>`).join('\n      ')}
     </div>
@@ -113,7 +113,7 @@ ${ctaBand()}
 
   return page({
     title: 'Bušenje i kopanje bunara po područjima BiH',
-    description: `Očekivana dubina bunara, cijena po metru i tip izdani za ${regions.length} općina i područja u BiH — od plitke Posavine do dubokog hercegovačkog krša.`,
+    description: `Očekivana dubina bunara za ${regions.length} općina u BiH, od plitke Posavine do dubokog hercegovačkog krša. Cijena bušenja od ${site.pricing.from} KM po metru.`,
     path: '/podrucja/',
     body,
   })
@@ -129,16 +129,11 @@ export function regionPage(r) {
 
   const midDepth = Math.round((r.depth[0] + r.depth[1]) / 2)
 
-  // Middle band, not the full envelope — same logic as the client-side
-  // estimator in /assets/js/site.js. The full min×min…max×max span is
-  // arithmetically true but four times too wide to be useful.
-  const band = (a, b) => [a + 0.3 * (b - a), a + 0.75 * (b - a)]
-  const [dLo, dHi] = band(r.depth[0], r.depth[1])
-  const [pLo, pHi] = band(r.price[0], r.price[1])
-  const step = r.depth[1] * r.price[1] > 10000 ? 100 : 50
-  const lo = Math.round((dLo * pLo) / step) * step
-  const hi = Math.round((dHi * pHi) / step) * step
-  const km = n => n.toLocaleString('bs-BA')
+  /* Price is a single published floor now, not a per-region band. Only
+     depth genuinely varies by location, so the total is just depth × rate. */
+  const total = totalFrom(r.depth)
+  const lo = total.lo
+  const hi = total.hi
 
   const faq = [
     {
@@ -147,7 +142,7 @@ export function regionPage(r) {
     },
     {
       q: `Koliko košta bunar u ${r.loc}?`,
-      a: `<p>Cijena po metru na ovom terenu realno je <strong>${r.price[0]}–${r.price[1]} KM</strong> ključ u ruke — bušenje, kolona, filter, zasip, tampon i razrada. Za tipičnu dubinu na ovom terenu većina poslova završi između <strong>${km(lo)} i ${km(hi)} KM</strong>, uz plići i dublji ishod izvan tog raspona.</p><p>Pumpa, hidrofor i elektroinstalacija dolaze zasebno. <a href="/cijena/">Razrada svake stavke &rarr;</a></p>`,
+      a: `<p>Cijena bušenja je <strong>${priceFrom()}</strong>, ista bez obzira na teren. Ono što se mijenja je dubina — ovdje se očekuje <strong>${r.depth[0]}–${r.depth[1]} m</strong>, pa je bušotina okvirno <strong>${total.text}</strong>.</p><p>Pumpa, hidrofor i elektroinstalacija dolaze zasebno. <a href="/cijena/">Šta ulazi u cijenu &rarr;</a></p>`,
     },
     {
       q: `Treba li dozvola za bunar u ${r.loc}?`,
@@ -171,8 +166,8 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja', href: '/podruc
         <p class="lede">${esc(r.intro)}</p>
         <div class="readout" style="margin-top:.5rem">
           <div><span class="n">${r.depth[0]}–${r.depth[1]} <small>m</small></span><span class="l">Očekivana dubina</span></div>
-          <div><span class="n">${r.price[0]}–${r.price[1]} <small>KM/m</small></span><span class="l">Cijena po metru</span></div>
-          <div><span class="n">${km(lo)}–${km(hi)} <small>KM</small></span><span class="l">Najčešće ukupno</span></div>
+          <div><span class="n">od ${site.pricing.from} <small>KM/m</small></span><span class="l">Cijena po metru</span></div>
+          <div><span class="n">${km(lo)}–${km(hi)} <small>KM</small></span><span class="l">Okvirno ukupno</span></div>
         </div>
         <div class="btn-row" style="margin-top:.5rem">
           <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
@@ -244,9 +239,9 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja', href: '/podruc
       <table>
         <thead><tr><th>Stavka</th><th class="num">Okvirno</th><th>Napomena</th></tr></thead>
         <tbody>
-          <tr class="yes"><td><strong>Bušenje s kolonom i filterom</strong></td><td class="num">${r.price[0]}–${r.price[1]} KM/m</td><td>Ključ u ruke, uključuje zasip, tampon i razradu.</td></tr>
+          <tr class="yes"><td><strong>Bušenje s kolonom i filterom</strong></td><td class="num">${priceFrom(true)}</td><td>Ključ u ruke, uključuje zasip, tampon i razradu.</td></tr>
           <tr class="yes"><td><strong>Tipična dubina</strong></td><td class="num">${r.depth[0]}–${r.depth[1]} m</td><td>Za domaćinstvo. Navodnjavanje traži veći promjer i često veću dubinu.</td></tr>
-          <tr class="yes"><td><strong>Bušotina — najčešće</strong></td><td class="num">${km(lo)}–${km(hi)} KM</td><td>Srednja vrijednost oko ${midDepth} m dubine.</td></tr>
+          <tr class="yes"><td><strong>Bušotina okvirno</strong></td><td class="num">${total.text}</td><td>Za ${r.depth[0]}–${r.depth[1]} m po objavljenoj cijeni.</td></tr>
           <tr class="no"><td>Pumpa i hidrofor</td><td class="num">700–1.200 KM</td><td>Bira se tek nakon mjerenja izdašnosti.</td></tr>
           <tr class="no"><td>Elektro i priključak</td><td class="num">200–600 KM</td><td>Ovisi o udaljenosti od objekta.</td></tr>
           <tr class="no"><td>Analiza vode</td><td class="num">60–400 KM</td><td>Radi se jednom.</td></tr>
@@ -270,7 +265,7 @@ ${near.length ? `
     <div class="regions-list">
       ${near.map(n => `<a class="region-item" href="/podrucja/${n.slug}/">
         <span class="r-n">${esc(n.name)}</span>
-        <span class="r-d">${n.depth[0]}–${n.depth[1]} m &middot; ${n.price[0]}–${n.price[1]} KM/m</span>
+        <span class="r-d">${n.depth[0]}–${n.depth[1]} m dubine</span>
         <span class="r-t">${esc(aquiferTypes[n.type].short)}</span>
       </a>`).join('\n      ')}
     </div>
@@ -289,7 +284,7 @@ ${ctaBand(`Bušite u ${r.loc}? Recite nam namjenu i pristup parceli.`)}
 
   return page({
     title: `Bušenje i kopanje bunara ${r.name}`,
-    description: `Bunar u ${r.loc}: dubina ${r.depth[0]}–${r.depth[1]} m, cijena ${r.price[0]}–${r.price[1]} KM/m, ${t.short.toLowerCase()}. Šta je ispod i treba li dozvola.`,
+    description: `Bunar u ${r.loc}: očekivana dubina ${r.depth[0]}–${r.depth[1]} m, cijena ${priceFrom(true)}. Treba li dozvola i šta je ispod.`,
     path: `/podrucja/${r.slug}/`,
     body,
     schema: [
