@@ -43,7 +43,7 @@ const footer = () => `
     <div class="footer-grid">
       <div class="stack gap-sm">
         <a class="brand" href="/">${logo}<span class="brand-name">${esc(site.nameLead)}<span>${esc(site.nameAccent)}</span></span></a>
-        <p style="max-width:34ch"><strong>Nismo bušači.</strong> ${esc(site.role)}</p>
+        <p style="max-width:34ch">${esc(site.role)}</p>
         <p><a href="tel:${site.phoneHref}" style="font-family:var(--mono);font-size:1.05rem;color:var(--accent);text-decoration:none">${esc(site.phone)}</a></p>
         <p style="font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase">${esc(site.hours)}</p>
       </div>
@@ -307,14 +307,14 @@ export const faqSchema = (items) => ({
 })
 
 /* CTA band, used at the bottom of most pages */
-export const ctaBand = (heading = 'Recite nam gdje je parcela — mi vam kažemo šta očekivati.') => `
+export const ctaBand = (heading = 'Gdje je parcela? Recite nam, a mi vam kažemo šta vas čeka.') => `
 <section class="band band-deep">
   <div class="wrap">
     <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center" class="cta-grid">
       <div class="stack gap-md">
         <p class="eyebrow">Besplatna procjena</p>
         <h2>${esc(heading)}</h2>
-        <p class="lede">Jedan poziv. Kažete nam općinu i namjenu, mi vam damo realan raspon dubine i cijene — i tek onda izlazak na teren.</p>
+        <p class="lede">Jedan poziv je dovoljan. Kažete općinu i za šta vam treba voda, a mi vam damo realnu dubinu i cijenu — i tek onda ide izlazak na teren.</p>
       </div>
       <div class="call-card">
         <p class="hours">Pozovite direktno</p>

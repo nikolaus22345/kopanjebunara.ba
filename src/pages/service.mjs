@@ -258,7 +258,7 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Postupak' }])}
 ${pageHead({
     eyebrow: 'Od poziva do vode u slavini',
     title: 'Kako ide postupak',
-    lede: 'Sedam koraka, s tim šta se u svakom dešava, koliko traje i — što je najvažnije — šta vi dobijete na kraju svakog.',
+    lede: 'Sedam koraka od prvog poziva do vode u slavini: šta se dešava, koliko traje i šta dobijete na kraju svakog.',
   })}
 
 <section class="band">

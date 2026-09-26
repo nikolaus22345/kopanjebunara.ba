@@ -13,7 +13,7 @@ const services = [
   {
     slug: 'geotermalne-sonde',
     nav: 'Geotermalne sonde',
-    title: 'Geotermalne sonde i bušotine za toplotnu pumpu',
+    title: 'Geotermalne sonde za toplotnu pumpu',
     eyebrow: 'Grijanje i hlađenje',
     lede: 'Bušotine za sistem zemlja-voda i voda-voda. Ista mehanizacija kao za bunar, potpuno drugi proračun.',
     meta: 'Bušenje geotermalnih sondi u BiH za toplotne pumpe zemlja-voda i voda-voda. Dubine, broj sondi, cijena po metru i razlika u odnosu na bunar.',
@@ -176,7 +176,7 @@ ${pageHead({
 ${ctaBand()}
 `
   return page({
-    title: 'Usluge — bunari, geosonde, pumpe, analiza vode',
+    title: 'Usluge — bunari, geosonde, pumpe i voda',
     description: 'Bušenje bunara, geotermalne sonde, pumpe i hidrofori, analiza vode te čišćenje i regeneracija starih bunara — u cijeloj BiH.',
     path: '/usluge/',
     body,

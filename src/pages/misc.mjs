@@ -54,7 +54,7 @@ const groups = [
   {
     title: 'O nama',
     items: [
-      { q: 'Vi bušite ili posredujete?', a: `<p>Budimo precizni: <strong>${esc(site.role)}</strong></p><p>Mi vodimo procjenu, provjeru terena i dogovor, a posao izvodi bušačka firma s vlastitim strojevima i registrovanom djelatnošću. To vam kažemo otvoreno jer mislimo da imate pravo znati s kim radite.</p>` },
+      { q: 'Da li vi sami bušite?', a: `<p><strong>Ne — bušimo preko partnerskih ekipa.</strong> Mi radimo procjenu, provjeru terena i dogovor, a sam posao izvodi bušačka firma s vlastitim strojevima i registrovanom djelatnošću.</p><p>Kažemo vam to otvoreno, jer imate pravo znati s kim radite. Ugovor potpisujete direktno s njima.</p>` },
       { q: 'Kako birate ekipe?', a: '<p>Registrovana djelatnost, vlastita mehanizacija, provjerljive reference i spremnost da sve dogovoreno stave na papir. Ekipe koje ne rade tampon i probno crpljenje ne uvrštavamo.</p>' },
       { q: 'Naplaćujete li procjenu?', a: '<p>Ne. Telefonska procjena — raspon dubine, cijene i odgovor treba li vam dozvola — je besplatna i ne obavezuje vas ni na šta.</p>' },
       { q: 'Radite li u cijeloj BiH?', a: `<p>Da. Trenutno imamo pisanu procjenu terena za <strong>${regions.length} općina i područja</strong>, a pokrivamo i sve ostalo — samo za ta područja procjenu radimo telefonom umjesto iz gotove analize.</p>` },
@@ -235,7 +235,7 @@ ${pageHead({
 </section>
 `
   return page({
-    title: 'Kontakt — besplatna procjena za bušenje bunara',
+    title: 'Kontakt — besplatna procjena bušenja bunara',
     description: `Pozovite ${site.phone} ili pošaljite upit. Besplatna procjena dubine i cijene bunara za vašu općinu, bez obaveze.`,
     path: '/kontakt/',
     body,

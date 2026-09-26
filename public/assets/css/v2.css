@@ -127,7 +127,7 @@ h2 { font-size: clamp(2.1rem, 5vw, 4rem); line-height: .95; }
 @keyframes drip { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
 
 @media (max-width: 760px) {
-  .hero3d { height: 380vh; }
+  .hero3d { height: 300vh; }
   .hero3d-copy { justify-content: flex-start; padding-top: 5.8rem; gap: .9rem; }
   .hero3d h1 { font-size: clamp(2.5rem, 12vw, 3.6rem); }
   .hero3d .hero-answers { display: none; }
@@ -209,3 +209,47 @@ h2 { font-size: clamp(2.1rem, 5vw, 4rem); line-height: .95; }
   .cine-media { clip-path: none; }
   .cine-media video, .cine-media img { transform: none; }
 }
+
+/* ==========================================================================
+   Mobile. The desktop layout stacked into one column made the home page
+   ~20 screens long; on a phone the long runs become swipe rows instead.
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .band { padding-block: 3.25rem; }
+  .sec-head { margin-bottom: 1.4rem; }
+  h2 { font-size: clamp(1.9rem, 8.4vw, 2.5rem); }
+  .lede { font-size: 1.02rem; }
+
+  /* swipe rows: videos and gallery */
+  .vgrid, .gallery {
+    display: flex; gap: .6rem; overflow-x: auto; scroll-snap-type: x mandatory;
+    background: none; border: 0; scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) .4rem;
+  }
+  .vgrid::-webkit-scrollbar, .gallery::-webkit-scrollbar { display: none; }
+  .vcard { flex: none; width: 64vw; scroll-snap-align: start; border-radius: var(--radius); overflow: hidden; }
+  .vcard-meta { padding: .8rem .2rem 0; }
+  .gallery figure { flex: none; width: 78vw; height: 17rem; scroll-snap-align: start; border-radius: var(--radius); }
+  .gallery .g-wide, .gallery .g-big, .gallery .g-tall { grid-column: auto; grid-row: auto; }
+  .swipe-hint { display: flex; }
+
+  /* the marquee already lists every municipality; the grid would double it */
+  .home .regions-list { display: none; }
+  .marquee a { font-size: 2.3rem; }
+
+  /* hero: less copy weight so the model shows */
+  .hero3d .btn-row { gap: .5rem; }
+  .hero3d .btn-lg { min-height: 3.1rem; padding: .7rem 1.15rem; font-size: 1rem; }
+  .hero3d .kicker { font-size: 1.15rem; }
+
+  .cine { height: 140vh; }
+  .cine-copy h2 { font-size: 2.6rem; }
+  .cine-copy p { font-size: 1rem; }
+
+  .footer-word { margin-top: 2rem; }
+}
+
+.swipe-hint { display: none; align-items: center; gap: .5rem; margin-top: .9rem; font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+.band-deep .swipe-hint { color: var(--deep-soft); }
+.swipe-hint::after { content: ""; flex: 0 0 2rem; height: 1px; background: currentColor; }

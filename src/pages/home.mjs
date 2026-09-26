@@ -4,42 +4,47 @@ import { page, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom } from '../lay
 import { estimator } from '../components/estimator.mjs'
 import { videoShowcase, gallery, heroImage } from '../components/media.mjs'
 
+/* Copy leads with what the visitor came for — depth and price before the
+   first metre. How we work (partner crews, not our own rig) is stated
+   plainly, just lower down: KNOWLEDGE-BASE §7.3 still applies, we never
+   present ourselves as the contractor. */
+
 const homeFaq = [
   {
-    q: 'Vi bušite ili posredujete?',
-    a: `<p><strong>Ne bušimo sami.</strong> Povezujemo vas s bušačkim ekipama koje imaju vlastite strojeve i registrovanu djelatnost.</p><p>Mi uzmemo podatke, kažemo vam očekivanu dubinu i cijenu, i pošaljemo ekipu koja radi na vašem terenu. Posao ugovarate s njima, a mi ostajemo na vezi dok se ne završi.</p>`,
+    q: 'Koliko košta bušenje bunara?',
+    a: `<p><strong>${priceFrom()}</strong>, i to je ista cijena u cijeloj BiH.</p><p>Ukupan račun ovisi samo o tome koliko se duboko ide. U Posavini voda dođe na 15–40 metara, u hercegovačkom kršu zna se ići i preko sto. <a href="/cijena/">Šta sve ulazi u cijenu &rarr;</a></p>`,
   },
   {
-    q: 'Koliko košta?',
-    a: `<p>Bušenje je <strong>${priceFrom()}</strong> — ista cijena za svaki teren u BiH.</p><p>Ukupan račun zavisi od dubine. U Posavini se voda nađe na 15–40 m, u hercegovačkom kršu se ide i preko sto. <a href="/cijena/">Šta ulazi u cijenu &rarr;</a></p>`,
+    q: 'Koliko duboko se buši kod mene?',
+    a: '<p>Ovisi o terenu ispod vaše parcele. Semberija i Posavina <strong>15–40 m</strong>, doline središnje Bosne <strong>25–80 m</strong>, hercegovački krš <strong>40–120 m</strong>, nekad i više.</p><p><a href="/podrucja/">Pogledajte svoju općinu &rarr;</a></p>',
   },
   {
     q: 'Treba li mi dozvola?',
-    a: '<p>Za bunar na <strong>vlastitom zemljištu, za potrebe domaćinstva</strong> — ne treba. Tako je i u Federaciji i u Republici Srpskoj.</p><p>Treba čim pređete u <strong>navodnjavanje ili posao</strong>. <a href="/dozvole/">Cijeli postupak &rarr;</a></p>',
-  },
-  {
-    q: 'Koliko duboko se buši?',
-    a: '<p>Zavisi od terena. Semberija i Posavina <strong>15–40 m</strong>, središnja Bosna <strong>25–80 m</strong>, hercegovački krš <strong>40–120 m</strong> i više.</p><p><a href="/podrucja/">Očekivana dubina za vašu općinu &rarr;</a></p>',
+    a: '<p>Ako je bunar na <strong>vašem zemljištu i za kuću</strong> — ne treba. Isto je i u Federaciji i u Republici Srpskoj.</p><p>Dozvola treba tek kad voda ide za <strong>navodnjavanje ili posao</strong>. <a href="/dozvole/">Kako to ide &rarr;</a></p>',
   },
   {
     q: 'Šta ako se ne nađe voda?',
-    a: '<p>To se dogovara <strong>prije</strong> nego iko izađe na parcelu, i mora biti napisano. Neke ekipe naplaćuju izvedene metre, neke pristanu na ograničenu dubinu.</p><p>Na kršu je to najvažnije pitanje, i tu vam otvoreno kažemo koliki je rizik.</p>',
+    a: '<p>O tome se dogovara <strong>prije</strong> nego iko dođe na parcelu, i to napismeno. Neke ekipe naplaćuju izbušene metre, neke pristanu na gornju granicu dubine.</p><p>Na kršu je to najvažnije pitanje, pa vam otvoreno kažemo koliki je rizik.</p>',
   },
   {
-    q: 'Košta li vaša procjena?',
-    a: '<p>Ne. Kažete nam općinu i za šta vam treba voda, dobijete dubinu, cijenu i odgovor o dozvoli. Ne obavezuje vas ni na šta.</p>',
+    q: 'Da li vi sami bušite?',
+    a: `<p>Ne. Radimo s bušačkim ekipama koje imaju svoje strojeve i registrovanu djelatnost, širom BiH.</p><p>Mi vam kažemo šta da očekujete, nađemo ekipu koja poznaje vaš teren i ostanemo na vezi dok posao ne bude gotov. Ugovor potpisujete direktno s njima.</p>`,
+  },
+  {
+    q: 'Naplaćujete li procjenu?',
+    a: '<p>Ne. Kažete općinu i za šta vam treba voda, a dobijete dubinu, cijenu i odgovor oko dozvole. Ni na šta se ne obavezujete.</p>',
   },
 ]
 
 const steps = [
-  ['01', 'Nazovete nas', 'Kažete općinu i za šta vam treba voda. Dobijete očekivanu dubinu, cijenu i odgovor treba li dozvola — odmah, telefonom.'],
-  ['02', 'Nađemo ekipu', 'Biramo bušača koji radi na vašem terenu i ima pravu mehanizaciju za njega. Krš i ravnica nisu isti posao ni isti stroj.'],
-  ['03', 'Oni buše, mi ostajemo na vezi', 'Ekipa izlazi, daje konačnu ponudu i radi. Mi pratimo posao do kraja i tu smo ako nešto zapne.'],
+  ['01', 'Javite nam se', 'Kažete gdje je parcela i za šta vam treba voda. Odmah dobijete očekivanu dubinu, cijenu i odgovor oko dozvole.'],
+  ['02', 'Dogovorimo ekipu', 'Šaljemo bušače koji rade baš na vašem terenu. Ravnica i krš traže različite strojeve i različito iskustvo.'],
+  ['03', 'Buši se, a mi smo na vezi', 'Ekipa izađe, potvrdi ponudu i radi. Mi pratimo posao do kraja i tu smo ako nešto zapne.'],
 ]
 
 /* The three grounds the 3D model can show. Strata come straight from
-   aquiferTypes, the depth ranges are the ones quoted everywhere on the site,
-   so the model can never tell a different story from the copy. */
+   aquiferTypes and the depth ranges are the ones quoted everywhere on the
+   site, so the model can never tell a different story from the copy. */
 const WELL_TYPES = {
   aluvij: { label: 'Posavina i Semberija', depth: [15, 40], surface: '#56663a', tree: '#3b5a2e' },
   mjesovito: { label: 'Doline središnje Bosne', depth: [25, 80], surface: '#566a3a', tree: '#355230' },
@@ -65,18 +70,18 @@ export function homePage() {
     <canvas aria-hidden="true"></canvas>
 
     <div class="wrap hero3d-copy">
-      <p class="eyebrow">Cijela Bosna i Hercegovina</p>
+      <p class="eyebrow">Bušenje bunara u cijeloj BiH</p>
       <h1>Bušenje i kopanje bunara <br><em>Bosna i Hercegovina</em></h1>
-      <p class="kicker">Nismo bušači — povezujemo vas s ekipama koje buše.</p>
-      <p class="lede">Kažete nam općinu i za šta vam treba voda. Dobijete očekivanu dubinu, cijenu i odgovor treba li dozvola — prije nego iko izađe na teren.</p>
+      <p class="kicker">Prije prvog metra znate koliko duboko i koliko košta.</p>
+      <p class="lede">Recite nam općinu i za šta vam treba voda. Za par minuta imate očekivanu dubinu, cijenu i odgovor treba li vam dozvola.</p>
       <div class="btn-row">
         <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
-        <a class="btn btn-ghost btn-lg" href="#procjena">Provjeri za svoju općinu ${icon.arrow}</a>
+        <a class="btn btn-ghost btn-lg" href="#procjena">Izračunaj za svoju općinu ${icon.arrow}</a>
       </div>
       <div class="hero-answers">
         <div><span class="n">od ${site.pricing.from}</span><span class="l">KM po metru, ista cijena svugdje</span></div>
-        <div><span class="n">15–120</span><span class="l">Metara dubine, ovisno o terenu</span></div>
-        <div><span class="n">0</span><span class="l">Dozvola za kućni bunar na svom zemljištu</span></div>
+        <div><span class="n">15–120</span><span class="l">Metara, ovisno o terenu</span></div>
+        <div><span class="n">Bez papira</span><span class="l">Za kućni bunar na svom zemljištu</span></div>
       </div>
     </div>
 
@@ -89,33 +94,34 @@ export function homePage() {
         <p class="hud-metres"><span data-hud="metres">0</span><small>m</small></p>
       </div>
       <div>
-        <p class="hud-k">Cijena do ove dubine</p>
+        <p class="hud-k">Račun do ove dubine</p>
         <p class="hud-price">od <span data-hud="price">0</span> <small>KM</small></p>
       </div>
       <p class="hud-layer" data-hud="layer"></p>
-      <p class="hud-status"><i></i><span class="st-drill">Buši se · voda oko <span data-hud="target">0</span> m</span><span class="st-water">Voda! Filter i zasip na mjestu</span></p>
-      <p class="terrain-note">${esc(priceFrom(true))} × metri. Profil je tipičan za teren, ne mjeren za vašu parcelu.</p>
+      <p class="hud-status"><i></i><span class="st-drill">Buši se · voda na oko <span data-hud="target">0</span> m</span><span class="st-water">Voda! Filter i zasip su na mjestu</span></p>
+      <p class="terrain-note">${esc(priceFrom(true))} puta broj metara. Slojevi su tipični za taj teren, ne izmjereni na vašoj parceli.</p>
     </div>
 
-    <p class="hero3d-caption">Cijena po metru je ista. <em class="s">Broj metara nije.</em></p>
-    <div class="scroll-hint"><i></i>Skrolajte da bušite</div>
+    <p class="hero3d-caption">Metar svugdje košta isto. <em class="s">Broj metara ne.</em></p>
+    <div class="scroll-hint"><i></i>Skrolajte i bušite</div>
   </div>
   <script type="application/json" id="well-data">${wellData()}</script>
 </section>
 
 <section class="band">
   <div class="wrap">
-    <p class="eyebrow" data-rv>Da ne bude zabune</p>
-    <p class="manifesto" style="margin-top:1.6rem">Mi nismo bušačka firma. Spojimo vas s ekipom koja radi na <em class="s">vašem</em> terenu — i prije toga vam kažemo koliko duboko, koliko košta i treba li dozvola.</p>
+    <p class="eyebrow" data-rv>Zašto dubina, a ne cijena</p>
+    <p class="manifesto" style="margin-top:1.6rem">Metar košta isto u Bijeljini i u Ljubuškom. Razlika je koliko metara treba — i to čujete <em class="s">odmah</em>, a ne kad je garnitura već na placu.</p>
   </div>
 </section>
 
 <section class="band band-alt">
   <div class="wrap">
     <div class="sec-head">
-      <h2 data-split>Kako ovo radi</h2>
+      <h2 data-split>Kako do bunara</h2>
       <span class="tag">Poziv i procjena su besplatni</span>
     </div>
+    <p class="lede" style="max-width:58ch;margin-bottom:1.75rem">Nemamo svoju garnituru, i to je namjerno. Radimo s bušačkim ekipama širom BiH i za svaki posao biramo onu koja poznaje vaš teren i ima pravi stroj za njega.</p>
     <div class="grid grid-3 reveal">
       ${steps.map(([n, t, b]) => `<div class="card">
         <span class="card-num">${n}</span>
@@ -129,13 +135,13 @@ export function homePage() {
 <section class="band" id="procjena">
   <div class="wrap">
     <div class="sec-head">
-      <h2 data-split>Provjerite za svoju općinu</h2>
+      <h2 data-split>Koliko duboko kod vas?</h2>
       <span class="tag">Bez ostavljanja podataka</span>
     </div>
     <div class="stack gap-md">
-      <p class="lede" style="max-width:58ch">Cijena bušenja je svugdje ista — <strong>${esc(priceFrom())}</strong>. Ono što se mijenja je dubina, a ona zavisi od toga šta je ispod vaše parcele.</p>
+      <p class="lede" style="max-width:58ch">Metar je svugdje <strong>${esc(priceFrom())}</strong>. Mijenja se samo dubina — izaberite općinu i vidite okvirno koliko metara i koliki račun.</p>
       ${estimator()}
-      <p class="note">Dubine su <strong>orijentacione</strong>, izvedene iz geološke građe područja. Konačnu cijenu daje ekipa nakon izlaska na teren. Nije ponuda u pravnom smislu.</p>
+      <p class="note">Dubine su <strong>okvirne</strong> i izvedene iz geološke građe područja. Konačnu cijenu daje ekipa kad izađe na teren. Ovo nije ponuda u pravnom smislu.</p>
     </div>
   </div>
 </section>
@@ -149,7 +155,7 @@ export function homePage() {
     <div class="cine-copy">
       <p class="eyebrow">Probno crpljenje</p>
       <h2>Trenutak kad <em class="s">voda krene</em>.</h2>
-      <p>Zbog tog trenutka se sve radi. Naš posao je da do njega dođete bez iznenađenja u cijeni.</p>
+      <p>Zbog toga se sve i radi. Naše je da do tog trenutka dođete bez iznenađenja na računu.</p>
     </div>
   </div>
 </section>
@@ -160,25 +166,26 @@ export function homePage() {
       <h2 data-split>Kako izgleda bušenje</h2>
       <span class="tag">Isplaka, stijena, voda</span>
     </div>
-    <p class="lede" style="max-width:56ch;margin-bottom:1.75rem">Bušenje nije čist posao i ne pravimo se da jeste. Ovako izgleda isplaka, ovako stijena, i ovako trenutak kad voda krene.</p>
+    <p class="lede" style="max-width:56ch;margin-bottom:1.75rem">Bušenje nije čist posao. Isplaka, prašina iz stijene, blato na sve strane — i onda voda.</p>
     ${videoShowcase()}
+    <p class="swipe-hint">Povucite za još</p>
   </div>
 </section>
 
 <section class="band">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.25rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1.25rem">
       <div class="call" data-rv>
         <span class="k">Cijena</span>
-        <p><strong>${esc(priceFrom())}</strong>, ista za svaki teren. U cijeni su bušenje, kolona, filter, šljunčani zasip, tampon i ispiranje. Pumpa i elektro dolaze zasebno. <a href="/cijena/">Detaljno &rarr;</a></p>
+        <p><strong>${esc(priceFrom())}</strong>, ista za svaki teren. U cijenu ulaze bušenje, kolona, filter, šljunčani zasip, tampon i ispiranje. Pumpa i struja idu posebno. <a href="/cijena/">Detaljno &rarr;</a></p>
       </div>
       <div class="call" data-rv=".08">
-        <span class="k">Dozvola — najčešće ne treba</span>
-        <p>Bunar na vlastitom zemljištu za kućne potrebe je <strong>opća upotreba voda</strong>, bez papira. Navodnjavanje i posao traže vodne akte. <a href="/dozvole/">Cijeli postupak &rarr;</a></p>
+        <span class="k">Dozvola — uglavnom ne treba</span>
+        <p>Za kućni bunar na svom zemljištu papiri ne trebaju. Navodnjavanje i posao traže vodne akte. <a href="/dozvole/">Kako to ide &rarr;</a></p>
       </div>
       <div class="call warn" data-rv=".16">
-        <span class="k">Kažemo i kad je teren loš</span>
-        <p>Na kršu i fliškom terenu izdašnost zna izostati. To vam kažemo prvim pozivom, a ne na pola bušotine. <a href="/podrucja/">Šta je ispod vaše općine &rarr;</a></p>
+        <span class="k">Kažemo i kad teren nije dobar</span>
+        <p>Na kršu i laporu voda zna izostati. To čujete u prvom razgovoru, a ne na pola bušotine. <a href="/podrucja/">Šta je ispod vaše općine &rarr;</a></p>
       </div>
     </div>
   </div>
@@ -187,8 +194,8 @@ export function homePage() {
 <section class="band band-alt" style="padding-bottom:0" aria-labelledby="podrucja-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="podrucja-h" data-split>${regions.length} općina. Od plitkog do dubokog.</h2>
-      <span class="tag">Obrub = preko 80 m</span>
+      <h2 id="podrucja-h" data-split>${regions.length} općina, od plitkog do dubokog</h2>
+      <span class="tag">Obrub = dublje od 80 m</span>
     </div>
   </div>
   ${rows.map(row => `<div class="marquee"><div class="marquee-track">
@@ -202,7 +209,7 @@ export function homePage() {
         <span class="r-t">${esc(r.area)}</span>
       </a>`).join('\n      ')}
     </div>
-    <p style="margin-top:1.5rem"><a class="btn btn-primary" href="/podrucja/">Sve općine ${icon.arrow}</a></p>
+    <p style="margin-top:1.5rem"><a class="btn btn-primary" href="/podrucja/">Pronađite svoju općinu ${icon.arrow}</a></p>
   </div>
 </section>
 
@@ -213,6 +220,7 @@ export function homePage() {
       <span class="tag">Ilustracije</span>
     </div>
     ${gallery()}
+    <p class="swipe-hint">Povucite za još</p>
   </div>
 </section>
 
@@ -220,7 +228,7 @@ export function homePage() {
   <div class="wrap-narrow">
     <div class="sec-head">
       <h2 data-split>Česta pitanja</h2>
-      <span class="tag">Kratki odgovori</span>
+      <span class="tag">Kratko i jasno</span>
     </div>
     ${faqBlock(homeFaq)}
     <p style="margin-top:1.25rem"><a class="btn btn-ghost" href="/pitanja/">Sva pitanja ${icon.arrow}</a></p>
@@ -232,7 +240,7 @@ ${ctaBand()}
 
   return page({
     title: `Bušenje i kopanje bunara Bosna i Hercegovina | ${site.name}`,
-    description: `Bušenje i kopanje bunara u cijeloj BiH, ${priceFrom()}. Povezujemo vas s provjerenim bušačkim ekipama — dubina, cijena i dozvola prije izlaska na teren.`,
+    description: `Bušenje i kopanje bunara u cijeloj BiH, ${priceFrom()}. Dubinu, cijenu i odgovor oko dozvole znate prije nego krene bušenje.`,
     path: '/',
     body,
     bodyClass: 'home',

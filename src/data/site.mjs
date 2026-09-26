@@ -73,7 +73,7 @@ export const site = {
   // --- positioning ------------------------------------------------------
   // Honest description of what we are. See KNOWLEDGE-BASE.md §7.3 —
   // we must NOT present ourselves as the drilling contractor.
-  role: 'Povezujemo vas s provjerenim bušačkim ekipama širom Bosne i Hercegovine.',
+  role: 'Bušenje bunara s provjerenim ekipama širom Bosne i Hercegovine — dubinu i cijenu znate unaprijed.',
 }
 
 export const nav = [
