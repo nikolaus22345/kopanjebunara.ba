@@ -53,8 +53,8 @@ const EST_JSON = JSON.stringify(estimatorData())
 function injectEstimator(html) {
   if (!html.includes('id="estimator"')) return html
   return html.replace(
-    '<script src="/assets/js/site.js" defer></script>',
-    `<script type="application/json" id="estimator-data">${EST_JSON}</script>\n<script src="/assets/js/site.js" defer></script>`
+    '<script type="module" src="/assets/js/main.js"></script>',
+    `<script type="application/json" id="estimator-data">${EST_JSON}</script>\n<script type="module" src="/assets/js/main.js"></script>`
   )
 }
 
@@ -195,6 +195,29 @@ const vercelJson = () => JSON.stringify({
   ],
 }, null, 2) + '\n'
 
+/* ---------- client JS ----------
+   src/client -> public/assets/js. three.js is split into its own chunk and
+   only the home page ever requests it (dynamic import in main.js). The
+   output is committed, so if esbuild is missing (a bare host with no
+   npm install) the build keeps the last bundle instead of failing. */
+async function bundleJs() {
+  let esbuild
+  try { esbuild = await import('esbuild') } catch {
+    console.log('  ! esbuild nije instaliran — zadržavam postojeći public/assets/js')
+    return
+  }
+  const dir = join(OUT, 'assets', 'js')
+  if (existsSync(dir)) for (const f of await readdir(dir)) await rm(join(dir, f))
+  const r = await esbuild.build({
+    entryPoints: [join(ROOT, 'src/client/main.js')],
+    bundle: true, splitting: true, format: 'esm', minify: true, target: 'es2020',
+    outdir: dir, chunkNames: 'chunk-[hash]', metafile: true, logLevel: 'warning',
+  })
+  const sizes = Object.entries(r.metafile.outputs).filter(([f]) => f.endsWith('.js'))
+    .map(([f, o]) => `${f.split(/[\\/]/).pop()} ${Math.round(o.bytes / 1024)}k`)
+  console.log(`  js: ${sizes.join(' · ')}`)
+}
+
 /* ---------- run ---------- */
 
 async function build() {
@@ -221,6 +244,8 @@ async function build() {
     if (!d) warnings.push(`${p.path} — nema description`)
     await write(outPathFor(p.path), injectEstimator(html))
   }
+
+  await bundleJs()
 
   await write(join(OUT, 'sitemap.xml'), sitemap())
   await write(join(OUT, 'robots.txt'), robots())

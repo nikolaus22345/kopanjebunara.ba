@@ -1,8 +1,8 @@
 import { site } from '../data/site.mjs'
-import { regions } from '../data/regions.mjs'
+import { regions, aquiferTypes } from '../data/regions.mjs'
 import { page, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
-import { videoShowcase, gallery, photoBand, heroImage } from '../components/media.mjs'
+import { videoShowcase, gallery, heroImage } from '../components/media.mjs'
 
 const homeFaq = [
   {
@@ -37,16 +37,34 @@ const steps = [
   ['03', 'Oni buše, mi ostajemo na vezi', 'Ekipa izlazi, daje konačnu ponudu i radi. Mi pratimo posao do kraja i tu smo ako nešto zapne.'],
 ]
 
+/* The three grounds the 3D model can show. Strata come straight from
+   aquiferTypes, the depth ranges are the ones quoted everywhere on the site,
+   so the model can never tell a different story from the copy. */
+const WELL_TYPES = {
+  aluvij: { label: 'Posavina i Semberija', depth: [15, 40], surface: '#56663a', tree: '#3b5a2e' },
+  mjesovito: { label: 'Doline središnje Bosne', depth: [25, 80], surface: '#566a3a', tree: '#355230' },
+  krs: { label: 'Hercegovački krš', depth: [40, 120], surface: '#84867a', tree: '#4f6338' },
+}
+const wellData = () => JSON.stringify(Object.fromEntries(Object.entries(WELL_TYPES).map(([k, v]) => [k, {
+  ...v, strata: aquiferTypes[k].strata.map(({ n, h, c, dark, water }) => ({ n, h, c, dark: !!dark, water: !!water })),
+}])))
+
 export function homePage() {
   const tier1 = regions.filter(r => r.tier === 1).slice(0, 12)
+  const byDepth = [...regions].sort((a, b) => a.depth[1] - b.depth[1])
+  const half = Math.ceil(byDepth.length / 2)
+  const rows = [byDepth.slice(0, half), byDepth.slice(half)]
 
   const body = `
-<section class="hero-photo">
-  <div class="hero-bg">
-    ${heroImage({ alt: 'Bušaća garnitura u radu na brdskom imanju u Bosni i Hercegovini, u zoru' })}
-  </div>
-  <div class="wrap hero-inner">
-    <div class="stack gap-md">
+<section class="hero3d" data-rate="${site.pricing.from}" aria-label="Uvod">
+  <div class="hero3d-stage">
+    <div class="hero3d-sky"></div>
+    <div class="hero3d-fallback">
+      ${heroImage({ alt: 'Bušaća garnitura u radu na brdskom imanju u Bosni i Hercegovini, u zoru' })}
+    </div>
+    <canvas aria-hidden="true"></canvas>
+
+    <div class="wrap hero3d-copy">
       <p class="eyebrow">Cijela Bosna i Hercegovina</p>
       <h1>Bušenje i kopanje bunara <br><em>Bosna i Hercegovina</em></h1>
       <p class="kicker">Nismo bušači — povezujemo vas s ekipama koje buše.</p>
@@ -61,16 +79,43 @@ export function homePage() {
         <div><span class="n">0</span><span class="l">Dozvola za kućni bunar na svom zemljištu</span></div>
       </div>
     </div>
+
+    <div class="well-hud" aria-live="off">
+      <div class="terrain" role="group" aria-label="Teren">
+        ${Object.entries(WELL_TYPES).map(([k, v], i) => `<button type="button" data-type="${k}" aria-pressed="${i === 0}">${esc(v.label)}</button>`).join('\n        ')}
+      </div>
+      <div>
+        <p class="hud-k">Dubina</p>
+        <p class="hud-metres"><span data-hud="metres">0</span><small>m</small></p>
+      </div>
+      <div>
+        <p class="hud-k">Cijena do ove dubine</p>
+        <p class="hud-price">od <span data-hud="price">0</span> <small>KM</small></p>
+      </div>
+      <p class="hud-layer" data-hud="layer"></p>
+      <p class="hud-status"><i></i><span class="st-drill">Buši se · voda oko <span data-hud="target">0</span> m</span><span class="st-water">Voda! Filter i zasip na mjestu</span></p>
+      <p class="terrain-note">${esc(priceFrom(true))} × metri. Profil je tipičan za teren, ne mjeren za vašu parcelu.</p>
+    </div>
+
+    <p class="hero3d-caption">Cijena po metru je ista. <em class="s">Broj metara nije.</em></p>
+    <div class="scroll-hint"><i></i>Skrolajte da bušite</div>
+  </div>
+  <script type="application/json" id="well-data">${wellData()}</script>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow" data-rv>Da ne bude zabune</p>
+    <p class="manifesto" style="margin-top:1.6rem">Mi nismo bušačka firma. Spojimo vas s ekipom koja radi na <em class="s">vašem</em> terenu — i prije toga vam kažemo koliko duboko, koliko košta i treba li dozvola.</p>
   </div>
 </section>
 
 <section class="band band-alt">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Kako ovo radi</h2>
+      <h2 data-split>Kako ovo radi</h2>
       <span class="tag">Poziv i procjena su besplatni</span>
     </div>
-    <p class="lede" style="max-width:58ch;margin-bottom:1.75rem">Da ne bude zabune: <strong>mi nismo bušačka firma.</strong> Nemamo garnituru i ne izlazimo na teren. Ono što radimo je da vas spojimo s ekipom koja radi na vašem terenu — i da vam prije toga kažemo šta vas realno čeka.</p>
     <div class="grid grid-3 reveal">
       ${steps.map(([n, t, b]) => `<div class="card">
         <span class="card-num">${n}</span>
@@ -84,7 +129,7 @@ export function homePage() {
 <section class="band" id="procjena">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Provjerite za svoju općinu</h2>
+      <h2 data-split>Provjerite za svoju općinu</h2>
       <span class="tag">Bez ostavljanja podataka</span>
     </div>
     <div class="stack gap-md">
@@ -95,11 +140,25 @@ export function homePage() {
   </div>
 </section>
 
+<section class="cine" aria-label="Voda iz bušotine">
+  <div class="cine-stage">
+    <div class="cine-media">
+      <video muted loop playsinline preload="none" poster="/assets/video/cine-voda-poster.webp"
+        data-src="/assets/video/cine-voda-1280.mp4" data-src-hd="/assets/video/cine-voda-1920.mp4" aria-hidden="true"></video>
+    </div>
+    <div class="cine-copy">
+      <p class="eyebrow">Probno crpljenje</p>
+      <h2>Trenutak kad <em class="s">voda krene</em>.</h2>
+      <p>Zbog tog trenutka se sve radi. Naš posao je da do njega dođete bez iznenađenja u cijeni.</p>
+    </div>
+  </div>
+</section>
+
 <section class="band band-deep">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Kako to izgleda na terenu</h2>
-      <span class="tag">Snimci s bušotina</span>
+      <h2 data-split>Kako izgleda bušenje</h2>
+      <span class="tag">Isplaka, stijena, voda</span>
     </div>
     <p class="lede" style="max-width:56ch;margin-bottom:1.75rem">Bušenje nije čist posao i ne pravimo se da jeste. Ovako izgleda isplaka, ovako stijena, i ovako trenutak kad voda krene.</p>
     ${videoShowcase()}
@@ -109,15 +168,15 @@ export function homePage() {
 <section class="band">
   <div class="wrap">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.25rem">
-      <div class="call">
+      <div class="call" data-rv>
         <span class="k">Cijena</span>
         <p><strong>${esc(priceFrom())}</strong>, ista za svaki teren. U cijeni su bušenje, kolona, filter, šljunčani zasip, tampon i ispiranje. Pumpa i elektro dolaze zasebno. <a href="/cijena/">Detaljno &rarr;</a></p>
       </div>
-      <div class="call">
+      <div class="call" data-rv=".08">
         <span class="k">Dozvola — najčešće ne treba</span>
         <p>Bunar na vlastitom zemljištu za kućne potrebe je <strong>opća upotreba voda</strong>, bez papira. Navodnjavanje i posao traže vodne akte. <a href="/dozvole/">Cijeli postupak &rarr;</a></p>
       </div>
-      <div class="call warn">
+      <div class="call warn" data-rv=".16">
         <span class="k">Kažemo i kad je teren loš</span>
         <p>Na kršu i fliškom terenu izdašnost zna izostati. To vam kažemo prvim pozivom, a ne na pola bušotine. <a href="/podrucja/">Šta je ispod vaše općine &rarr;</a></p>
       </div>
@@ -125,15 +184,17 @@ export function homePage() {
   </div>
 </section>
 
-${photoBand('garnitura-njiva', 'Ekipa na terenu. Prvo procjena telefonom, pa izlazak na parcelu.')}
-
-<section class="band band-alt">
+<section class="band band-alt" style="padding-bottom:0" aria-labelledby="podrucja-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Područja</h2>
-      <span class="tag">Teren odlučuje o dubini</span>
+      <h2 id="podrucja-h" data-split>${regions.length} općina. Od plitkog do dubokog.</h2>
+      <span class="tag">Obrub = preko 80 m</span>
     </div>
-    <p class="lede" style="max-width:60ch;margin-bottom:1.5rem">Bušenje u Semberiji i bušenje u Širokom Brijegu nisu isti posao. Cijena po metru je ista, ali se broj metara zna utrostručiti.</p>
+  </div>
+  ${rows.map(row => `<div class="marquee"><div class="marquee-track">
+    ${row.map(r => `<a href="/podrucja/${r.slug}/"${r.depth[1] > 80 ? ' class="deep"' : ''}>${esc(r.name)}<small>${r.depth[0]}–${r.depth[1]} m</small></a>`).join('')}
+  </div></div>`).join('\n  ')}
+  <div class="wrap" style="padding-block:2.5rem 4rem">
     <div class="regions-list reveal">
       ${tier1.map(r => `<a class="region-item" href="/podrucja/${r.slug}/">
         <span class="r-n">${esc(r.name)}</span>
@@ -148,8 +209,8 @@ ${photoBand('garnitura-njiva', 'Ekipa na terenu. Prvo procjena telefonom, pa izl
 <section class="band">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Galerija</h2>
-      <span class="tag">Strojevi, teren, materijal</span>
+      <h2 data-split>Strojevi, teren, materijal</h2>
+      <span class="tag">Ilustracije</span>
     </div>
     ${gallery()}
   </div>
@@ -158,7 +219,7 @@ ${photoBand('garnitura-njiva', 'Ekipa na terenu. Prvo procjena telefonom, pa izl
 <section class="band band-alt">
   <div class="wrap-narrow">
     <div class="sec-head">
-      <h2>Česta pitanja</h2>
+      <h2 data-split>Česta pitanja</h2>
       <span class="tag">Kratki odgovori</span>
     </div>
     ${faqBlock(homeFaq)}
@@ -174,6 +235,7 @@ ${ctaBand()}
     description: `Bušenje i kopanje bunara u cijeloj BiH, ${priceFrom()}. Povezujemo vas s provjerenim bušačkim ekipama — dubina, cijena i dozvola prije izlaska na teren.`,
     path: '/',
     body,
+    bodyClass: 'home',
     schema: [faqSchema(homeFaq)],
   })
 }

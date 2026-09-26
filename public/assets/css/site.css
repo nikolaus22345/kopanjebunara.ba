@@ -6,108 +6,51 @@
    (editorial authority) + IBM Plex Mono (depths, prices, codes).
    ========================================================================== */
 
-/* ---------- tokens ---------- */
+/* ---------- tokens ----------
+   v2: always dark. The site is about what is under the ground, so the page
+   is the ground: near-black teal, with water as the only bright colour.  */
 
 :root {
-  /* light */
-  --ground:        #EFF2F1;
-  --ground-alt:    #E6EBE9;
-  --surface:       #FFFFFF;
-  --surface-sunk:  #E7ECEA;
-  --ink:           #131E1C;
-  --ink-soft:      #475754;
-  --ink-faint:     #6F817D;
-  --rule:          #D2DAD8;
-  --rule-soft:     #E3E9E7;
+  color-scheme: dark;
 
-  --accent:        #0E6E63;
-  --accent-deep:   #0A544B;
-  --accent-sunk:   #DFEFEC;
-  --accent-ink:    #FFFFFF;
+  --ground:        #07100F;
+  --ground-alt:    #0B1615;
+  --surface:       #101C1A;
+  --surface-sunk:  #162321;
+  --ink:           #E7EEEC;
+  --ink-soft:      #9DB0AC;
+  --ink-faint:     #748985;
+  --rule:          #22322F;
+  --rule-soft:     #192725;
 
-  --ochre:         #A15A24;
-  --ochre-sunk:    #F4E8DC;
+  --accent:        #62DCC8;   /* water, lit */
+  --accent-deep:   #95EBDD;
+  --accent-sunk:   #0E2F2A;
+  --accent-ink:    #03201B;
 
-  --deep:          #0B1615;   /* underground / hero ground */
-  --deep-2:        #122220;
-  --deep-ink:      #E7EEEC;
-  --deep-soft:     #93A8A3;
-  --deep-rule:     #21332F;
-
-  --shadow-sm: 0 1px 2px rgba(19,30,28,.06);
-  --shadow:    0 1px 2px rgba(19,30,28,.05), 0 10px 30px -14px rgba(19,30,28,.22);
-  --shadow-lg: 0 2px 4px rgba(19,30,28,.05), 0 24px 60px -24px rgba(19,30,28,.3);
-
-  --display: "Barlow Condensed", "Arial Narrow", Helvetica, sans-serif;
-  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
-
-  --measure: 68ch;
-  --gutter: clamp(1.15rem, 4vw, 3rem);
-  --maxw: 76rem;
-  --radius: 3px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ground:        #0B1211;
-    --ground-alt:    #0F1917;
-    --surface:       #141F1D;
-    --surface-sunk:  #1B2725;
-    --ink:           #E6ECEA;
-    --ink-soft:      #9CADA9;
-    --ink-faint:     #788A86;
-    --rule:          #283733;
-    --rule-soft:     #1E2B28;
-
-    --accent:        #55C7B4;
-    --accent-deep:   #7FDCCB;
-    --accent-sunk:   #12332E;
-    --accent-ink:    #06211D;
-
-    --ochre:         #DB975F;
-    --ochre-sunk:    #33241A;
-
-    --deep:          #070E0D;
-    --deep-2:        #0D1817;
-    --deep-ink:      #E7EEEC;
-    --deep-soft:     #8FA4A0;
-    --deep-rule:     #1D2C29;
-
-    --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
-    --shadow:    0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.8);
-    --shadow-lg: 0 2px 4px rgba(0,0,0,.5), 0 24px 60px -24px rgba(0,0,0,.9);
-  }
-}
-
-:root[data-theme="dark"] {
-  --ground:        #0B1211;
-  --ground-alt:    #0F1917;
-  --surface:       #141F1D;
-  --surface-sunk:  #1B2725;
-  --ink:           #E6ECEA;
-  --ink-soft:      #9CADA9;
-  --ink-faint:     #788A86;
-  --rule:          #283733;
-  --rule-soft:     #1E2B28;
-
-  --accent:        #55C7B4;
-  --accent-deep:   #7FDCCB;
-  --accent-sunk:   #12332E;
-  --accent-ink:    #06211D;
-
-  --ochre:         #DB975F;
+  --ochre:         #E0A064;   /* iron in Posavina water, clay */
   --ochre-sunk:    #33241A;
 
-  --deep:          #070E0D;
-  --deep-2:        #0D1817;
+  --deep:          #040A09;
+  --deep-2:        #0A1413;
   --deep-ink:      #E7EEEC;
   --deep-soft:     #8FA4A0;
-  --deep-rule:     #1D2C29;
+  --deep-rule:     #1A2926;
 
   --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
   --shadow:    0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.8);
   --shadow-lg: 0 2px 4px rgba(0,0,0,.5), 0 24px 60px -24px rgba(0,0,0,.9);
+
+  --display: "Barlow Condensed", "Arial Narrow", Helvetica, sans-serif;
+  --serif:   "Instrument Serif", Georgia, serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --measure: 68ch;
+  --gutter: clamp(1.15rem, 4vw, 3.5rem);
+  --maxw: 84rem;
+  --radius: 4px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
 }
 
 /* ---------- reset ---------- */

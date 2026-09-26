@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 /* ==========================================================================
-   MEDIA PIPELINE — run once, or whenever the source media changes.
+   MEDIA PIPELINE — brand assets (logo, favicon, OG card, client hero).
+
+   ⚠ Photos and videos are now produced by media-ai.mjs. Running this file
+   in full would bring back the third-party stock and TikTok material that
+   was removed (MEDIA.md) and overwrite the manifest. Only run it for the
+   brand steps, and re-run `node media-ai.mjs` afterwards.
 
      node media.mjs                              # uses SRC below
      node media.mjs "D:\\path\\to\\fotografije"   # or pass a folder

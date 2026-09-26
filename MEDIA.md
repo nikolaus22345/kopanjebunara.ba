@@ -1,5 +1,26 @@
 # Media — what's on the site, and what needs clearing
 
+## ✅ Current state (Sep 2026): third-party media removed
+
+Every Shutterstock / Facebook / Google Images photo and every TikTok clip
+listed below has been **deleted** from `public/assets` and replaced with
+**AI-generated** media (KIE AI: Nano Banana 2 for photos, Veo 3.1 for video),
+under the same slugs, so every page kept working without code changes.
+
+```bash
+node media-ai.mjs     # media-src/ (not committed) -> public/assets/{photo,video} + src/data/media.mjs
+```
+
+- 11 photos: the 8 old slugs + `voda`, `krs-teren`, `posavina`. JPEG + WebP at 640/1280/1920.
+- 3 showcase clips (same slugs as before) + `cine-voda` for the home video band.
+- **Still client-supplied, untouched:** hero art (`public/assets/hero`), logo, favicon, OG card — `media.mjs` owns those.
+
+These are illustrations of the trade, not footage of our partners' jobs, so
+the copy no longer calls them "snimci s bušotina". Real partner footage is
+still the best thing this site could get; drop it in `media-src/` and rerun.
+
+The rest of this file is the history of why the originals had to go.
+
 The originals live outside the repo (`~/Downloads/kopanje bunara`). Only optimised derivatives are committed. Regenerate with:
 
 ```bash

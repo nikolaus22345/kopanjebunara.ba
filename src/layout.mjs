@@ -53,6 +53,7 @@ const footer = () => `
         <ul>${col.links.map(l => `<li><a href="${l.href}">${esc(l.label)}</a></li>`).join('')}</ul>
       </div>`).join('')}
     </div>
+    <div class="footer-word" aria-hidden="true">Kopanje<span>Bunara</span></div>
     <div class="footer-bottom">
       <span>&copy; ${new Date().getFullYear()} ${esc(site.name)}</span>
       <span>Bušenje bunara &middot; Bosna i Hercegovina</span>
@@ -138,7 +139,7 @@ const breadcrumbSchema = (path) => {
 
 /* ---------- page shell ---------- */
 
-const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap'
+const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap'
 
 /* GA4. Google's snippet loads gtag.js unconditionally; this wraps it in a
    hostname check so localhost builds and Vercel preview deployments don't
@@ -180,6 +181,7 @@ export function page({
   schema = [],
   bodyClass = '',
   noindex = false,
+  preload = '',
 }) {
   const origin = site.origin.replace(/\/$/, '')
   const canonical = origin + path
@@ -201,7 +203,7 @@ export function page({
 <link rel="canonical" href="${canonical}">
 <meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}">${site.googleSiteVerification ? `
 <meta name="google-site-verification" content="${esc(site.googleSiteVerification)}">` : ''}
-<meta name="theme-color" content="#0B1615">
+<meta name="theme-color" content="#040A09">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="bs_BA">
 <meta property="og:site_name" content="${esc(site.name)}">
@@ -222,6 +224,7 @@ export function page({
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/v2.css">${preload}
 <link rel="preload" as="style" href="${FONT_CSS}">
 <link rel="stylesheet" href="${FONT_CSS}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="${FONT_CSS}"></noscript>
@@ -235,7 +238,7 @@ ${header(path)}
 ${body}
 </main>
 ${footer()}
-<script src="/assets/js/site.js" defer></script>
+<script type="module" src="/assets/js/main.js"></script>
 </body>
 </html>`
 }
