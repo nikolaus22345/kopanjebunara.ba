@@ -184,11 +184,15 @@ if (hero) {
   if (gl && !REDUCED && !saveData && canvas) {
     const types = JSON.parse($('#well-data')?.textContent || '{}')
     const initial = buttons.find(b => b.getAttribute('aria-pressed') === 'true')?.dataset.type || Object.keys(types)[0]
-    const start = () => import('./well3d.js').then(({ mountWell }) => {
+    // Start straight away: the headline is plain HTML and the chunk is
+    // modulepreloaded, so waiting for idle only delayed the model. If the
+    // chunk fails, drop the .gl flag so the photo fallback comes back.
+    import('./well3d.js').then(({ mountWell }) => {
       api = mountWell({ canvas, types, initial, onFrame, onReady: () => hero.classList.add('gl-on') })
       api.setProgress(st.progress)
-    })
-    'requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 1200 }) : setTimeout(start, 300)
+    }).catch(() => document.documentElement.classList.remove('gl'))
+  } else {
+    document.documentElement.classList.remove('gl')
   }
 }
 

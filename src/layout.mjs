@@ -224,7 +224,17 @@ export function page({
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
-<link rel="stylesheet" href="/assets/css/v2.css">${preload}
+<link rel="stylesheet" href="/assets/css/v2.css">${preload}${/\bhome\b/.test(bodyClass) ? `
+<script>
+/* Decide before first paint whether the 3D hero will run. If it will, the
+   photo fallback is never shown, so nobody sees one hero swap for another. */
+(function () { try {
+  var c = document.createElement('canvas')
+  if ((c.getContext('webgl2') || c.getContext('webgl')) &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+      !(navigator.connection && navigator.connection.saveData)) document.documentElement.classList.add('gl')
+} catch (e) {} })()
+</script>` : ''}
 <link rel="preload" as="style" href="${FONT_CSS}">
 <link rel="stylesheet" href="${FONT_CSS}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="${FONT_CSS}"></noscript>

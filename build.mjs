@@ -201,21 +201,61 @@ const vercelJson = () => JSON.stringify({
    output is committed, so if esbuild is missing (a bare host with no
    npm install) the build keeps the last bundle instead of failing. */
 async function bundleJs() {
+  const dir = join(OUT, 'assets', 'js')
   let esbuild
   try { esbuild = await import('esbuild') } catch {
     console.log('  ! esbuild nije instaliran — zadržavam postojeći public/assets/js')
-    return
+    return existingBundle(dir)
   }
-  const dir = join(OUT, 'assets', 'js')
   if (existsSync(dir)) for (const f of await readdir(dir)) await rm(join(dir, f))
+  /* Content-hashed names. /assets/* is served with a one-year immutable
+     cache (vercel.json), so a fixed "main.js" would keep returning
+     visitors on the old bundle forever after a deploy. */
   const r = await esbuild.build({
     entryPoints: [join(ROOT, 'src/client/main.js')],
     bundle: true, splitting: true, format: 'esm', minify: true, target: 'es2020',
-    outdir: dir, chunkNames: 'chunk-[hash]', metafile: true, logLevel: 'warning',
+    outdir: dir, entryNames: '[name]-[hash]', chunkNames: 'chunk-[hash]', metafile: true, logLevel: 'warning',
   })
-  const sizes = Object.entries(r.metafile.outputs).filter(([f]) => f.endsWith('.js'))
-    .map(([f, o]) => `${f.split(/[\\/]/).pop()} ${Math.round(o.bytes / 1024)}k`)
-  console.log(`  js: ${sizes.join(' · ')}`)
+  const outs = Object.entries(r.metafile.outputs).filter(([f]) => f.endsWith('.js'))
+    .map(([f, o]) => ({ name: f.split(/[\/]/).pop(), bytes: o.bytes, entry: !!o.entryPoint }))
+  console.log(`  js: ${outs.map(o => `${o.name} ${Math.round(o.bytes / 1024)}k`).join(' · ')}`)
+  return pickBundle(outs)
+}
+
+async function existingBundle(dir) {
+  const outs = []
+  for (const name of await readdir(dir)) outs.push({ name, bytes: (await stat(join(dir, name))).size, entry: name.startsWith('main-') })
+  return pickBundle(outs)
+}
+
+// main entry, plus the three.js chunk (the big one) for modulepreload
+// (by name: esbuild also marks the dynamic-import target as an entry point)
+const pickBundle = outs => ({
+  main: outs.find(o => o.name.startsWith('main-'))?.name,
+  three: outs.filter(o => !o.name.startsWith('main-')).sort((a, b) => b.bytes - a.bytes)[0]?.name,
+})
+
+/* CSS keeps its path; a content hash in the query busts the same cache. */
+async function cssVersions() {
+  const { createHash } = await import('node:crypto')
+  const { readFile } = await import('node:fs/promises')
+  const v = {}
+  for (const f of ['site.css', 'v2.css']) {
+    v[f] = createHash('sha1').update(await readFile(join(OUT, 'assets', 'css', f))).digest('hex').slice(0, 10)
+  }
+  return v
+}
+
+function revision(html, js, css) {
+  let out = html
+    .replaceAll('/assets/js/main.js', `/assets/js/${js.main}`)
+    .replace('/assets/css/site.css"', `/assets/css/site.css?v=${css['site.css']}"`)
+    .replace('/assets/css/v2.css"', `/assets/css/v2.css?v=${css['v2.css']}"`)
+  if (js.three && out.includes('id="well-data"')) {
+    out = out.replace('</head>', `<link rel="modulepreload" href="/assets/js/${js.three}">
+</head>`)
+  }
+  return out
 }
 
 /* ---------- run ---------- */
@@ -234,6 +274,10 @@ async function build() {
   /* SEO guards — titles and descriptions drift long as copy gets edited, and
      Google truncates around 60 / 160 characters. Warn loudly instead of
      silently shipping clipped snippets. */
+  const js = await bundleJs()
+  const css = await cssVersions()
+  if (!js.main) throw new Error('nema JS paketa u public/assets/js')
+
   const warnings = []
   for (const p of pages) {
     const html = p.html
@@ -242,10 +286,8 @@ async function build() {
     if (t.length > 62) warnings.push(`${p.path} — title ${t.length} zn.: ${t}`)
     if (d.length > 160) warnings.push(`${p.path} — description ${d.length} zn.`)
     if (!d) warnings.push(`${p.path} — nema description`)
-    await write(outPathFor(p.path), injectEstimator(html))
+    await write(outPathFor(p.path), revision(injectEstimator(html), js, css))
   }
-
-  await bundleJs()
 
   await write(join(OUT, 'sitemap.xml'), sitemap())
   await write(join(OUT, 'robots.txt'), robots())

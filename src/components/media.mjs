@@ -185,15 +185,18 @@ export function presjekBunara() {
    cells, landscape ones get wide cells. Nothing is upscaled past its source
    width, so the low-resolution files are only ever given small cells.
    -------------------------------------------------------------------------- */
+/* The spans must add up to whole rows of the 4-column grid, or the last row
+   shows empty cells: big 4 + wide 2+2 + tall 2+2 + 1+1 + wide 2 = 16 = 4x4.
+   The two portrait sources take the tall cells. */
 const GALLERY = [
   ['garnitura-brdo', 'g-big', 'Brdski teren — isplaka izlazi iz bušotine'],
   ['isplaka-blizu', 'g-wide', 'Rotaciono bušenje s isplakom, izbliza'],
-  ['kolone-cijevi', 'g-wide', 'Zaštitne kolone i spojnice'],
+  ['kolone-cijevi', 'g-wide', 'Zaštitne kolone, filter i šljunak'],
   ['garnitura-njiva', 'g-tall', 'Kamionska garnitura na ravnom terenu'],
   ['garnitura-gusjenicar', '', 'Gusjeničar za teško dostupne parcele'],
   ['garnitura-velika', '', 'Velika garnitura na kamenitom terenu'],
-  ['svrdlo-dvoriste', '', 'Rad u dvorištu kuće'],
-  ['garnitura-sumrak', '', 'Garnitura na terenu u sumrak'],
+  ['garnitura-sumrak', 'g-tall', 'Garnitura na terenu u sumrak'],
+  ['svrdlo-dvoriste', 'g-wide', 'Bušenje u dvorištu kuće'],
 ]
 
 export function gallery() {
