@@ -10,19 +10,19 @@ import { photo, presjekBunara, videoShowcase, photoBand } from '../components/me
 const sFaq = [
   {
     q: 'Koja je razlika između kopanja i bušenja bunara?',
-    a: '<p>Kopani bunar se radi ručno ili mini-bagerom, širok je i plitak, i obziđuje se. Danas se praktički ne radi — opasan je za izvođenje i lako se zagadi s površine.</p><p><strong>Bušeni bunar</strong> se izvodi strojem, uzak je i dubok, obložen kolonom i zabrtvljen. To je ono što danas znači „bunar“, iako ljudi i dalje govore „kopanje bunara“.</p>',
+    a: '<p>Kopani bunar se radi ručno ili mini-bagerom, širok je i plitak, i obziđuje se. Danas se praktički ne radi. Opasan je za izvođenje i lako se zagadi s površine.</p><p><strong>Bušeni bunar</strong> se izvodi strojem, uzak je i dubok, obložen kolonom i zabrtvljen. To je ono što danas znači "bunar", iako ljudi i dalje govore "kopanje bunara".</p>',
   },
   {
     q: 'Šta je arteški bunar?',
-    a: '<p>Pravi arteški bunar je onaj kod kojeg je voda pod pritiskom pa sama izlazi na površinu bez pumpe. Takvi uslovi u BiH postoje, ali su rijetki i vezani za određene geološke strukture.</p><p>U svakodnevnom govoru „arteški bunar“ znači <strong>svaki dublji bušeni bunar</strong>. Ako ste to tražili — tražili ste bušeni bunar, i to je ono što radimo.</p>',
+    a: '<p>Pravi arteški bunar je onaj kod kojeg je voda pod pritiskom pa sama izlazi na površinu bez pumpe. Takvi uslovi u BiH postoje, ali su rijetki i vezani za određene geološke strukture.</p><p>U svakodnevnom govoru "arteški bunar" znači <strong>svaki dublji bušeni bunar</strong>. Ako ste to tražili, tražili ste bušeni bunar. To je ono što radimo.</p>',
   },
   {
     q: 'Može li stroj doći do moje parcele?',
-    a: '<p>To je jedno od prvih pitanja koje ćemo vam postaviti. Bušaća garnitura je kamion ili gusjeničar i treba joj prilaz i prostor za manevar.</p><p>Za teško dostupne parcele postoje manji strojevi, ali imaju ograničenu dubinu. Recite nam kakav je pristup — to mijenja i izbor ekipe i cijenu.</p>',
+    a: '<p>To je jedno od prvih pitanja koje ćemo vam postaviti. Bušaća garnitura je kamion ili gusjeničar i treba joj prilaz i prostor za manevar.</p><p>Za teško dostupne parcele postoje manji strojevi, ali imaju ograničenu dubinu. Recite nam kakav je pristup. To mijenja i izbor ekipe i cijenu.</p>',
   },
   {
     q: 'Koliko daleko od kuće ili septičke jame mora biti bunar?',
-    a: '<p>Što dalje od septičke jame, štale i đubrišta — to je pravilo koje vrijedi svugdje, a najviše na plitkim aluvijalnim izdanima. Konkretna udaljenost zavisi od terena i lokalnih uslova.</p><p>Ekipa to određuje na licu mjesta, prije nego stroj krene. Pravilno izveden tampon štiti bunar, ali ne poništava lošu poziciju.</p>',
+    a: '<p>Što dalje od septičke jame, štale i đubrišta. To pravilo vrijedi svugdje, a najviše na plitkim aluvijalnim izdanima. Konkretna udaljenost zavisi od terena i lokalnih uslova.</p><p>Ekipa to određuje na licu mjesta, prije nego stroj krene. Pravilno izveden tampon štiti bunar, ali ne poništava lošu poziciju.</p>',
   },
   {
     q: 'Radite li i zimi?',
@@ -35,7 +35,7 @@ const forWhom = [
   ['Vikendica i objekt van mreže', 'Tamo gdje vodovod ne dolazi ili je priključenje skuplje od bunara. Često i jedina realna opcija.'],
   ['Poljoprivreda', 'Navodnjavanje voćnjaka, plastenika i njiva. Ovdje je ključna stabilnost izdašnosti u julu i augustu, ne trenutna brojka.'],
   ['Stočarstvo', 'Napajanje stoke traži stalan i pouzdan dotok. Bunar se dimenzionira prema vršnoj potrošnji, ne prosjeku.'],
-  ['Poslovni objekti', 'Pogoni, ugostiteljstvo, autopraonice. Ovdje gotovo uvijek trebaju vodni akti — planirajte ih od početka.'],
+  ['Poslovni objekti', 'Pogoni, ugostiteljstvo, autopraonice. Ovdje gotovo uvijek trebaju vodni akti. Planirajte ih od početka.'],
   ['Toplotne pumpe', 'Bušotine za geotermalne sonde ili sistem voda-voda. Drugi proračun i druga oprema, ali ista mehanizacija.'],
 ]
 
@@ -45,7 +45,7 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Bušenje bunara' }])}
 ${pageHead({
     eyebrow: 'Osnovna usluga',
     title: 'Bušenje i kopanje bunara u BiH',
-    lede: 'Bušenje, opremanje i ispitivanje bunara za domaćinstva, poljoprivredu i poslovne objekte — u cijeloj Bosni i Hercegovini, s ekipama koje imaju vlastite strojeve i registrovanu djelatnost.',
+    lede: 'Bušenje, opremanje i ispitivanje bunara za kuće, poljoprivredu i poslovne objekte. U cijeloj Bosni i Hercegovini, s ekipama koje imaju svoje strojeve i registrovanu djelatnost.',
     extra: `<div class="btn-row">
       <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
       <a class="btn btn-ghost btn-lg" href="/#procjena">Procijeni za svoju općinu</a>
@@ -55,7 +55,7 @@ ${pageHead({
 <section class="band">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Tri vrste bunara — i zašto se danas radi samo jedna</h2>
+      <h2>Tri vrste bunara, a danas se radi samo jedna</h2>
       <span class="tag">Kopani, pobijeni, bušeni</span>
     </div>
     <div class="grid grid-3">
@@ -77,8 +77,8 @@ ${pageHead({
     </div>
 
     <div class="call" style="margin-top:1.75rem">
-      <span class="k">O riječi „arteški“</span>
-      <p>Većina ljudi u BiH kaže <strong>arteški bunar</strong> misleći na svaki dublji bušeni bunar. Tehnički, arteški je samo onaj kod kojeg voda pod pritiskom sama izlazi na površinu — a to je rijetkost. Ne ispravljamo vas kad zovete; samo da znate da nije svaka duboka bušotina arteška, i da vam niko ne bi trebao naplatiti „arteški“ kao poseban proizvod.</p>
+      <span class="k">O riječi "arteški"</span>
+      <p>Većina ljudi u BiH kaže <strong>arteški bunar</strong> misleći na svaki dublji bušeni bunar. Tehnički, arteški je samo onaj kod kojeg voda pod pritiskom sama izlazi na površinu. To je rijetkost. Ne ispravljamo vas kad zovete. Samo da znate: nije svaka duboka bušotina arteška, i niko vam ne bi trebao naplatiti "arteški" kao poseban proizvod.</p>
     </div>
   </div>
 </section>
@@ -92,7 +92,7 @@ ${pageHead({
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1.25rem">
       <div class="panel panel-accent">
         <h3>Rotaciono s isplakom</h3>
-        <p>Standard u mekim naslagama — glina, pijesak, šljunak. Isplaka hladi alat, iznosi izbušeni materijal i drži zid bušotine stabilnim dok se ne ugradi kolona.</p>
+        <p>Standard u mekim naslagama: glina, pijesak, šljunak. Isplaka hladi alat, iznosi izbušeni materijal i drži zid bušotine stabilnim dok se ne ugradi kolona.</p>
         <p class="note">Koristi se u Posavini, Semberiji, Lijevču i riječnim dolinama.</p>
       </div>
       <div class="panel panel-accent">
@@ -112,9 +112,9 @@ ${pageHead({
 <section class="band">
   <div class="wrap">
     <div class="pgrid pgrid-3">
-      ${photo('isplaka-blizu', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Rotaciono bušenje s isplakom — meke naslage, pijesak i šljunak.' })}
-      ${photo('garnitura-velika', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Velika garnitura na kamenitom terenu — pneumatski čekić za stijenu i krš.' })}
-      ${photo('garnitura-gusjenicar', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Gusjeničar za teško dostupne parcele — dolazi gdje kamion ne može.' })}
+      ${photo('isplaka-blizu', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Rotaciono bušenje s isplakom. Za meke naslage, pijesak i šljunak.' })}
+      ${photo('garnitura-velika', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Velika garnitura na kamenitom terenu. Pneumatski čekić za stijenu i krš.' })}
+      ${photo('garnitura-gusjenicar', { sizes: '(max-width: 860px) 100vw, 30vw', ratio: '4/3', caption: 'Gusjeničar za teško dostupne parcele. Dolazi gdje kamion ne može.' })}
     </div>
   </div>
 </section>
@@ -179,7 +179,7 @@ ${pageHead({
     </div>
     <div class="call warn" style="margin-top:1.75rem">
       <span class="k">Namjena određuje i pravni režim</span>
-      <p>Kućne potrebe su opća upotreba voda i ne traže dozvolu. Navodnjavanje i poslovna namjena traže vodne akte. <a href="/dozvole/">Provjerite u koju grupu spadate &rarr;</a></p>
+      <p>Kućne potrebe su opća upotreba voda i ne traže dozvolu. Navodnjavanje i poslovna namjena traže vodne akte. <a href="/dozvole/">Provjerite u koju grupu spadate</a></p>
     </div>
   </div>
 </section>
@@ -210,18 +210,18 @@ ${ctaBand()}
 const steps = [
   {
     n: '1', when: 'Isti dan', t: 'Poziv i procjena',
-    b: 'Trebamo četiri stvari: općinu i najbliže naselje, namjenu vode, pristup parceli za kamion, i — ako znate — dubinu najbližeg postojećeg bunara. Ta zadnja informacija je najbolji besplatan pokazatelj u ovom poslu i često nam kaže više od svega ostalog.',
+    b: 'Trebamo četiri stvari: općinu i najbliže naselje, namjenu vode i pristup za kamion. Četvrta je dubina najbližeg bunara, ako je znate. To je najbolji besplatan pokazatelj u ovom poslu.',
     out: 'Dobijate: realan raspon dubine i cijene, procjenu izvodljivosti i odgovor treba li vam dozvola.',
   },
   {
-    n: '2', when: '2–7 dana', t: 'Izlazak na teren',
+    n: '2', when: '2-7 dana', t: 'Izlazak na teren',
     b: 'Ekipa provjerava pristup i prostor za manevar, poziciju u odnosu na objekte, granicu parcele, septičku jamu i podzemne instalacije. Određuje se tačno mjesto bušenja i potvrđuje konačna ponuda.',
-    out: 'Dobijate: pismenu ponudu sa specifikacijom — dubina, promjer, materijal kolone, šta ulazi u cijenu.',
+    out: 'Dobijate pismenu ponudu: dubina, promjer, materijal kolone i šta ulazi u cijenu.',
   },
   {
-    n: '3', when: '1–7 dana', t: 'Bušenje',
-    b: 'U aluviju rotacijom s isplakom, u stijeni pneumatskim čekićem. Tokom bušenja se prati profil — koji sloj na kojoj dubini — jer to određuje gdje ide filter. U aluviju posao traje dan do dva, u stijeni i do sedam dana.',
-    out: 'Dobijate: profil bušotine — koji materijal je nabušen na kojoj dubini.',
+    n: '3', when: '1-7 dana', t: 'Bušenje',
+    b: 'U aluviju rotacijom s isplakom, u stijeni pneumatskim čekićem. Tokom bušenja se prati koji sloj je na kojoj dubini. To određuje gdje ide filter. U aluviju posao traje dan do dva, u stijeni i do sedam dana.',
+    out: 'Dobijate profil bušotine: koji materijal je na kojoj dubini.',
   },
   {
     n: '4', when: 'Isti dan', t: 'Ugradnja kolone i filtera',
@@ -229,7 +229,7 @@ const steps = [
     out: 'Ovo je korak koji se najčešće preskače kod jeftinih ponuda. Tražite da bude u ponudi.',
   },
   {
-    n: '5', when: '1–2 dana', t: 'Razrada i probno crpljenje',
+    n: '5', when: '1-2 dana', t: 'Razrada i probno crpljenje',
     b: 'Bunar se ispira dok voda ne bude bistra, pa se mjeri stvarna izdašnost: prvo step-test na tri različita kapaciteta, zatim kontinuirano crpljenje. U aluviju najmanje 36 sati, u pukotinskoj stijeni znatno duže.',
     out: 'Dobijate: izmjerenu izdašnost i nivo vode. Tek sada se zna koja pumpa vam treba.',
   },
@@ -239,17 +239,17 @@ const steps = [
     out: 'Dobijate: funkcionalan sistem i podatke o ugrađenoj opremi.',
   },
   {
-    n: '7', when: '5–15 dana', t: 'Analiza vode',
-    b: 'Uzorak se šalje na bakteriološku i hemijsku analizu. Nalaz kaže je li voda ispravna za piće i treba li tretman — u Posavini je najčešće filter za željezo i mangan.',
+    n: '7', when: '5-15 dana', t: 'Analiza vode',
+    b: 'Uzorak se šalje na bakteriološku i hemijsku analizu. Nalaz kaže je li voda ispravna za piće i treba li tretman. U Posavini je to najčešće filter za željezo i mangan.',
     out: 'Dobijate: nalaz i, ako treba, prijedlog tretmana s cijenom.',
   },
 ]
 
 const STEP_PHOTO = {
-  '2': ['garnitura-gusjenicar', 'Provjera pristupa i prostora za garnituru — prije bilo kakvog dogovora.'],
-  '3': ['garnitura-brdo', 'Bušenje u toku — isplaka iznosi izbušeni materijal na površinu.'],
+  '2': ['garnitura-gusjenicar', 'Provjera pristupa i prostora za garnituru, prije bilo kakvog dogovora.'],
+  '3': ['garnitura-brdo', 'Bušenje u toku. Isplaka iznosi izbušeni materijal na površinu.'],
   '4': ['kolone-cijevi', 'Kolona i filterska cijev prije spuštanja u bušotinu.'],
-  '6': ['svrdlo-dvoriste', 'Rad u dvorištu — bunar se pozicionira što dalje od septičke jame.'],
+  '6': ['svrdlo-dvoriste', 'Rad u dvorištu. Bunar ide što dalje od septičke jame.'],
 }
 
 export function postupakPage() {
@@ -291,12 +291,12 @@ ${pageHead({
       <div class="card"><span class="card-num">01</span><h3>Lokacija</h3><p>Općina i najbliže naselje ili rijeka. Ne treba nam tačna adresa dok ne dogovorimo posao.</p></div>
       <div class="card"><span class="card-num">02</span><h3>Namjena</h3><p>Domaćinstvo, vrt, navodnjavanje ili posao. Ovo određuje i izdašnost i papire.</p></div>
       <div class="card"><span class="card-num">03</span><h3>Pristup</h3><p>Može li kamion do mjesta bušenja i koliko ima prostora za manevar.</p></div>
-      <div class="card"><span class="card-num">04</span><h3>Susjedni bunar</h3><p>Ako znate koliko je dubok najbliži postojeći bunar — to je zlata vrijedan podatak.</p></div>
+      <div class="card"><span class="card-num">04</span><h3>Susjedni bunar</h3><p>Ako znate koliko je dubok najbliži bunar, to je zlata vrijedan podatak.</p></div>
     </div>
   </div>
 </section>
 
-${photoBand('garnitura-sumrak', 'Posao ne staje kad padne mrak — ali ni tada ne obećavamo ono što teren ne daje.')}
+${photoBand('garnitura-sumrak', 'Posao ne staje kad padne mrak. Ali ni tada ne obećavamo ono što teren ne daje.')}
 
 <section class="band">
   <div class="wrap">
@@ -311,7 +311,7 @@ ${photoBand('garnitura-sumrak', 'Posao ne staje kad padne mrak — ali ni tada n
       </div>
       <div class="call warn">
         <span class="k">Dublje nego procijenjeno</span>
-        <p>Procjena je procjena. Ako se ide dublje, to se plaća po ugovorenoj cijeni po metru — ali se <strong>dogovara prije nego se nastavi</strong>, ne saopštava na kraju.</p>
+        <p>Procjena je procjena. Ako se ide dublje, plaća se po ugovorenoj cijeni po metru. Ali se to <strong>dogovara prije nego se nastavi</strong>, a ne saopštava na kraju.</p>
       </div>
       <div class="call warn">
         <span class="k">Voda nije za piće</span>
@@ -329,7 +329,7 @@ ${ctaBand('Prvi korak je jedan telefonski razgovor.')}
 `
 
   return page({
-    title: 'Bušenje bunara — postupak korak po korak',
+    title: 'Bušenje bunara: postupak korak po korak',
     description: 'Sedam koraka izrade bunara: procjena, bušenje, kolona i filter, razrada i probno crpljenje, pumpa i analiza vode. Šta traje koliko i šta dobijete.',
     path: '/postupak/',
     body,

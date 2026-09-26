@@ -127,16 +127,16 @@ const llms = () => {
 
   return `# ${site.name}
 
-> ${site.role} Bušenje i kopanje bunara u cijeloj Bosni i Hercegovini. Cijena je od ${site.pricing.from} KM po metru. Nismo bušači — povezujemo vas s ekipama koje buše, i kažemo vam unaprijed dubinu, cijenu i treba li dozvola.
+> ${site.role} Bušenje i kopanje bunara u cijeloj Bosni i Hercegovini. Cijena je od ${site.pricing.from} KM po metru. Ne bušimo sami. Radimo s provjerenim bušačkim ekipama i unaprijed kažemo dubinu, cijenu i treba li dozvola.
 
-Kontakt: ${site.phone} · ${site.email}
+Kontakt: ${site.phone}, ${site.email}
 
 ## Ključne činjenice
 
-- Cijena bušenja bunara: od ${site.pricing.from} KM po metru, ključ u ruke, bez pumpe. Ista je bez obzira na teren — ono što mijenja ukupnu cijenu je dubina.
-- Dubina: 15–40 m u Posavini i Semberiji, 25–80 m u središnjoj Bosni, 40–150 m u kršu.
+- Cijena bušenja bunara: od ${site.pricing.from} KM po metru, ključ u ruke, bez pumpe. Ista je bez obzira na teren. Ukupnu cijenu mijenja samo dubina.
+- Dubina: 15-40 m u Posavini i Semberiji, 25-80 m u središnjoj Bosni, 40-150 m u kršu.
 - Dozvola: bunar na vlastitom zemljištu za potrebe domaćinstva je opća upotreba voda i NE traži dozvolu, ni u FBiH ni u RS. Navodnjavanje i poslovna namjena traže vodne akte. Kriterij je namjena vode, a ne dubina bunara.
-- Vodne akte izdaju: u FBiH agencije za vodna područja (Sava — Sarajevo, Jadransko more — Mostar); u RS JU „Vode Srpske“; u Brčko distriktu organ Distrikta.
+- Vodne akte izdaju: u FBiH agencije za vodna područja (Sava u Sarajevu, Jadransko more u Mostaru). U RS izdaje JU "Vode Srpske". U Brčko distriktu izdaje organ Distrikta.
 - Kompletan bunar sadrži sedam stavki: bušenje, zaštitnu kolonu, filtersku cijev, šljunčani zasip, tampon, razradu s probnim crpljenjem, i opremu. Ponuda bez tampona i probnog crpljenja nije kompletan bunar.
 
 ## Glavne stranice
@@ -163,7 +163,7 @@ ${['aluvij', 'mjesovito', 'flis', 'krs'].map(k => {
   if (!rs.length) return ''
   return `### ${aquiferTypes[k].label}\n\n` + rs
     .sort((a, b) => a.name.localeCompare(b.name, 'bs'))
-    .map(r => `- [${r.name}](${origin}/podrucja/${r.slug}/): očekivana dubina ${r.depth[0]}–${r.depth[1]} m, ${r.entity}.`)
+    .map(r => `- [${r.name}](${origin}/podrucja/${r.slug}/): očekivana dubina ${r.depth[0]}-${r.depth[1]} m, ${r.entity}.`)
     .join('\n')
 }).filter(Boolean).join('\n\n')}
 `
@@ -311,11 +311,11 @@ async function build() {
   if (warnings.length) {
     console.log(`\n  ⚠ ${warnings.length} SEO upozorenja:`)
     for (const w of warnings.slice(0, 12)) console.log(`    · ${w}`)
-    if (warnings.length > 12) console.log(`    · … i još ${warnings.length - 12}`)
+    if (warnings.length > 12) console.log(`    · ... i još ${warnings.length - 12}`)
   }
 
   console.log(`\n  ✓ ${pages.length} stranica  ·  ${regions.length} područja  ·  ${kb.toFixed(0)} KB  ·  ${Date.now() - t0} ms`)
-  console.log(`  → ${OUT}`)
+  console.log(`  ${OUT}`)
   console.log(`\n  Pregled:  npx serve public\n`)
 }
 

@@ -56,7 +56,7 @@ const footer = () => `
     <div class="footer-word" aria-hidden="true">Kopanje<span>Bunara</span></div>
     <div class="footer-bottom">
       <span>&copy; ${new Date().getFullYear()} ${esc(site.name)}</span>
-      <span>Bušenje bunara &middot; Bosna i Hercegovina</span>
+      <span>Bušenje bunara u Bosni i Hercegovini</span>
     </div>
   </div>
 </footer>
@@ -213,7 +213,7 @@ export function page({
 <meta property="og:image" content="${origin}/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(site.name)} — bušenje i kopanje bunara u Bosni i Hercegovini">
+<meta property="og:image:alt" content="${esc(site.name)}: bušenje i kopanje bunara u Bosni i Hercegovini">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(fullTitle)}">
 <meta name="twitter:description" content="${esc(description)}">
@@ -324,7 +324,7 @@ export const ctaBand = (heading = 'Gdje je parcela? Recite nam, a mi vam kažemo
       <div class="stack gap-md">
         <p class="eyebrow">Besplatna procjena</p>
         <h2>${esc(heading)}</h2>
-        <p class="lede">Jedan poziv je dovoljan. Kažete općinu i za šta vam treba voda, a mi vam damo realnu dubinu i cijenu — i tek onda ide izlazak na teren.</p>
+        <p class="lede">Jedan poziv je dovoljan. Kažete općinu i za šta vam treba voda. Mi vam damo realnu dubinu i cijenu. Tek onda ide izlazak na teren.</p>
       </div>
       <div class="call-card">
         <p class="hours">Pozovite direktno</p>

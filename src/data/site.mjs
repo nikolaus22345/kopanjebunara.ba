@@ -21,7 +21,7 @@ export const site = {
   viberHref: '+38763050308',           // usually same number
   whatsappHref: '38763050308',         // wa.me form, no plus
   email: 'info@kopanjebunara.ba',
-  hours: 'Pon–Sub, 07:00–20:00',
+  hours: 'Pon-Sub, 07:00-20:00',
 
   // --- deployment -------------------------------------------------------
   // Canonical origin. Feeds canonical URLs, sitemap.xml, llms.txt, Open
@@ -73,7 +73,7 @@ export const site = {
   // --- positioning ------------------------------------------------------
   // Honest description of what we are. See KNOWLEDGE-BASE.md §7.3 —
   // we must NOT present ourselves as the drilling contractor.
-  role: 'Bušenje bunara s provjerenim ekipama širom Bosne i Hercegovine — dubinu i cijenu znate unaprijed.',
+  role: 'Bušenje bunara s provjerenim ekipama širom Bosne i Hercegovine. Dubinu i cijenu znate unaprijed.',
 }
 
 export const nav = [

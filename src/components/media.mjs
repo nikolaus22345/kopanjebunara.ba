@@ -1,4 +1,6 @@
-import { photoBySlug, videos, heroBySlug } from '../data/media.mjs'
+import { photoBySlug, videos, heroBySlug, mediaVersion } from '../data/media.mjs'
+
+const V = `?v=${mediaVersion}`
 import { esc, icon } from '../layout.mjs'
 
 /* --------------------------------------------------------------------------
@@ -19,7 +21,7 @@ export function photo(slug, opts = {}) {
   if (!p) return `<!-- nema fotografije: ${esc(slug)} -->`
 
   const { sizes = '(max-width: 860px) 100vw, 50vw', priority = false, ratio, cls = '', caption, alt } = opts
-  const set = ext => p.widths.map(w => `/assets/photo/${p.slug}-${w}.${ext} ${w}w`).join(', ')
+  const set = ext => p.widths.map(w => `/assets/photo/${p.slug}-${w}.${ext}${V} ${w}w`).join(', ')
   const largest = p.widths[p.widths.length - 1]
 
   /* WebP first, JPEG fallback. An earlier version shipped JPEG only
@@ -28,7 +30,7 @@ export function photo(slug, opts = {}) {
   const style = ratio ? ` style="aspect-ratio:${ratio}"` : ''
   const pic = `<picture class="ph${ratio ? ' ph-crop' : ''}${cls ? ' ' + cls : ''}"${style}>
   <source type="image/webp" srcset="${set('webp')}" sizes="${esc(sizes)}">
-  <img src="/assets/photo/${p.slug}-${largest}.jpg" srcset="${set('jpg')}" sizes="${esc(sizes)}"
+  <img src="/assets/photo/${p.slug}-${largest}.jpg${V}" srcset="${set('jpg')}" sizes="${esc(sizes)}"
        width="${p.w}" height="${p.h}" alt="${esc(alt || p.alt)}"
        loading="${priority ? 'eager' : 'lazy'}" decoding="${priority ? 'sync' : 'async'}"${priority ? ' fetchpriority="high"' : ''}>
 </picture>`
@@ -48,9 +50,9 @@ export function photo(slug, opts = {}) {
    it be lazy-loaded and responsive. Clicking swaps in the real <video>.
    -------------------------------------------------------------------------- */
 export function videoCard(v, { priority = false } = {}) {
-  return `<article class="vcard" data-video="/assets/video/${v.slug}.mp4">
+  return `<article class="vcard" data-video="/assets/video/${v.slug}.mp4${V}">
   <button class="vcard-play" type="button" aria-label="Pusti video: ${esc(v.title)}">
-    <img src="/assets/video/${v.slug}.jpg" width="${v.w}" height="${v.h}"
+    <img src="/assets/video/${v.slug}.jpg${V}" width="${v.w}" height="${v.h}"
          alt="${esc(v.title)}" loading="${priority ? 'eager' : 'lazy'}" decoding="async">
     <span class="vcard-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
@@ -85,7 +87,7 @@ export function presjekBunara() {
     { n: 'Glina',                y: 100, h: 78,  c: '#8A7359', ink: '#E7EEEC' },
     { n: 'Sitni pijesak',        y: 178, h: 62,  c: '#B49A6E', ink: '#16211F' },
     { n: 'Krupni pijesak',       y: 240, h: 54,  c: '#C8A96B', ink: '#16211F' },
-    { n: 'Šljunak — vodonosni',  y: 294, h: 118, c: '#8FA9A5', ink: '#16211F', water: true },
+    { n: 'Šljunak, vodonosni',  y: 294, h: 118, c: '#8FA9A5', ink: '#16211F', water: true },
     { n: 'Glinena podina',       y: 412, h: 58,  c: '#6E6152', ink: '#E7EEEC' },
   ]
 
@@ -169,11 +171,11 @@ export function presjekBunara() {
     ${label(120, 'Zaštitna kolona', 'PVC, pocinčano ili inox')}
     ${label(190, 'Glineni tampon', 'do 0,5 m iznad filtera')}
     ${label(278, 'Potapajuća pumpa', 'iznad filtera i dna')}
-    ${label(344, 'Šljunčani zasip', '1–4 mm u pijesku')}
+    ${label(344, 'Šljunčani zasip', '1-4 mm u pijesku')}
     ${label(396, 'Filterska cijev', 'otvori > 20 % površine')}
   </g>
 </svg>
-<figcaption>Presjek pravilno izvedenog bunara. Tampon i šljunčani zasip su nevidljivi kad je posao gotov — i upravo se na njima najčešće šteti.</figcaption>
+<figcaption>Presjek pravilno izvedenog bunara. Tampon i šljunčani zasip se ne vide kad je posao gotov. Upravo se na njima najčešće šteti.</figcaption>
 </figure>`
 }
 
@@ -189,7 +191,7 @@ export function presjekBunara() {
    shows empty cells: big 4 + wide 2+2 + tall 2+2 + 1+1 + wide 2 = 16 = 4x4.
    The two portrait sources take the tall cells. */
 const GALLERY = [
-  ['garnitura-brdo', 'g-big', 'Brdski teren — isplaka izlazi iz bušotine'],
+  ['garnitura-brdo', 'g-big', 'Brdski teren, isplaka izlazi iz bušotine'],
   ['isplaka-blizu', 'g-wide', 'Rotaciono bušenje s isplakom, izbliza'],
   ['kolone-cijevi', 'g-wide', 'Zaštitne kolone, filter i šljunak'],
   ['garnitura-njiva', 'g-tall', 'Kamionska garnitura na ravnom terenu'],
@@ -205,12 +207,12 @@ export function gallery() {
     const p = photoBySlug[slug]
     if (!p) return ''
     const big = cls === 'g-big'
-    const set = p.widths.map(w => `/assets/photo/${p.slug}-${w}.jpg ${w}w`).join(', ')
+    const set = p.widths.map(w => `/assets/photo/${p.slug}-${w}.jpg${V} ${w}w`).join(', ')
     const largest = p.widths[p.widths.length - 1]
     return `<figure${cls ? ` class="${cls}"` : ''}>
     <picture class="ph">
       <source type="image/webp" srcset="${set.replace(/\.jpg/g, '.webp')}" sizes="${big ? '(max-width: 900px) 100vw, 50vw' : '(max-width: 480px) 100vw, (max-width: 900px) 50vw, 25vw'}">
-      <img src="/assets/photo/${p.slug}-${largest}.jpg" srcset="${set}"
+      <img src="/assets/photo/${p.slug}-${largest}.jpg${V}" srcset="${set}"
            sizes="${big ? '(max-width: 900px) 100vw, 50vw' : '(max-width: 480px) 100vw, (max-width: 900px) 50vw, 25vw'}"
            width="${p.w}" height="${p.h}" alt="${esc(p.alt)}" loading="lazy" decoding="async">
     </picture>
@@ -224,12 +226,12 @@ export function gallery() {
 export function photoBand(slug, caption) {
   const p = photoBySlug[slug]
   if (!p) return ''
-  const set = p.widths.map(w => `/assets/photo/${p.slug}-${w}.jpg ${w}w`).join(', ')
+  const set = p.widths.map(w => `/assets/photo/${p.slug}-${w}.jpg${V} ${w}w`).join(', ')
   const largest = p.widths[p.widths.length - 1]
   return `<section class="photo-band">
   <picture class="ph">
     <source type="image/webp" srcset="${set.replace(/\.jpg/g, '.webp')}" sizes="100vw">
-    <img src="/assets/photo/${p.slug}-${largest}.jpg" srcset="${set}" sizes="100vw"
+    <img src="/assets/photo/${p.slug}-${largest}.jpg${V}" srcset="${set}" sizes="100vw"
          width="${p.w}" height="${p.h}" alt="${esc(p.alt)}" loading="lazy" decoding="async">
   </picture>
   ${caption ? `<div class="photo-band-cap">${esc(caption)}</div>` : ''}

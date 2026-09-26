@@ -26,7 +26,7 @@ export const photos = [
   },
   {
     "slug": "isplaka-blizu",
-    "alt": "Rotaciono bušenje s isplakom — detalj bušotine",
+    "alt": "Rotaciono bušenje s isplakom, detalj bušotine",
     "widths": [
       640,
       1280,
@@ -95,7 +95,7 @@ export const photos = [
   },
   {
     "slug": "voda",
-    "alt": "Probno crpljenje — voda izlazi iz novog bunara",
+    "alt": "Probno crpljenje. Voda izlazi iz novog bunara",
     "widths": [
       640,
       1280,
@@ -151,7 +151,7 @@ export const videos = [
   {
     "slug": "voda-iz-busotine",
     "title": "Voda iz bušotine",
-    "note": "Trenutak zbog kojeg se sve radi — dotok nakon probijanja vodonosnog sloja.",
+    "note": "Trenutak zbog kojeg se sve radi. Voda krene čim se probije vodonosni sloj.",
     "w": 720,
     "h": 1280,
     "duration": 8
@@ -190,3 +190,8 @@ export const brand = {
 
 export const photoBySlug = Object.fromEntries(photos.map(p => [p.slug, p]))
 export const heroBySlug  = Object.fromEntries(heroes.map(h => [h.slug, h]))
+
+/* Cache-buster for /assets/photo and /assets/video. Those paths are served
+   immutable for a year, and the AI media reused the old stock files' names,
+   so without this a returning visitor keeps the old thumbnails. */
+export const mediaVersion = '09892e18'

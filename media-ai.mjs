@@ -19,6 +19,7 @@
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { createHash } from 'node:crypto'
 
 import { heroes, brand } from './src/data/media.mjs'
 
@@ -30,13 +31,13 @@ const WIDTHS = [640, 1280, 1920]
 const PHOTOS = [
   ['garnitura-brdo', 'Bušaća garnitura na brdskom terenu, isplaka izlazi iz bušotine'],
   ['garnitura-njiva', 'Kamionska bušaća garnitura na ravnom terenu uz taložnicu'],
-  ['isplaka-blizu', 'Rotaciono bušenje s isplakom — detalj bušotine'],
+  ['isplaka-blizu', 'Rotaciono bušenje s isplakom, detalj bušotine'],
   ['kolone-cijevi', 'Zaštitne kolone, filterska cijev i šljunak za zasip'],
   ['garnitura-gusjenicar', 'Gusjeničarska bušaća garnitura uz kuću, za teško dostupne parcele'],
   ['garnitura-velika', 'Velika bušaća garnitura na kamenitom terenu u Hercegovini'],
   ['garnitura-sumrak', 'Bušaća garnitura na terenu u sumrak'],
   ['svrdlo-dvoriste', 'Bušenje bunara u dvorištu kuće'],
-  ['voda', 'Probno crpljenje — voda izlazi iz novog bunara'],
+  ['voda', 'Probno crpljenje. Voda izlazi iz novog bunara'],
   ['krs-teren', 'Hercegovački krš: vapnenac, suhozidi i planine'],
   ['posavina', 'Ravnica Posavine s rijekom i poljima'],
 ]
@@ -45,7 +46,7 @@ const PHOTOS = [
 const CLIPS = [
   ['v-isplaka', 'busenje-isplaka', 'Bušenje s isplakom', 'Isplaka iznosi izbušeni materijal i drži zid bušotine stabilnim.'],
   ['v-stijena', 'busenje-stijena', 'Bušenje u stijeni', 'Pneumatski čekić drobi stijenu, a komprimirani zrak izbacuje materijal.'],
-  ['v-voda', 'voda-iz-busotine', 'Voda iz bušotine', 'Trenutak zbog kojeg se sve radi — dotok nakon probijanja vodonosnog sloja.'],
+  ['v-voda', 'voda-iz-busotine', 'Voda iz bušotine', 'Trenutak zbog kojeg se sve radi. Voda krene čim se probije vodonosni sloj.'],
 ]
 
 const ff = args => execFileSync('ffmpeg', ['-v', 'error', '-y', ...args], { stdio: 'inherit' })
@@ -108,5 +109,16 @@ export const brand = ${JSON.stringify(brand, null, 2)}
 
 export const photoBySlug = Object.fromEntries(photos.map(p => [p.slug, p]))
 export const heroBySlug  = Object.fromEntries(heroes.map(h => [h.slug, h]))
+
+/* Cache-buster for /assets/photo and /assets/video. Those paths are served
+   immutable for a year, and the AI media reused the old stock files' names,
+   so without this a returning visitor keeps the old thumbnails. */
+export const mediaVersion = '${mediaVersion()}'
 `)
+
+function mediaVersion() {
+  const h = createHash('sha1')
+  for (const d of [PHOTO, VIDEO]) for (const f of readdirSync(d).sort()) h.update(f + statSync(join(d, f)).size)
+  return h.digest('hex').slice(0, 8)
+}
 console.log(`manifest: ${photos.length} fotografija, ${videos.length} videa`)

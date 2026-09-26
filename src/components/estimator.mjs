@@ -54,9 +54,9 @@ export function estimator(defaultSlug = 'bijeljina') {
 
   <div class="tool-out">
     <div class="readout">
-      <div><span class="n" data-out="depth">—</span><span class="l">Očekivana dubina</span></div>
-      <div><span class="n" data-out="price">—</span><span class="l">Cijena po metru</span></div>
-      <div><span class="n" data-out="total">—</span><span class="l">Okvirno ukupno</span></div>
+      <div><span class="n" data-out="depth">-</span><span class="l">Očekivana dubina</span></div>
+      <div><span class="n" data-out="price">-</span><span class="l">Cijena po metru</span></div>
+      <div><span class="n" data-out="total">-</span><span class="l">Okvirno ukupno</span></div>
     </div>
 
     <div class="call" data-out="permit"></div>
@@ -71,7 +71,7 @@ export function estimator(defaultSlug = 'bijeljina') {
 <noscript>
   <div class="call warn">
     <span class="k">JavaScript je isključen</span>
-    <p>Kalkulator ne radi bez JavaScripta. Cijena je <strong>${esc(priceFrom())}</strong> — pozovite nas i recite općinu, kažemo vam očekivanu dubinu.</p>
+    <p>Kalkulator ne radi bez JavaScripta. Cijena je <strong>${esc(priceFrom())}</strong>. Pozovite nas i recite općinu. Kažemo vam očekivanu dubinu.</p>
   </div>
 </noscript>`
 }

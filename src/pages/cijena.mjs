@@ -7,23 +7,23 @@ const R = site.pricing.from
 const faq = [
   {
     q: 'Zašto je cijena ista za svaki teren?',
-    a: `<p>Zato što je tako ekipe naplaćuju. Bušač ne spušta cijenu jer je teren lakši — on naplaćuje metar. Ono što se mijenja je <strong>koliko metara treba</strong>.</p><p>U Posavini se voda nađe na dvadesetak metara, u hercegovačkom kršu i preko sto. Ista cijena po metru, tri puta veći račun.</p>`,
+    a: `<p>Zato što je tako ekipe naplaćuju. Bušač ne spušta cijenu jer je teren lakši. On naplaćuje metar. Ono što se mijenja je <strong>koliko metara treba</strong>.</p><p>U Posavini se voda nađe na dvadesetak metara. U hercegovačkom kršu ide i preko sto. Ista cijena po metru, tri puta veći račun.</p>`,
   },
   {
     q: 'Vidio sam oglase za 30 ili 50 KM po metru. Zašto ste vi skuplji?',
-    a: `<p>Zato što to najčešće nije ista stvar. Za trideset maraka dobijete <strong>rupu</strong> — bez pravilne kolone, bez šljunčanog zasipa, bez tampona, bez ispiranja i bez ijednog mjerenja koliko bunar daje.</p><p>Za godinu-dvije voda počne nositi pijesak, pijesak uništi pumpu, a bez tampona vam površinska voda s njive ulazi ravno u bunar. Sanacija je skuplja od razlike koju ste uštedjeli.</p><p>Ne kažemo da je svaka jeftina ponuda loša. Kažemo da pitate šta je u njoj.</p>`,
+    a: `<p>Zato što to najčešće nije ista stvar. Za trideset maraka dobijete <strong>rupu</strong>. Nema pravilne kolone, zasipa ni tampona. Nema ispiranja ni mjerenja koliko bunar daje.</p><p>Za godinu ili dvije voda počne nositi pijesak. Pijesak uništi pumpu. Bez tampona površinska voda s njive ulazi ravno u bunar. Sanacija je skuplja od razlike koju ste uštedjeli.</p><p>Ne kažemo da je svaka jeftina ponuda loša. Kažemo da pitate šta je u njoj.</p>`,
   },
   {
     q: 'Može li ispasti skuplje od 200?',
-    a: `<p>Može. Veći promjer, tvrda stijena, teško dostupna parcela ili velika dubina podižu cijenu. Zato pišemo <strong>„od ${R}"</strong> a ne „${R}".</p><p>Tačnu cijenu vam kaže ekipa nakon izlaska na teren, i to prije nego išta počne.</p>`,
+    a: `<p>Može. Veći promjer, tvrda stijena, teško dostupna parcela ili velika dubina podižu cijenu. Zato pišemo <strong>"od ${R}"</strong>, a ne samo "${R}".</p><p>Tačnu cijenu vam kaže ekipa nakon izlaska na teren, i to prije nego išta počne.</p>`,
   },
   {
     q: 'Plaća se ako se ne nađe voda?',
-    a: `<p>To se dogovara <strong>prije</strong> početka i mora biti napisano. Neke ekipe naplaćuju izvedene metre, neke nude uslov „nema vode — nema naplate", neke pristanu na ograničenu dubinu.</p><p>Mi taj uslov utvrdimo prije nego iko izađe na parcelu i kažemo vam koja varijanta vrijedi za vaš teren. Na kršu je to pitanje najvažnije.</p>`,
+    a: `<p>To se dogovara <strong>prije</strong> početka i mora biti napisano. Neke ekipe naplaćuju izbušene metre. Neke nude uslov "nema vode, nema naplate". Neke pristanu na gornju granicu dubine.</p><p>Mi taj uslov utvrdimo prije nego iko izađe na parcelu i kažemo vam koja varijanta vrijedi za vaš teren. Na kršu je to pitanje najvažnije.</p>`,
   },
   {
     q: 'Koliko košta pumpa?',
-    a: `<p>Za prosječno domaćinstvo <strong>700–1.200 KM</strong> s ugradnjom — pumpa, hidrofor i spajanje. Za navodnjavanje osjetno više.</p><p>Bira se tek kad se izmjeri koliko bunar stvarno daje, ne prije.</p>`,
+    a: `<p>Za prosječno domaćinstvo <strong>700-1.200 KM</strong> s ugradnjom. To su pumpa, hidrofor i spajanje. Za navodnjavanje osjetno više.</p><p>Bira se tek kad se izmjeri koliko bunar stvarno daje, ne prije.</p>`,
   },
 ]
 
@@ -42,10 +42,10 @@ const inPrice = [
 ]
 
 const depths = [
-  ['Posavina, Semberija, riječne doline', '15–40 m', 15, 40],
-  ['Krajina, Sprečko polje, doline', '20–60 m', 20, 60],
-  ['Središnja Bosna', '25–80 m', 25, 80],
-  ['Hercegovina i zapadna Bosna (krš)', '40–120 m', 40, 120],
+  ['Posavina, Semberija, riječne doline', '15-40 m', 15, 40],
+  ['Krajina, Sprečko polje, doline', '20-60 m', 20, 60],
+  ['Središnja Bosna', '25-80 m', 25, 80],
+  ['Hercegovina i zapadna Bosna (krš)', '40-120 m', 40, 120],
 ]
 
 export function cijenaPage() {
@@ -54,7 +54,7 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Cijena' }])}
 ${pageHead({
     eyebrow: 'Cijena bušenja bunara',
     title: `Bušenje je <em>${priceFrom()}</em>`,
-    lede: 'Ista cijena bez obzira na općinu i teren. Ono što mijenja ukupan račun je dubina — a ona zavisi od toga gdje bušite.',
+    lede: 'Ista cijena bez obzira na općinu i teren. Ukupan račun mijenja samo dubina. A dubina ovisi o tome gdje bušite.',
     extra: `<div class="btn-row">
       <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
       <a class="btn btn-ghost btn-lg" href="/podrucja/">Dubina za moju općinu</a>
@@ -75,7 +75,7 @@ ${pageHead({
         </tbody>
       </table>
     </div>
-    <p class="note" style="margin-top:.9rem">Bušotina s kolonom, filterom, zasipom, tamponom i ispiranjem — <strong>bez pumpe i elektroinstalacije</strong>. Orijentaciono, nije ponuda.</p>
+    <p class="note" style="margin-top:.9rem">Bušotina s kolonom, filterom, zasipom, tamponom i ispiranjem. <strong>Pumpa i struja nisu uključene.</strong> Orijentaciono, nije ponuda.</p>
     <p style="margin-top:1.25rem"><a class="btn btn-primary" href="/podrucja/">Očekivana dubina po općinama ${icon.arrow}</a></p>
   </div>
 </section>
@@ -106,18 +106,18 @@ ${pageHead({
       <span class="tag">Pošteno pitanje</span>
     </div>
     <div class="prose">
-      <p>Vidjet ćete oglase za trideset i pedeset maraka po metru. Nećemo se praviti da ih nema — nego ćemo vam reći šta je razlika.</p>
+      <p>Vidjet ćete oglase za trideset i pedeset maraka po metru. Nećemo se praviti da ih nema. Reći ćemo vam šta je razlika.</p>
       <p>Za tu cijenu se najčešće dobije <strong>rupa u zemlji</strong>. Kolona tanka ili nikakva, filter improviziran, bez šljunčanog zasipa, bez tampona, bez ispiranja, i bez ijednog mjerenja koliko bunar stvarno daje. Prvih par mjeseci sve izgleda uredu.</p>
       <div class="call warn">
         <span class="k">Šta se dogodi kasnije</span>
         <p>Voda počne nositi pijesak. Pijesak uništi pumpu. A bez tampona površinska voda s njive ili iz septičke jame ulazi ravno u bunar. Popravka košta više nego razlika koju ste uštedjeli, a ponekad se bunar više ne može spasiti.</p>
       </div>
-      <p>Nije svaka jeftina ponuda loša. Ali ako u njoj ne piše <strong>tampon</strong> i <strong>mjerenje izdašnosti</strong>, to nije kompletan bunar — bez obzira koliko dobro izgleda cijena po metru.</p>
+      <p>Nije svaka jeftina ponuda loša. Ali ako u njoj ne piše <strong>tampon</strong> i <strong>mjerenje izdašnosti</strong>, to nije kompletan bunar. Bez obzira na to koliko dobro izgleda cijena po metru.</p>
     </div>
   </div>
 </section>
 
-${photoBand('kolone-cijevi', 'Kolona, filter i spojnice — materijal koji nestane iz jeftinih ponuda.')}
+${photoBand('kolone-cijevi', 'Kolona, filter i spojnice. Materijal koji nestane iz jeftinih ponuda.')}
 
 <section class="band band-alt">
   <div class="wrap">
@@ -127,17 +127,17 @@ ${photoBand('kolone-cijevi', 'Kolona, filter i spojnice — materijal koji nesta
     </div>
     <div class="grid grid-3">
       <div class="card">
-        <span class="card-num">700–1.200 KM</span>
+        <span class="card-num">700-1.200 KM</span>
         <h3>Pumpa i hidrofor</h3>
         <p>Za prosječno domaćinstvo, s ugradnjom. Bira se tek kad se zna koliko bunar daje.</p>
       </div>
       <div class="card">
-        <span class="card-num">200–600 KM</span>
+        <span class="card-num">200-600 KM</span>
         <h3>Elektro i priključak</h3>
         <p>Kabl, zaštita i spajanje na kućnu instalaciju. Ovisi o udaljenosti od objekta.</p>
       </div>
       <div class="card">
-        <span class="card-num">60–400 KM</span>
+        <span class="card-num">60-400 KM</span>
         <h3>Analiza vode</h3>
         <p>Radi se jednom. Osnovna bakteriološka je jeftina, širi paket košta više.</p>
       </div>
@@ -152,11 +152,11 @@ ${photoBand('kolone-cijevi', 'Kolona, filter i spojnice — materijal koji nesta
   </div>
 </section>
 
-${ctaBand('Recite nam općinu — kažemo vam dubinu i koliko to ispadne.')}
+${ctaBand('Recite nam općinu. Kažemo vam dubinu i koliko to ispadne.')}
 `
 
   return page({
-    title: `Cijena bušenja bunara — ${priceFrom(true)}`,
+    title: `Cijena bušenja bunara: ${priceFrom(true)}`,
     description: `Bušenje bunara u BiH je ${priceFrom()}, isto za svaki teren. Šta je u cijeni, šta dolazi zasebno i koliko ukupno ispadne po dubini.`,
     path: '/cijena/',
     body,

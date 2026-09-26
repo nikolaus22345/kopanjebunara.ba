@@ -100,7 +100,7 @@ function splitLines(el) {
   let top = null
   for (const u of units) {
     const y = u.n.getBoundingClientRect().top
-    const punct = /^[.,:;!?…—–-]+$/.test(u.n.textContent)
+    const punct = /^[.,:;!?...—–-]+$/.test(u.n.textContent)
     if (top === null || (!punct && Math.abs(y - top) > tol)) { lines.push([]); top = y }
     lines[lines.length - 1].push(u)
   }
@@ -366,7 +366,8 @@ if (upit) {
     const label = id => {
       const el = $(id, upit)
       if (!el) return ''
-      return el.tagName === 'SELECT' ? (el.selectedOptions[0]?.text || '') : el.value.trim()
+      // an unchosen select (value "") must not send its placeholder text
+      return el.tagName === 'SELECT' ? (el.value ? el.selectedOptions[0]?.text || '' : '') : el.value.trim()
     }
     const rows = [
       ['Ime', label('#f-ime')], ['Telefon', label('#f-tel')], ['Općina', label('#f-opcina')],
@@ -415,7 +416,7 @@ if (tool && estData) {
   }
   const ENTITY = {
     FBiH: { body: 'Agencija za vodno područje rijeke Save, odnosno Jadranskog mora za Hercegovinu', law: 'Zakonu o vodama FBiH' },
-    RS: { body: 'JU „Vode Srpske“', law: 'Zakonu o vodama RS' },
+    RS: { body: 'JU "Vode Srpske"', law: 'Zakonu o vodama RS' },
     BD: { body: 'nadležni organ Brčko distrikta', law: 'propisima Brčko distrikta' },
   }
   // bs-BA locale data is not reliably in browsers: dot separator by hand
@@ -426,21 +427,21 @@ if (tool && estData) {
     const use = USE[useInputs.find(i => i.checked)?.value || 'kuca']
     const lo = Math.round((r.depth[0] * RATE) / 100) * 100
     const hi = Math.round((r.depth[1] * RATE) / 100) * 100
-    out('depth').innerHTML = `${r.depth[0]}–${r.depth[1]} <small>m</small>`
+    out('depth').innerHTML = `${r.depth[0]}-${r.depth[1]} <small>m</small>`
     out('price').innerHTML = `od ${RATE} <small>KM/m</small>`
     out('total').innerHTML = `od ${fmt(lo)} <small>do</small> ${fmt(hi)} <small>KM</small>`
     const ent = ENTITY[r.entity] || ENTITY.FBiH
     const permit = out('permit')
     if (use.permit) {
       permit.className = 'call warn'
-      permit.innerHTML = `<span class="k">Dozvola je potrebna</span><p>Za <strong>${use.label}</strong> trebaju vodni akti, a izdaje ih ${ent.body}. <a href="/dozvole/">Šta tačno treba &rarr;</a></p>`
+      permit.innerHTML = `<span class="k">Dozvola je potrebna</span><p>Za <strong>${use.label}</strong> trebaju vodni akti, a izdaje ih ${ent.body}. <a href="/dozvole/">Šta tačno treba</a></p>`
     } else {
       permit.className = 'call'
-      permit.innerHTML = `<span class="k">Dozvola vam ne treba</span><p>Bunar na vlastitom zemljištu za <strong>${use.label}</strong> je opća upotreba voda po ${ent.law}. <a href="/dozvole/">Pročitajte izuzetak &rarr;</a></p>`
+      permit.innerHTML = `<span class="k">Dozvola vam ne treba</span><p>Bunar na vlastitom zemljištu za <strong>${use.label}</strong> je opća upotreba voda po ${ent.law}. <a href="/dozvole/">Pročitajte izuzetak</a></p>`
     }
     const link = out('link')
     link.setAttribute('href', `/podrucja/${select.value}/`)
-    link.textContent = `Detaljno — ${r.name}`
+    link.textContent = `Detaljno: ${r.name}`
   }
   select.addEventListener('change', render)
   useInputs.forEach(i => i.addEventListener('change', render))

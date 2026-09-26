@@ -288,3 +288,10 @@ h2 { font-size: clamp(2.1rem, 5vw, 4rem); line-height: .95; }
   .hero3d-caption .c1 { font-size: .9rem; letter-spacing: .1em; }
   .hero3d-caption .c2 { font-size: 2.6rem; }
 }
+
+/* Footer word sized to its container, not the viewport: "KOPANJEBUNARA" in
+   Barlow Condensed 700 is 6.15em wide, so 15.8cqi fills ~97% of the column
+   on any screen instead of clipping on wide monitors. */
+.site-footer .wrap { container-type: inline-size; }
+.footer-word { font-size: clamp(2.4rem, 12vw, 13rem); overflow: visible; }
+@supports (font-size: 1cqi) { .footer-word { font-size: 15.8cqi; } }
