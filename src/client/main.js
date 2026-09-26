@@ -187,7 +187,9 @@ if (hero) {
     // Start straight away: the headline is plain HTML and the chunk is
     // modulepreloaded, so waiting for idle only delayed the model. If the
     // chunk fails, drop the .gl flag so the photo fallback comes back.
-    import('./well3d.js').then(({ mountWell }) => {
+    // layer names are painted into canvas textures once, so the face must
+    // be loaded first or they'd bake in the fallback font
+    Promise.all([import('./well3d.js'), document.fonts?.load('500 28px "Geist"').catch(() => {})]).then(([{ mountWell }]) => {
       api = mountWell({ canvas, types, initial, onFrame, onReady: () => hero.classList.add('gl-on') })
       api.setProgress(st.progress)
     }).catch(() => document.documentElement.classList.remove('gl'))

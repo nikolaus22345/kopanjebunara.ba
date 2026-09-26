@@ -93,11 +93,11 @@ function layerFace(layer, units, seed) {
     g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(0, 0, w, 2)
     // label, left side, only if the layer is tall enough to carry it
     if (h >= 34) {
-      g.font = `500 ${Math.min(26, h * 0.42)}px "IBM Plex Mono", ui-monospace, monospace`
+      g.font = `500 ${Math.min(28, h * 0.44)}px "Geist", system-ui, sans-serif`
       g.textBaseline = 'middle'
       const light = !layer.dark
       g.fillStyle = light ? 'rgba(10,20,18,.82)' : 'rgba(235,242,240,.9)'
-      g.fillText(layer.n.toUpperCase(), 26, h / 2)
+      g.fillText(layer.n, 26, h / 2)
     }
   })
 }

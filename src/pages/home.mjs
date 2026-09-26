@@ -111,7 +111,7 @@ export function homePage() {
 <section class="band">
   <div class="wrap">
     <p class="eyebrow" data-rv>Zašto dubina, a ne cijena</p>
-    <p class="manifesto" style="margin-top:1.6rem">Metar košta isto u Bijeljini i u Ljubuškom. Razlika je koliko metara treba. To čujete <em class="s">odmah</em>, a ne kad je garnitura već na placu.</p>
+    <p class="manifesto" style="margin-top:1.6rem">Metar košta isto u Bijeljini i u Ljubuškom. Razlika je <span class="hl">koliko metara treba</span>. To čujete <em class="s">odmah</em>, a ne kad je garnitura već na placu.</p>
   </div>
 </section>
 
