@@ -102,7 +102,7 @@ export function homePage() {
       <p class="terrain-note">${esc(priceFrom(true))} puta broj metara. Slojevi su tipični za taj teren, ne izmjereni na vašoj parceli.</p>
     </div>
 
-    <p class="hero3d-caption">Metar svugdje košta isto. <em class="s">Broj metara ne.</em></p>
+    <p class="hero3d-caption"><span class="c1">Metar svugdje košta isto.</span> <em class="s c2">Broj metara ne.</em></p>
     <div class="scroll-hint"><i></i>Skrolajte i bušite</div>
   </div>
   <script type="application/json" id="well-data">${wellData()}</script>
