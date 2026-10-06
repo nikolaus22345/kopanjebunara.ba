@@ -29,7 +29,7 @@ export const site = {
      with no phone number would lose every lead. */
   form: {
     endpoint: 'https://api.web3forms.com/submit',
-    accessKey: '',
+    accessKey: '599e304b-a2e1-4f41-b011-0a3c1faf424e',
   },
   responseTime: 'Javljamo se isti ili sljedeći radni dan.',
 
