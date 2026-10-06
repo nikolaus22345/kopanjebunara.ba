@@ -1,6 +1,6 @@
 import { site } from '../data/site.mjs'
 import { aquiferTypes } from '../data/regions.mjs'
-import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand } from '../layout.mjs'
+import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand, upitBtn } from '../layout.mjs'
 import { photo, presjekBunara, videoShowcase, photoBand } from '../components/media.mjs'
 
 /* ==========================================================================
@@ -47,7 +47,7 @@ ${pageHead({
     title: 'Bušenje i kopanje bunara u BiH',
     lede: 'Bušenje, opremanje i ispitivanje bunara za kuće, poljoprivredu i poslovne objekte. U cijeloj Bosni i Hercegovini, s ekipama koje imaju svoje strojeve i registrovanu djelatnost.',
     extra: `<div class="btn-row">
-      <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
+      ${upitBtn()}
       <a class="btn btn-ghost btn-lg" href="/#procjena">Procijeni za svoju općinu</a>
     </div>`,
   })}
@@ -307,7 +307,7 @@ ${photoBand('garnitura-sumrak', 'Posao ne staje kad padne mrak. Ali ni tada ne o
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.25rem">
       <div class="call warn">
         <span class="k">Nema dovoljno vode</span>
-        <p>Realno se dešava, najviše u kršu i na fliškom terenu. Zato uslove za taj slučaj utvrđujemo <strong>pismeno prije početka</strong>, a na rizičnim terenima vam to kažemo prvim pozivom.</p>
+        <p>Realno se dešava, najviše u kršu i na fliškom terenu. Zato uslove za taj slučaj utvrđujemo <strong>pismeno prije početka</strong>, a na rizičnim terenima vam to kažemo u prvom odgovoru.</p>
       </div>
       <div class="call warn">
         <span class="k">Dublje nego procijenjeno</span>

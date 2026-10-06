@@ -24,7 +24,7 @@ import { dozvolePage } from './src/pages/dozvole.mjs'
 import { busenjeBunaraPage, postupakPage } from './src/pages/service.mjs'
 import { podrucjaIndexPage, regionPage } from './src/pages/regions.mjs'
 import { uslugeIndexPage, servicePages } from './src/pages/usluge.mjs'
-import { pitanjaPage, kontaktPage, notFoundPage } from './src/pages/misc.mjs'
+import { pitanjaPage, kontaktPage, hvalaPage, notFoundPage } from './src/pages/misc.mjs'
 
 const ROOT = dirname(fileURLToPath(import.meta.url))
 const OUT = join(ROOT, 'public')
@@ -42,6 +42,7 @@ const pages = [
   ...servicePages(),
   { path: '/pitanja/', html: pitanjaPage() },
   { path: '/kontakt/', html: kontaktPage() },
+  { path: '/hvala/', html: hvalaPage(), noIndex: true },
   ...regions.map(r => ({ path: `/podrucja/${r.slug}/`, html: regionPage(r) })),
   { path: '/404.html', html: notFoundPage(), noIndex: true },
 ]
@@ -129,7 +130,7 @@ const llms = () => {
 
 > ${site.role} Bušenje i kopanje bunara u cijeloj Bosni i Hercegovini. Cijena je od ${site.pricing.from} KM po metru. Ne bušimo sami. Radimo s provjerenim bušačkim ekipama i unaprijed kažemo dubinu, cijenu i treba li dozvola.
 
-Kontakt: ${site.phone}, ${site.email}
+Kontakt: upit preko obrasca na ${site.origin.replace(/\/$/, '')}/kontakt/. ${site.responseTime}
 
 ## Ključne činjenice
 
@@ -262,6 +263,15 @@ function revision(html, js, css) {
 
 async function build() {
   const t0 = Date.now()
+
+  /* The site has no phone number: the form is the only way in. Shipping it
+     without a delivery key would silently lose every lead, so refuse.
+     ALLOW_NO_FORM_KEY=1 builds anyway for local previews. */
+  if (!site.form?.accessKey && !process.env.ALLOW_NO_FORM_KEY) {
+    console.error('\n  ✗ site.form.accessKey je prazan: forma ne bi slala upite. Build zaustavljen.')
+    console.error('    Za lokalni pregled: ALLOW_NO_FORM_KEY=1 node build.mjs\n')
+    process.exit(1)
+  }
 
   // clear generated HTML but keep /assets
   if (existsSync(OUT)) {

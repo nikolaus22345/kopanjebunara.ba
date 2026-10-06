@@ -1,5 +1,5 @@
 import { site } from '../data/site.mjs'
-import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom, km } from '../layout.mjs'
+import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom, km, upitBtn } from '../layout.mjs'
 import { photo, presjekBunara, photoBand } from '../components/media.mjs'
 
 const R = site.pricing.from
@@ -56,7 +56,7 @@ ${pageHead({
     title: `Bušenje je <em>${priceFrom()}</em>`,
     lede: 'Ista cijena bez obzira na općinu i teren. Ukupan račun mijenja samo dubina. A dubina ovisi o tome gdje bušite.',
     extra: `<div class="btn-row">
-      <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
+      ${upitBtn()}
       <a class="btn btn-ghost btn-lg" href="/podrucja/">Dubina za moju općinu</a>
     </div>`,
   })}

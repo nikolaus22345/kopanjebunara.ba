@@ -30,7 +30,7 @@ const header = (current) => `
       ${nav.map(n => `<a href="${n.href}"${current && current.startsWith(n.href) && n.href !== '/' ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`).join('\n      ')}
     </nav>
     <div class="header-cta">
-      <a class="header-phone" href="tel:${site.phoneHref}">${icon.phone}<span>${esc(site.phone)}</span></a>
+      <a class="btn btn-primary header-upit" href="/kontakt/#upit">Pošalji upit</a>
     </div>
   </div>
 </header>`
@@ -44,8 +44,8 @@ const footer = () => `
       <div class="stack gap-sm">
         <a class="brand" href="/">${logo}<span class="brand-name">${esc(site.nameLead)}<span>${esc(site.nameAccent)}</span></span></a>
         <p style="max-width:34ch">${esc(site.role)}</p>
-        <p><a href="tel:${site.phoneHref}" style="font-family:var(--mono);font-size:1.05rem;color:var(--accent);text-decoration:none">${esc(site.phone)}</a></p>
-        <p style="font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase">${esc(site.hours)}</p>
+        <p><a class="btn btn-primary" href="/kontakt/#upit">Pošalji upit</a></p>
+        <p class="note">${esc(site.responseTime)}</p>
       </div>
       ${footerNav.map(col => `
       <div>
@@ -62,8 +62,8 @@ const footer = () => `
 </footer>
 
 <div class="callbar">
-  <a class="c-call" href="tel:${site.phoneHref}">${icon.phone} Pozovi</a>
-  <a class="c-viber" href="viber://chat?number=${encodeURIComponent(site.viberHref)}">${icon.chat} Viber</a>
+  <a class="c-call" href="/kontakt/#upit">${icon.chat} Pošalji upit</a>
+  <a class="c-viber" href="/#procjena">Izračunaj dubinu</a>
 </div>`
 
 /* ---------- JSON-LD ---------- */
@@ -76,8 +76,13 @@ const orgSchema = () => {
     name: site.name,
     description: site.role,
     url: site.origin,
-    telephone: site.phone,
-    email: site.email,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      url: `${site.origin}/kontakt/`,
+      availableLanguage: ['bs', 'hr', 'sr'],
+      areaServed: 'BA',
+    },
     image: `${site.origin}/assets/img/og.jpg`,
     priceRange: `od ${site.pricing.from} KM/m`,
     areaServed: { '@type': 'Country', name: 'Bosna i Hercegovina' },
@@ -316,6 +321,11 @@ export const faqSchema = (items) => ({
   })),
 })
 
+/* The one call to action on the site. slug prefills the municipality. */
+export const upitHref = (slug) => `/kontakt/${slug ? `?opcina=${encodeURIComponent(slug)}` : ''}#upit`
+export const upitBtn = ({ slug = '', label = 'Pošalji upit', lg = true } = {}) =>
+  `<a class="btn btn-primary${lg ? ' btn-lg' : ''}" href="${upitHref(slug)}">${icon.chat} ${esc(label)}</a>`
+
 /* CTA band, used at the bottom of most pages */
 export const ctaBand = (heading = 'Gdje je parcela? Recite nam, a mi vam kažemo šta vas čeka.') => `
 <section class="band band-deep">
@@ -324,16 +334,17 @@ export const ctaBand = (heading = 'Gdje je parcela? Recite nam, a mi vam kažemo
       <div class="stack gap-md">
         <p class="eyebrow">Besplatna procjena</p>
         <h2>${esc(heading)}</h2>
-        <p class="lede">Jedan poziv je dovoljan. Kažete općinu i za šta vam treba voda. Mi vam damo realnu dubinu i cijenu. Tek onda ide izlazak na teren.</p>
+        <p class="lede">Jedan upit je dovoljan. Kažete općinu i za šta vam treba voda. Mi vam damo realnu dubinu i cijenu. Tek onda ide izlazak na teren.</p>
       </div>
       <div class="call-card">
-        <p class="hours">Pozovite direktno</p>
-        <a class="big" href="tel:${site.phoneHref}">${esc(site.phone)}</a>
-        <p>${esc(site.hours)}</p>
-        <div class="btn-row">
-          <a class="btn btn-primary" href="viber://chat?number=${encodeURIComponent(site.viberHref)}">${icon.chat} Viber</a>
-          <a class="btn btn-ghost" href="/kontakt/">Pošalji upit</a>
-        </div>
+        <p class="hours">Besplatno i bez obaveze</p>
+        <ul class="ticks">
+          <li>${icon.check} Okvirna dubina za vašu parcelu</li>
+          <li>${icon.check} Cijena prije izlaska na teren</li>
+          <li>${icon.check} Odgovor treba li vam dozvola</li>
+        </ul>
+        <a class="btn btn-primary btn-lg" href="/kontakt/#upit">${icon.chat} Pošalji upit</a>
+        <p>${esc(site.responseTime)}</p>
       </div>
     </div>
   </div>

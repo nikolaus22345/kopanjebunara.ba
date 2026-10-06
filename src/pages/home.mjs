@@ -1,6 +1,6 @@
 import { site } from '../data/site.mjs'
 import { regions, aquiferTypes } from '../data/regions.mjs'
-import { page, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom } from '../layout.mjs'
+import { page, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom, upitBtn } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
 import { videoShowcase, gallery, heroImage } from '../components/media.mjs'
 
@@ -37,7 +37,7 @@ const homeFaq = [
 ]
 
 const steps = [
-  ['01', 'Javite nam se', 'Kažete gdje je parcela i za šta vam treba voda. Odmah dobijete očekivanu dubinu, cijenu i odgovor oko dozvole.'],
+  ['01', 'Pošaljete upit', 'Kažete gdje je parcela i za šta vam treba voda. Isti ili sljedeći radni dan dobijete očekivanu dubinu, cijenu i odgovor oko dozvole.'],
   ['02', 'Dogovorimo ekipu', 'Šaljemo bušače koji rade baš na vašem terenu. Ravnica i krš traže različite strojeve i različito iskustvo.'],
   ['03', 'Buši se, a mi smo na vezi', 'Ekipa izađe, potvrdi ponudu i radi. Mi pratimo posao do kraja i tu smo ako nešto zapne.'],
 ]
@@ -73,9 +73,9 @@ export function homePage() {
       <p class="eyebrow">Bušenje bunara u cijeloj BiH</p>
       <h1>Bušenje i kopanje bunara <br><em>Bosna i Hercegovina</em></h1>
       <p class="kicker">Prije prvog metra znate koliko duboko i koliko košta.</p>
-      <p class="lede">Recite nam općinu i za šta vam treba voda. Za par minuta imate očekivanu dubinu, cijenu i odgovor treba li vam dozvola.</p>
+      <p class="lede">Recite nam općinu i za šta vam treba voda. Dobijete očekivanu dubinu, cijenu i odgovor treba li vam dozvola, besplatno.</p>
       <div class="btn-row">
-        <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
+        ${upitBtn({ label: 'Pošalji besplatan upit' })}
         <a class="btn btn-ghost btn-lg" href="#procjena">Izračunaj za svoju općinu ${icon.arrow}</a>
       </div>
       <div class="hero-answers">
@@ -185,7 +185,7 @@ export function homePage() {
       </div>
       <div class="call warn" data-rv=".16">
         <span class="k">Kažemo i kad teren nije dobar</span>
-        <p>Na kršu i laporu voda zna izostati. To čujete u prvom razgovoru, a ne na pola bušotine. <a href="/podrucja/">Šta je ispod vaše općine</a></p>
+        <p>Na kršu i laporu voda zna izostati. To čujete u prvom odgovoru, a ne na pola bušotine. <a href="/podrucja/">Šta je ispod vaše općine</a></p>
       </div>
     </div>
   </div>

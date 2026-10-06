@@ -1,3 +1,4 @@
+import { upitForm } from '../components/upit.mjs'
 import { site } from '../data/site.mjs'
 import { regions } from '../data/regions.mjs'
 import { page, pageHead, crumbs, icon, esc, faqBlock, faqSchema, ctaBand, priceFrom } from '../layout.mjs'
@@ -45,7 +46,7 @@ const groups = [
   {
     title: 'Izvođenje',
     items: [
-      { q: 'Koliko traje izrada bunara?', a: '<p>Bušenje u aluviju jedan do dva dana, u stijeni tri do sedam. Na to dolazi razrada i probno crpljenje (dan do dva) i ugradnja pumpe (dan).</p><p>Od poziva do vode u slavini realno računajte <strong>jednu do tri sedmice</strong>, ovisno o terminima.</p>' },
+      { q: 'Koliko traje izrada bunara?', a: '<p>Bušenje u aluviju jedan do dva dana, u stijeni tri do sedam. Na to dolazi razrada i probno crpljenje (dan do dva) i ugradnja pumpe (dan).</p><p>Od upita do vode u slavini realno računajte <strong>jednu do tri sedmice</strong>, ovisno o terminima.</p>' },
       { q: 'Koliko prostora treba stroju?', a: '<p>Bušaća garnitura je kamion ili gusjeničar. Treba joj prilaz i prostor za manevar i podupirače. Za teško dostupne parcele postoje manje garniture, ali s manjom dubinom.</p><p>Recite nam kakav je pristup. To mijenja izbor ekipe i cijenu.</p>' },
       { q: 'Pravi li bušenje veliku štetu u dvorištu?', a: '<p>Bušenje s isplakom stvara blato oko bušotine i treba prostor za taložnicu. Nije katastrofa, ali nije ni čist posao. Računajte na sređivanje terena poslije.</p><p>U stijeni s pneumatskim čekićem manje je blata, ali ima prašine i buke.</p>' },
       { q: 'Radite li zimi?', a: '<p>U nizinama uglavnom da, osim po smrznutom terenu i jakom snijegu. U planinskim i visokim krškim područjima sezona je kraća.</p><p>Zima je najmirniji dio godine u ovom poslu. Termini su kraći, a ekipe dostupnije nego u proljeće.</p>' },
@@ -56,8 +57,8 @@ const groups = [
     items: [
       { q: 'Da li vi sami bušite?', a: `<p><strong>Ne. Bušimo preko partnerskih ekipa.</strong> Mi radimo procjenu, provjeru terena i dogovor. Sam posao izvodi bušačka firma s vlastitim strojevima i registrovanom djelatnošću.</p><p>Kažemo vam to otvoreno, jer imate pravo znati s kim radite. Ugovor potpisujete direktno s njima.</p>` },
       { q: 'Kako birate ekipe?', a: '<p>Registrovana djelatnost, vlastita mehanizacija, provjerljive reference i spremnost da sve dogovoreno stave na papir. Ekipe koje ne rade tampon i probno crpljenje ne uvrštavamo.</p>' },
-      { q: 'Naplaćujete li procjenu?', a: '<p>Ne. Procjena telefonom je besplatna. Dobijete raspon dubine, cijenu i odgovor treba li vam dozvola. Ni na šta se ne obavezujete.</p>' },
-      { q: 'Radite li u cijeloj BiH?', a: `<p>Da. Pisanu procjenu terena imamo za <strong>${regions.length} općina i područja</strong>. Pokrivamo i sve ostalo. Za ta mjesta procjenu radimo telefonom.</p>` },
+      { q: 'Naplaćujete li procjenu?', a: '<p>Ne. Procjena je besplatna. Dobijete raspon dubine, cijenu i odgovor treba li vam dozvola. Ni na šta se ne obavezujete.</p>' },
+      { q: 'Radite li u cijeloj BiH?', a: `<p>Da. Pisanu procjenu terena imamo za <strong>${regions.length} općina i područja</strong>. Pokrivamo i sve ostalo. Za ta mjesta procjenu radimo iz vašeg upita.</p>` },
     ],
   },
 ]
@@ -83,7 +84,7 @@ ${groups.map((g, i) => `${i === 2 ? photoBand('svrdlo-dvoriste', 'Većina naših
   </div>
 </section>`).join('\n')}
 
-${ctaBand('Nema odgovora na vaše pitanje? Pozovite.')}
+${ctaBand('Nema odgovora na vaše pitanje? Pošaljite upit.')}
 `
   return page({
     title: 'Česta pitanja o bušenju bunara u BiH',
@@ -99,14 +100,12 @@ ${ctaBand('Nema odgovora na vaše pitanje? Pozovite.')}
    ========================================================================== */
 
 export function kontaktPage() {
-  const opts = [...regions].sort((a, b) => a.name.localeCompare(b.name, 'bs'))
-
   const body = `
 ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Kontakt' }])}
 ${pageHead({
     eyebrow: 'Besplatna procjena',
-    title: 'Kontakt',
-    lede: 'Najbrže je da nazovete. Jedan razgovor i znate raspon dubine, cijene i treba li vam dozvola.',
+    title: 'Pošaljite upit',
+    lede: 'Par minuta i pet kratkih koraka. Što više nam kažete, to je procjena dubine i cijene tačnija.',
   })}
 
 <section class="band">
@@ -114,120 +113,32 @@ ${pageHead({
     <div class="contact-grid">
 
       <div class="stack gap-md">
-        <div class="call-card">
-          <p class="hours">Pozovite direktno</p>
-          <a class="big" href="tel:${site.phoneHref}">${esc(site.phone)}</a>
-          <p>${esc(site.hours)}</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="viber://chat?number=${encodeURIComponent(site.viberHref)}">${icon.chat} Viber</a>
-            <a class="btn btn-ghost" href="https://wa.me/${esc(site.whatsappHref)}">${icon.chat} WhatsApp</a>
-          </div>
-        </div>
-
         <div class="panel panel-accent">
-          <h2>Šta pripremiti prije poziva</h2>
-          <ol style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.55rem;margin:0">
-            <li>Općinu i najbliže naselje. Tačna adresa ne treba.</li>
-            <li>Za šta vam treba voda: kuća, vrt, navodnjavanje ili posao.</li>
-            <li>Može li kamion doći do mjesta bušenja.</li>
-            <li>Dubinu najbližeg bunara, ako je znate. To je najbolji besplatan pokazatelj u ovom poslu.</li>
-          </ol>
+          <h2>Šta dobijete</h2>
+          <ul class="ticks">
+            <li>${icon.check} Okvirnu dubinu za vašu parcelu, iz geologije područja i okolnih bunara</li>
+            <li>${icon.check} Cijenu prije nego iko izađe na teren</li>
+            <li>${icon.check} Odgovor treba li vam dozvola, za vaš entitet</li>
+            <li>${icon.check} Ekipu koja radi baš na vašem terenu</li>
+          </ul>
+          <p class="note">${esc(site.responseTime)} Besplatno i bez obaveze.</p>
         </div>
 
         <div class="panel">
-          <h2>E-mail</h2>
-          <p><a href="mailto:${esc(site.email)}" style="font-family:var(--mono)">${esc(site.email)}</a></p>
+          <h2>Zašto toliko pitanja</h2>
+          <p>Dubina ovisi o terenu, a cijena o dubini. Pristup za kamion odlučuje koji stroj ide na parcelu. Dubina susjednog bunara je najbolji besplatan pokazatelj koji postoji. Svaki odgovor skraćuje razgovor i čini procjenu pouzdanijom.</p>
           <p class="note">${esc(site.role)}</p>
         </div>
 
         ${photo('garnitura-njiva', {
           sizes: '(max-width: 860px) 100vw, 34vw',
           ratio: '4/3',
-          caption: 'Ekipa na terenu. Prvo procjena telefonom, pa izlazak na parcelu.',
+          caption: 'Prvo procjena iz vašeg upita, pa izlazak na parcelu.',
         })}
       </div>
 
-      <div>
-        <div class="panel">
-          <h2>Pošaljite upit</h2>
-          <p class="note">Odgovaramo isti ili sljedeći radni dan. Ako vam se žuri, nazovite.</p>
-
-          <!-- ==================================================================
-               Forma sastavlja WhatsApp poruku — bez backenda i bez posrednika.
-               Radi na Vercelu (i svugdje drugdje) bez ijedne postavke, a
-               WhatsApp je kanal na kojem ovo tržište zapravo komunicira.
-
-               Ako ikad zatreba klasična e-mail forma, vidi README.md
-               sekciju "Forma" — Formspree ili Web3Forms je jedna linija.
-               ================================================================== -->
-          <noscript>
-            <div class="call warn" style="margin:1rem 0">
-              <span class="k">JavaScript je isključen</span>
-              <p>Obrazac sastavlja WhatsApp poruku, pa bez JavaScripta ne radi.
-                 Pozovite nas na <a href="tel:${site.phoneHref}">${esc(site.phone)}</a>. Tako je i brže.</p>
-            </div>
-          </noscript>
-
-          <form class="form" id="upit-form" data-wa="${esc(site.whatsappHref)}" style="margin-top:1rem">
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-ime">Ime i prezime</label>
-                <input id="f-ime" name="ime" type="text" required autocomplete="name">
-              </div>
-              <div class="field">
-                <label for="f-tel">Telefon</label>
-                <input id="f-tel" name="telefon" type="tel" required autocomplete="tel" placeholder="06X XXX XXX">
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-opcina">Općina</label>
-              <select id="f-opcina" name="opcina" required>
-                <option value="">Odaberite</option>
-                ${opts.map(r => `<option value="${esc(r.name)}">${esc(r.name)}</option>`).join('\n                ')}
-                <option value="ostalo">Druga općina</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="f-namjena">Za šta vam treba voda</label>
-              <select id="f-namjena" name="namjena" required>
-                <option value="domacinstvo">Domaćinstvo</option>
-                <option value="kuca-vrt">Kuća i vrt</option>
-                <option value="navodnjavanje">Navodnjavanje</option>
-                <option value="stoka">Stočarstvo</option>
-                <option value="posao">Poslovni objekt</option>
-                <option value="geosonda">Geotermalna sonda</option>
-                <option value="regeneracija">Čišćenje postojećeg bunara</option>
-              </select>
-            </div>
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-pristup">Pristup za kamion</label>
-                <select id="f-pristup" name="pristup">
-                  <option value="da">Da, bez problema</option>
-                  <option value="usko">Usko, ali moguće</option>
-                  <option value="ne">Otežano / ne znam</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="f-susjed">Dubina susjednog bunara</label>
-                <input id="f-susjed" name="susjedni_bunar" type="text" placeholder="npr. 22 m, ako znate">
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-poruka">Poruka</label>
-              <textarea id="f-poruka" name="poruka" rows="4" placeholder="Sve što mislite da nam pomaže."></textarea>
-            </div>
-
-            <button class="btn btn-primary btn-lg" type="submit">${icon.chat} Pošalji na WhatsApp</button>
-            <p class="note">Klikom se otvara WhatsApp s već napisanom porukom. Samo je pošaljete. Ako vam je lakše, <a href="tel:${site.phoneHref}">pozovite ${esc(site.phone)}</a>.</p>
-            <p class="note">Vaše podatke koristimo isključivo da vam odgovorimo na upit i dogovorimo posao. Ne prosljeđujemo ih trećim stranama osim izvođaču kojeg zajedno odaberemo.</p>
-          </form>
-        </div>
+      <div class="panel upit-panel" id="upit">
+        ${upitForm()}
       </div>
 
     </div>
@@ -235,10 +146,30 @@ ${pageHead({
 </section>
 `
   return page({
-    title: 'Kontakt: besplatna procjena bušenja bunara',
-    description: `Pozovite ${site.phone} ili pošaljite upit. Besplatna procjena dubine i cijene bunara za vašu općinu, bez obaveze.`,
+    title: 'Pošaljite upit: besplatna procjena bunara',
+    description: 'Pošaljite upit za bušenje bunara. Dobijete okvirnu dubinu, cijenu i odgovor oko dozvole za vašu općinu. Besplatno i bez obaveze.',
     path: '/kontakt/',
     body,
+  })
+}
+
+/* Thank-you page: where the no-JavaScript form post lands, and a clean
+   URL for counting conversions. Not indexed. */
+export function hvalaPage() {
+  const body = `
+${pageHead({
+    eyebrow: 'Upit je poslan',
+    title: 'Hvala. Javljamo se uskoro.',
+    lede: `Pogledat ćemo teren u vašoj općini i javiti vam se s okvirnom dubinom i cijenom. ${esc(site.responseTime)}`,
+    extra: `<div class="btn-row"><a class="btn btn-primary" href="/podrucja/">Pogledajte svoju općinu</a><a class="btn btn-ghost" href="/cijena/">Šta ulazi u cijenu</a></div>`,
+  })}
+`
+  return page({
+    title: 'Hvala na upitu',
+    description: 'Vaš upit za bušenje bunara je poslan. Javljamo se s okvirnom dubinom i cijenom za vašu općinu.',
+    path: '/hvala/',
+    body,
+    noindex: true,
   })
 }
 

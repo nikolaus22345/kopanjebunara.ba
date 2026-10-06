@@ -62,7 +62,7 @@ export function estimator(defaultSlug = 'bijeljina') {
     <div class="call" data-out="permit"></div>
 
     <div class="btn-row">
-      <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
+      <a class="btn btn-primary btn-lg" href="/kontakt/#upit" data-out="upit">${icon.chat} Pošalji upit za ovu općinu</a>
       <a class="btn btn-ghost" href="#" data-out="link">Detaljno o terenu</a>
     </div>
   </div>
@@ -71,7 +71,7 @@ export function estimator(defaultSlug = 'bijeljina') {
 <noscript>
   <div class="call warn">
     <span class="k">JavaScript je isključen</span>
-    <p>Kalkulator ne radi bez JavaScripta. Cijena je <strong>${esc(priceFrom())}</strong>. Pozovite nas i recite općinu. Kažemo vam očekivanu dubinu.</p>
+    <p>Kalkulator ne radi bez JavaScripta. Cijena je <strong>${esc(priceFrom())}</strong>. <a href="/kontakt/#upit">Pošaljite upit</a> i recite općinu. Kažemo vam očekivanu dubinu.</p>
   </div>
 </noscript>`
 }

@@ -6,6 +6,18 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["--yes", "serve", "public", "-l", "4321"],
       "port": 4321
+    },
+    {
+      "name": "doma",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:/Users/windows11/doma/tools/dev-server.mjs", "4400"],
+      "port": 4400
+    },
+    {
+      "name": "doma-comps",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", "C:/Users/windows11/doma/comps", "-l", "4401"],
+      "port": 4401
     }
   ]
 }

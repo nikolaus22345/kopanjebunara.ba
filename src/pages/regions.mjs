@@ -1,6 +1,6 @@
 import { site } from '../data/site.mjs'
 import { regions, regionBySlug, aquiferTypes, oddsMeta } from '../data/regions.mjs'
-import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand, priceFrom, totalFrom, km } from '../layout.mjs'
+import { page, pageHead, crumbs, icon, esc, strata, faqBlock, faqSchema, ctaBand, priceFrom, totalFrom, km, upitBtn } from '../layout.mjs'
 import { estimator } from '../components/estimator.mjs'
 import { photo, photoBand } from '../components/media.mjs'
 
@@ -103,7 +103,7 @@ ${photoBand('garnitura-velika', 'Isti stroj i isti ljudi. Potpuno drugačiji rez
   <div class="wrap-narrow">
     <div class="call warn">
       <span class="k">Ne vidite svoju općinu?</span>
-      <p>Pokrivamo <strong>cijelu Bosnu i Hercegovinu</strong>. Ova lista pokazuje područja za koja imamo pisanu procjenu terena. Nova dodajemo kako stižu podaci s bušotina. Za sve ostalo nas jednostavno pozovite.</p>
+      <p>Pokrivamo <strong>cijelu Bosnu i Hercegovinu</strong>. Ova lista pokazuje područja za koja imamo pisanu procjenu terena. Nova dodajemo kako stižu podaci s bušotina. Za sve ostalo nam jednostavno pošaljite upit.</p>
     </div>
   </div>
 </section>
@@ -170,7 +170,7 @@ ${crumbs([{ label: 'Početna', href: '/' }, { label: 'Područja', href: '/podruc
           <div><span class="n">${km(lo)}-${km(hi)} <small>KM</small></span><span class="l">Okvirno ukupno</span></div>
         </div>
         <div class="btn-row" style="margin-top:.5rem">
-          <a class="btn btn-primary btn-lg" href="tel:${site.phoneHref}">${icon.phone} ${esc(site.phone)}</a>
+          ${upitBtn({ slug: r.slug })}
           <a class="btn btn-ghost btn-lg" href="/kontakt/">Pošalji upit</a>
         </div>
       </div>

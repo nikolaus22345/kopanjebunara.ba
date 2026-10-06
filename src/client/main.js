@@ -357,28 +357,138 @@ if (FINE && !REDUCED) {
   }
 }
 
-/* ---------- contact form -> prefilled WhatsApp message ----------
-   No backend and no form processor: the fields become a readable message
-   handed to WhatsApp, which is where this market actually replies. */
+/* ---------- where the visitor came from ----------
+   Remembered once per visit, on whichever page they land, so the inquiry
+   email can say "came from Google, landed on /podrucja/mostar/". Storage
+   can be blocked (private mode), so every access is guarded. */
+
+const FIRST = 'kb-first-touch'
+const store = {
+  get() { try { return JSON.parse(sessionStorage.getItem(FIRST) || 'null') } catch { return null } },
+  set(v) { try { sessionStorage.setItem(FIRST, JSON.stringify(v)) } catch {} },
+}
+if (!store.get()) {
+  const q = new URLSearchParams(location.search)
+  const utm = ['utm_source', 'utm_medium', 'utm_campaign'].map(k => q.get(k)).filter(Boolean).join(' / ')
+  let ref = ''
+  try { const r = document.referrer && new URL(document.referrer); if (r && r.host !== location.host) ref = r.host + r.pathname } catch {}
+  store.set({ page: location.pathname, ref: ref || 'direktno', utm })
+}
+
+/* ---------- inquiry form: five steps, then Web3Forms -> owner's inbox ---------- */
 
 const upit = $('#upit-form')
 if (upit) {
-  upit.addEventListener('submit', e => {
-    e.preventDefault()
-    const label = id => {
-      const el = $(id, upit)
-      if (!el) return ''
-      // an unchosen select (value "") must not send its placeholder text
-      return el.tagName === 'SELECT' ? (el.value ? el.selectedOptions[0]?.text || '' : '') : el.value.trim()
+  const steps = $$('.step', upit)
+  const prev = $('[data-prev]', upit), next = $('[data-next]', upit), submit = $('[data-submit]', upit)
+  const bar = $('.upit-progress i', upit), now = $('[data-step-now]', upit)
+  const err = $('.upit-error', upit), done = $('#upit-done')
+  const opcina = $('#u-opcina', upit), estimate = $('[data-estimate]', upit)
+  const rate = Number(upit.dataset.rate) || 200
+  const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  const set = (name, v) => { const el = upit.elements.namedItem(name); if (el) el.value = v }
+  let i = 0
+
+  upit.classList.add('is-stepped')
+  $('[data-step-total]', upit).textContent = steps.length
+
+  // ?opcina=<slug> from the estimator or a region page
+  const want = new URLSearchParams(location.search).get('opcina')
+  if (want) {
+    const o = [...opcina.options].find(x => x.dataset.slug === want)
+    if (o) opcina.value = o.value
+  }
+
+  const estimateText = () => {
+    const o = opcina.selectedOptions[0]
+    if (!o?.dataset.depth) return ''
+    const [a, b] = o.dataset.depth.split('-').map(Number)
+    return `${o.value}: ${a}-${b} m, od ${fmt(Math.round(a * rate / 100) * 100)} do ${fmt(Math.round(b * rate / 100) * 100)} KM`
+  }
+  const showEstimate = () => {
+    const t = estimateText()
+    estimate.hidden = !t
+    if (t) estimate.textContent = `Okvirno za vašu općinu: ${t.split(': ')[1]}. Konačnu cijenu daje ekipa na terenu.`
+  }
+  opcina.addEventListener('change', showEstimate)
+
+  const show = n => {
+    i = Math.max(0, Math.min(steps.length - 1, n))
+    steps.forEach((s, k) => { s.hidden = k !== i })
+    prev.hidden = i === 0
+    next.hidden = i === steps.length - 1
+    submit.hidden = i !== steps.length - 1
+    bar.style.transform = `scaleX(${(i + 1) / steps.length})`
+    now.textContent = i + 1
+    err.hidden = true
+    if (i === 3) showEstimate()
+  }
+
+  // validate only the fields of the current step
+  const valid = () => {
+    for (const el of $$('input, select, textarea', steps[i])) {
+      if (!el.checkValidity()) {
+        err.textContent = el.type === 'radio' ? 'Odaberite jednu od ponuđenih opcija.'
+          : el.type === 'checkbox' ? 'Potrebna je saglasnost da bismo vam mogli odgovoriti.'
+          : el.type === 'tel' ? 'Upišite broj telefona na koji vas možemo dobiti.'
+          : 'Ovo polje je potrebno.'
+        err.hidden = false
+        ;(el.type === 'radio' ? el.closest('.choice') : el).scrollIntoView({ block: 'center', behavior: 'smooth' })
+        if (el.type !== 'radio') el.focus({ preventScroll: true })
+        return false
+      }
     }
-    const rows = [
-      ['Ime', label('#f-ime')], ['Telefon', label('#f-tel')], ['Općina', label('#f-opcina')],
-      ['Namjena', label('#f-namjena')], ['Pristup za kamion', label('#f-pristup')],
-      ['Dubina susjednog bunara', label('#f-susjed')], ['Poruka', label('#f-poruka')],
-    ].filter(r => r[1] && !r[1].startsWith('—'))
-    const text = 'Upit sa sajta kopanjebunara.ba\n\n' + rows.map(r => `${r[0]}: ${r[1]}`).join('\n')
-    window.open(`https://wa.me/${upit.dataset.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
+    return true
+  }
+
+  const top = () => upit.scrollIntoView({ block: 'start', behavior: REDUCED ? 'auto' : 'smooth' })
+  next.addEventListener('click', () => { if (valid()) { show(i + 1); top() } })
+  prev.addEventListener('click', () => { show(i - 1); top() })
+  // Enter in a text field moves forward instead of submitting half a form
+  upit.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT' && i < steps.length - 1) { e.preventDefault(); next.click() }
   })
+
+  upit.addEventListener('submit', async e => {
+    e.preventDefault()
+    if (!valid()) return
+    const ft = store.get() || {}
+    set('Okvirna procjena', estimateText())
+    set('Poslano sa stranice', location.pathname + location.search)
+    set('Prva posjećena stranica', ft.page || '')
+    set('Došao sa', ft.ref || '')
+    set('Kampanja (UTM)', ft.utm || '')
+    set('Uređaj', `${matchMedia('(pointer: coarse)').matches ? 'mobitel' : 'računar'}, ${innerWidth}x${innerHeight}`)
+    const data = Object.fromEntries(new FormData(upit))
+    const where = [data['Općina'], data['Naselje']].filter(Boolean).join(', ')
+    data.subject = `Novi upit: ${where || 'bunar'}${data['Namjena'] ? `, ${data['Namjena']}` : ''}`
+    delete data.redirect
+    delete data.botcheck
+    // unanswered fields stay out of the email; an empty "email" would also
+    // fail Web3Forms' reply-to validation
+    for (const k of Object.keys(data)) if (data[k] === '') delete data[k]
+    if (upit.elements.namedItem('botcheck').checked) return       // a bot ticked the hidden box
+
+    submit.disabled = true
+    submit.textContent = 'Šaljem...'
+    try {
+      const r = await fetch(upit.action, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
+      const j = await r.json().catch(() => ({}))
+      if (!r.ok || j.success === false) throw new Error(j.message || r.status)
+      window.gtag?.('event', 'generate_lead', { method: 'upit', opcina: data['Općina'] || '', namjena: data['Namjena'] || '' })
+      upit.hidden = true
+      done.hidden = false
+      done.focus()
+      done.scrollIntoView({ block: 'center' })
+    } catch {
+      err.textContent = 'Slanje nije uspjelo. Provjerite internet vezu i pokušajte ponovo za minutu.'
+      err.hidden = false
+      submit.disabled = false
+      submit.textContent = 'Pošalji upit'
+    }
+  })
+
+  show(0)
 }
 
 /* ---------- video cards: click to play ----------
@@ -444,6 +554,7 @@ if (tool && estData) {
     const link = out('link')
     link.setAttribute('href', `/podrucja/${select.value}/`)
     link.textContent = `Detaljno: ${r.name}`
+    out('upit')?.setAttribute('href', `/kontakt/?opcina=${encodeURIComponent(select.value)}#upit`)
   }
   select.addEventListener('change', render)
   useInputs.forEach(i => i.addEventListener('change', render))

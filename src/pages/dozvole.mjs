@@ -181,7 +181,7 @@ ${photoBand('garnitura-gusjenicar', 'Za kućni bunar na vlastitom zemljištu pap
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.25rem">
       <div class="call" style="background:var(--deep-2)">
         <span class="k">01 Utvrdimo režim</span>
-        <p style="color:var(--deep-ink)">Na osnovu namjene i lokacije kažemo vam da li ste u općoj upotrebi ili ne. To je besplatno i traje jedan telefonski razgovor.</p>
+        <p style="color:var(--deep-ink)">Na osnovu namjene i lokacije kažemo vam da li ste u općoj upotrebi ili ne. To je besplatno i dovoljan je jedan upit.</p>
       </div>
       <div class="call" style="background:var(--deep-2)">
         <span class="k">02 Uputimo na organ</span>
@@ -201,7 +201,7 @@ ${photoBand('garnitura-gusjenicar', 'Za kućni bunar na vlastitom zemljištu pap
     ${faqBlock(faq)}
     <div class="call warn" style="margin-top:1.5rem">
       <span class="k">Napomena</span>
-      <p>Ovaj tekst je informativni pregled, ne pravni savjet. Propisi se mijenjaju, a kantonalni i lokalni sloj može dodati uslove. Za obavezujuću informaciju obratite se nadležnom organu ili nas pozovite pa ćemo vas uputiti.</p>
+      <p>Ovaj tekst je informativni pregled, ne pravni savjet. Propisi se mijenjaju, a kantonalni i lokalni sloj može dodati uslove. Za obavezujuću informaciju obratite se nadležnom organu ili nam pošaljite upit pa ćemo vas uputiti.</p>
     </div>
   </div>
 </section>

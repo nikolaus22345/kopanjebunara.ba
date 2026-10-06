@@ -15,13 +15,23 @@ export const site = {
   nameAccent: 'Bunara',      // rendered in accent colour
   tagline: 'Bušenje bunara u BiH',
 
-  // --- contact — REPLACE THESE ------------------------------------------
-  phone: '+387 63 050 308',            // display form
-  phoneHref: '+38763050308',           // tel: form, no spaces
-  viberHref: '+38763050308',           // usually same number
-  whatsappHref: '38763050308',         // wa.me form, no plus
-  email: 'info@kopanjebunara.ba',
-  hours: 'Pon-Sub, 07:00-20:00',
+  // --- contact ----------------------------------------------------------
+  /* No phone number on the site (owner's decision, Oct 2026): every lead
+     comes through the inquiry form, which collects far more than a call
+     and lands in the owner's inbox. There is no public email either; the
+     info@ mailbox was never created.
+
+     Web3Forms forwards each submission to the inbox the access key was
+     created for. The key is public by design (it can only send TO that
+     inbox), so it is fine in the HTML. Get one at web3forms.com by
+     entering the destination email; it arrives by email.
+     The build refuses to ship without it, because a dead form on a site
+     with no phone number would lose every lead. */
+  form: {
+    endpoint: 'https://api.web3forms.com/submit',
+    accessKey: '',
+  },
+  responseTime: 'Javljamo se isti ili sljedeći radni dan.',
 
   // --- deployment -------------------------------------------------------
   // Canonical origin. Feeds canonical URLs, sitemap.xml, llms.txt, Open
